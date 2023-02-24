@@ -11,6 +11,7 @@ import (
 	"github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha/platformv1alphaconnect"
 
 	"github.com/anchore/syft/syft/formats"
+	"github.com/anchore/syft/syft/formats/spdxjson"
 	"github.com/anchore/syft/syft/formats/syftjson"
 	"github.com/bufbuild/connect-go"
 	"github.com/spf13/cobra"
@@ -64,12 +65,22 @@ func uploadSBOM(cmd *cobra.Command, args []string) error {
 	var imageID string
 	var imageTag string
 
+	var uploadFormat platform.SBOMFormat
+
 	switch format.ID() {
 	case syftjson.ID:
 		imageID = sbom.Source.ImageMetadata.ID
 		if len(sbom.Source.ImageMetadata.Tags) > 0 {
 			imageTag = sbom.Source.ImageMetadata.Tags[0]
 		}
+
+		uploadFormat = platform.SBOMFormat_SBOM_FORMAT_SYFT
+
+	case spdxjson.ID:
+		uploadFormat = platform.SBOMFormat_SBOM_FORMAT_SPDX_JSON
+
+	default:
+		return fmt.Errorf("unsupported SBOM format: %s", format.ID())
 	}
 
 	if cmd.Flag("image-id").Changed {
@@ -110,7 +121,7 @@ func uploadSBOM(cmd *cobra.Command, args []string) error {
 		Kind: &platform.UploadSBOMRequest_Header{
 			Header: &platform.UploadSBOMHeader{
 				ProjectId:      loginResponse.Msg.ProjectId,
-				Format:         platform.SBOMFormat_SBOM_FORMAT_SYFT,
+				Format:         uploadFormat,
 				Labels:         map[string]string{},
 				SourceRepoUrl:  repository,
 				SourceCommitId: commit,
