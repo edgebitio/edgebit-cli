@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -33,17 +34,76 @@ func uploadSBOMCommand() *cobra.Command {
 	return cmd
 }
 
-func uploadSBOM(cmd *cobra.Command, args []string) error {
-	ctx := cmd.Context()
+func uploadSBOMCommandForCI() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:    "upload-sbom-for-ci",
+		Short:  "Upload an SBOM and print machine-readable output for use in CI",
+		RunE:   uploadSBOM,
+		Args:   cobra.ExactArgs(1),
+		Hidden: true,
+	}
+
+	cmd.Flags().String("repo", "", "Source repository to tag the SBOM with")
+	cmd.Flags().String("commit", "", "Source commit ID to tag the SBOM with")
+	cmd.Flags().String("base-commit", "", "Base commit ID to compare the SBOM against")
+	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
+	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
+	cmd.Flags().String("comment-flavor", "", "Comment flavor to use for the SBOM (e.g. github)")
+
+	return cmd
+}
+
+type Client struct {
+	// We'll need a proper interceptor here long term
+	apiClient    platformv1alphaconnect.EdgeBitPublicAPIServiceClient
+	sessionToken string
+	ProjectID    string
+}
+
+func (c *Client) UploadSBOM(ctx context.Context) *connect.ClientStreamForClient[platform.UploadSBOMRequest, platform.UploadSBOMResponse] {
+	uploadRequest := c.apiClient.UploadSBOM(ctx)
+	uploadRequest.RequestHeader().Set("Authorization", "Bearer "+c.sessionToken)
+
+	return uploadRequest
+}
+
+func NewClient(ctx context.Context) (*Client, error) {
 	apiKey := os.Getenv("EDGEBIT_API_KEY")
 	if apiKey == "" {
-		return errors.New("EDGEBIT_API_KEY is required")
+		return nil, errors.New("EDGEBIT_API_KEY is required")
 	}
 
 	edgebitURL := os.Getenv("EDGEBIT_URL")
 	if edgebitURL == "" {
-		return errors.New("EDGEBIT_URL is required")
+		return nil, errors.New("EDGEBIT_URL is required")
 	}
+
+	loginClient := platformv1alphaconnect.NewLoginServiceClient(
+		http.DefaultClient,
+		edgebitURL,
+	)
+
+	loginResponse, err := loginClient.APIAccessTokenLogin(ctx, connect.NewRequest(&platform.APIAccessTokenLoginRequest{
+		Token: apiKey,
+	}))
+	if err != nil {
+		return nil, fmt.Errorf("failed to authenticate: %w", err)
+	}
+
+	apiClient := platformv1alphaconnect.NewEdgeBitPublicAPIServiceClient(
+		http.DefaultClient,
+		edgebitURL,
+	)
+
+	return &Client{
+		apiClient:    apiClient,
+		sessionToken: loginResponse.Msg.SessionToken,
+		ProjectID:    loginResponse.Msg.ProjectId,
+	}, nil
+}
+
+func uploadSBOM(cmd *cobra.Command, args []string) error {
+	ctx := cmd.Context()
 
 	sbomFile := args[0]
 	if sbomFile == "" {
@@ -97,30 +157,17 @@ func uploadSBOM(cmd *cobra.Command, args []string) error {
 	repository := cmd.Flag("repo").Value.String()
 	commit := cmd.Flag("commit").Value.String()
 
-	loginClient := platformv1alphaconnect.NewLoginServiceClient(
-		http.DefaultClient,
-		edgebitURL,
-	)
-
-	loginResponse, err := loginClient.APIAccessTokenLogin(ctx, connect.NewRequest(&platform.APIAccessTokenLoginRequest{
-		Token: apiKey,
-	}))
+	client, err := NewClient(ctx)
 	if err != nil {
-		return fmt.Errorf("failed to authenticate: %w", err)
+		return err
 	}
 
-	apiClient := platformv1alphaconnect.NewEdgeBitPublicAPIServiceClient(
-		http.DefaultClient,
-		edgebitURL,
-	)
-
-	uploadRequest := apiClient.UploadSBOM(ctx)
-	uploadRequest.RequestHeader().Set("Authorization", "Bearer "+loginResponse.Msg.SessionToken)
+	uploadRequest := client.UploadSBOM(ctx)
 
 	err = uploadRequest.Send(&platform.UploadSBOMRequest{
 		Kind: &platform.UploadSBOMRequest_Header{
 			Header: &platform.UploadSBOMHeader{
-				ProjectId:      loginResponse.Msg.ProjectId,
+				ProjectId:      client.ProjectID,
 				Format:         uploadFormat,
 				Labels:         map[string]string{},
 				SourceRepoUrl:  repository,
