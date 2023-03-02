@@ -22,6 +22,7 @@ func main() {
 	}
 
 	cmd.AddCommand(uploadSBOMCommand())
+	cmd.AddCommand(uploadSBOMCommandForCI())
 
 	err := cmd.ExecuteContext(ctx)
 	if err != nil {
