@@ -74,6 +74,7 @@ func uploadSBOMCommandForCI() *cobra.Command {
 					Repo:     cmd.Flag("repo").Value.String(),
 					Commit:   cmd.Flag("commit").Value.String(),
 				},
+				BaseCommit:    cmd.Flag("base-commit").Value.String(),
 				CommentFlavor: cmd.Flag("comment-flavor").Value.String(),
 			})
 			if err != nil {
@@ -274,6 +275,7 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 type UploadSBOMForCIArgs struct {
 	UploadSBOMArgs
 	CommentFlavor string
+	BaseCommit    string
 }
 
 type UploadSBOMForCIOutput struct {
@@ -305,7 +307,7 @@ func (cli *CLI) uploadSBOMForCI(ctx context.Context, args UploadSBOMForCIArgs) (
 		ProjectId:    cli.ProjectID,
 		SbomId:       sbomID,
 		CommitId:     args.Commit,
-		BaseCommitId: args.Commit,
+		BaseCommitId: args.BaseCommit,
 		Flavor:       commentFlavor,
 	})
 	req.Header().Add("Authorization", "Bearer "+cli.sessionToken)
