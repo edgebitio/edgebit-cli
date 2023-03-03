@@ -36,12 +36,18 @@ type EdgeBitPublicAPIServiceClient interface {
 	ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error)
 	// Inventory Exploration (project-scoped)
 	GetMachineInventory(context.Context, *connect_go.Request[v1alpha.GetMachineInventoryRequest]) (*connect_go.Response[v1alpha.GetMachineInventoryResponse], error)
+	Overview(context.Context, *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error)
 	// Org (Project) Access Token Management (project-scoped)
 	CreateOrgAccessToken(context.Context, *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error)
 	ListOrgAccessTokens(context.Context, *connect_go.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect_go.Response[v1alpha.ListOrgAccessTokensResponse], error)
 	DeleteOrgAccessToken(context.Context, *connect_go.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.DeleteOrgAccessTokenResponse], error)
 	// SBOM Management (project-scoped)
 	UploadSBOM(context.Context) *connect_go.ClientStreamForClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse]
+	ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error)
+	GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error)
+	GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error)
+	// CI/CD Integration (project-scoped)
+	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceClient constructs a client for the
@@ -75,6 +81,11 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL 
 			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetMachineInventory",
 			opts...,
 		),
+		overview: connect_go.NewClient[v1alpha.OverviewRequest, v1alpha.OverviewResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview",
+			opts...,
+		),
 		createOrgAccessToken: connect_go.NewClient[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse](
 			httpClient,
 			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken",
@@ -95,6 +106,26 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL 
 			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UploadSBOM",
 			opts...,
 		),
+		listSBOMs: connect_go.NewClient[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListSBOMs",
+			opts...,
+		),
+		getSBOM: connect_go.NewClient[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOM",
+			opts...,
+		),
+		getSBOMInventory: connect_go.NewClient[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory",
+			opts...,
+		),
+		getCIBotComment: connect_go.NewClient[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment",
+			opts...,
+		),
 	}
 }
 
@@ -104,10 +135,15 @@ type edgeBitPublicAPIServiceClient struct {
 	generateAgentDeployToken *connect_go.Client[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse]
 	listMachines             *connect_go.Client[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse]
 	getMachineInventory      *connect_go.Client[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse]
+	overview                 *connect_go.Client[v1alpha.OverviewRequest, v1alpha.OverviewResponse]
 	createOrgAccessToken     *connect_go.Client[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse]
 	listOrgAccessTokens      *connect_go.Client[v1alpha.ListOrgAccessTokensRequest, v1alpha.ListOrgAccessTokensResponse]
 	deleteOrgAccessToken     *connect_go.Client[v1alpha.DeleteOrgAccessTokenRequest, v1alpha.DeleteOrgAccessTokenResponse]
 	uploadSBOM               *connect_go.Client[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse]
+	listSBOMs                *connect_go.Client[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse]
+	getSBOM                  *connect_go.Client[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse]
+	getSBOMInventory         *connect_go.Client[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse]
+	getCIBotComment          *connect_go.Client[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse]
 }
 
 // ListProjects calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListProjects.
@@ -131,6 +167,11 @@ func (c *edgeBitPublicAPIServiceClient) GetMachineInventory(ctx context.Context,
 	return c.getMachineInventory.CallUnary(ctx, req)
 }
 
+// Overview calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.Overview.
+func (c *edgeBitPublicAPIServiceClient) Overview(ctx context.Context, req *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error) {
+	return c.overview.CallUnary(ctx, req)
+}
+
 // CreateOrgAccessToken calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateOrgAccessToken.
 func (c *edgeBitPublicAPIServiceClient) CreateOrgAccessToken(ctx context.Context, req *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error) {
 	return c.createOrgAccessToken.CallUnary(ctx, req)
@@ -151,6 +192,26 @@ func (c *edgeBitPublicAPIServiceClient) UploadSBOM(ctx context.Context) *connect
 	return c.uploadSBOM.CallClientStream(ctx)
 }
 
+// ListSBOMs calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListSBOMs.
+func (c *edgeBitPublicAPIServiceClient) ListSBOMs(ctx context.Context, req *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error) {
+	return c.listSBOMs.CallUnary(ctx, req)
+}
+
+// GetSBOM calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOM.
+func (c *edgeBitPublicAPIServiceClient) GetSBOM(ctx context.Context, req *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error) {
+	return c.getSBOM.CallUnary(ctx, req)
+}
+
+// GetSBOMInventory calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMInventory.
+func (c *edgeBitPublicAPIServiceClient) GetSBOMInventory(ctx context.Context, req *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error) {
+	return c.getSBOMInventory.CallUnary(ctx, req)
+}
+
+// GetCIBotComment calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment.
+func (c *edgeBitPublicAPIServiceClient) GetCIBotComment(ctx context.Context, req *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
+	return c.getCIBotComment.CallUnary(ctx, req)
+}
+
 // EdgeBitPublicAPIServiceHandler is an implementation of the
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService service.
 type EdgeBitPublicAPIServiceHandler interface {
@@ -162,12 +223,18 @@ type EdgeBitPublicAPIServiceHandler interface {
 	ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error)
 	// Inventory Exploration (project-scoped)
 	GetMachineInventory(context.Context, *connect_go.Request[v1alpha.GetMachineInventoryRequest]) (*connect_go.Response[v1alpha.GetMachineInventoryResponse], error)
+	Overview(context.Context, *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error)
 	// Org (Project) Access Token Management (project-scoped)
 	CreateOrgAccessToken(context.Context, *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error)
 	ListOrgAccessTokens(context.Context, *connect_go.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect_go.Response[v1alpha.ListOrgAccessTokensResponse], error)
 	DeleteOrgAccessToken(context.Context, *connect_go.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.DeleteOrgAccessTokenResponse], error)
 	// SBOM Management (project-scoped)
 	UploadSBOM(context.Context, *connect_go.ClientStream[v1alpha.UploadSBOMRequest]) (*connect_go.Response[v1alpha.UploadSBOMResponse], error)
+	ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error)
+	GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error)
+	GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error)
+	// CI/CD Integration (project-scoped)
+	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceHandler builds an HTTP handler from the service implementation. It
@@ -197,6 +264,11 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 		svc.GetMachineInventory,
 		opts...,
 	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview",
+		svc.Overview,
+		opts...,
+	))
 	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken", connect_go.NewUnaryHandler(
 		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken",
 		svc.CreateOrgAccessToken,
@@ -215,6 +287,26 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UploadSBOM", connect_go.NewClientStreamHandler(
 		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UploadSBOM",
 		svc.UploadSBOM,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListSBOMs", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListSBOMs",
+		svc.ListSBOMs,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOM", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOM",
+		svc.GetSBOM,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory",
+		svc.GetSBOMInventory,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment",
+		svc.GetCIBotComment,
 		opts...,
 	))
 	return "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/", mux
@@ -239,6 +331,10 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) GetMachineInventory(context.C
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetMachineInventory is not implemented"))
 }
 
+func (UnimplementedEdgeBitPublicAPIServiceHandler) Overview(context.Context, *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.Overview is not implemented"))
+}
+
 func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateOrgAccessToken(context.Context, *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateOrgAccessToken is not implemented"))
 }
@@ -253,4 +349,20 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteOrgAccessToken(context.
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) UploadSBOM(context.Context, *connect_go.ClientStream[v1alpha.UploadSBOMRequest]) (*connect_go.Response[v1alpha.UploadSBOMResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UploadSBOM is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListSBOMs is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOM is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMInventory is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment is not implemented"))
 }
