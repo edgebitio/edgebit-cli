@@ -209,7 +209,7 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 	}
 
 	if args.ImageTag != "" {
-		imageTag = args.ImageID
+		imageTag = args.ImageTag
 	}
 
 	uploadRequest := cli.uploadSBOMRequest(ctx)
