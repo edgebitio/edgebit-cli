@@ -19,6 +19,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func addUploadSBOMFlags(cmd *cobra.Command) {
+	cmd.Flags().String("repo", "", "Source repository to tag the SBOM with")
+	cmd.Flags().String("commit", "", "Source commit ID to tag the SBOM with")
+	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
+	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
+}
+
+func parseUploadSBOMArgs(cmd *cobra.Command, args []string) UploadSBOMArgs {
+	return UploadSBOMArgs{
+		FileName: args[0],
+		Repo:     cmd.Flag("repo").Value.String(),
+		Commit:   cmd.Flag("commit").Value.String(),
+		ImageID:  cmd.Flag("image-id").Value.String(),
+		ImageTag: cmd.Flag("image-tag").Value.String(),
+	}
+}
+
 func uploadSBOMCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "upload-sbom",
@@ -30,13 +47,7 @@ func uploadSBOMCommand() *cobra.Command {
 				return err
 			}
 
-			sbomID, err := cli.uploadSBOM(ctx, UploadSBOMArgs{
-				FileName: args[0],
-				ImageID:  cmd.Flag("image-id").Value.String(),
-				ImageTag: cmd.Flag("image-tag").Value.String(),
-				Repo:     cmd.Flag("repo").Value.String(),
-				Commit:   cmd.Flag("commit").Value.String(),
-			})
+			sbomID, err := cli.uploadSBOM(ctx, parseUploadSBOMArgs(cmd, args))
 			if err != nil {
 				return err
 			}
@@ -47,10 +58,7 @@ func uploadSBOMCommand() *cobra.Command {
 		Args: cobra.ExactArgs(1),
 	}
 
-	cmd.Flags().String("repo", "", "Source repository to tag the SBOM with")
-	cmd.Flags().String("commit", "", "Source commit ID to tag the SBOM with")
-	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
-	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
+	addUploadSBOMFlags(cmd)
 
 	return cmd
 }
@@ -67,15 +75,9 @@ func uploadSBOMCommandForCI() *cobra.Command {
 			}
 
 			out, err := cli.uploadSBOMForCI(ctx, UploadSBOMForCIArgs{
-				UploadSBOMArgs: UploadSBOMArgs{
-					FileName: args[0],
-					ImageID:  cmd.Flag("image-id").Value.String(),
-					ImageTag: cmd.Flag("image-tag").Value.String(),
-					Repo:     cmd.Flag("repo").Value.String(),
-					Commit:   cmd.Flag("commit").Value.String(),
-				},
-				BaseCommit:    cmd.Flag("base-commit").Value.String(),
-				CommentFlavor: cmd.Flag("comment-flavor").Value.String(),
+				UploadSBOMArgs: parseUploadSBOMArgs(cmd, args),
+				BaseCommit:     cmd.Flag("base-commit").Value.String(),
+				CommentFlavor:  cmd.Flag("comment-flavor").Value.String(),
 			})
 			if err != nil {
 				return err
@@ -94,11 +96,9 @@ func uploadSBOMCommandForCI() *cobra.Command {
 		Hidden: true,
 	}
 
-	cmd.Flags().String("repo", "", "Source repository to tag the SBOM with")
-	cmd.Flags().String("commit", "", "Source commit ID to tag the SBOM with")
+	addUploadSBOMFlags(cmd)
+
 	cmd.Flags().String("base-commit", "", "Base commit ID to compare the SBOM against")
-	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
-	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
 	cmd.Flags().String("comment-flavor", "", "Optional comment flavor to use for the SBOM (github)")
 
 	return cmd
