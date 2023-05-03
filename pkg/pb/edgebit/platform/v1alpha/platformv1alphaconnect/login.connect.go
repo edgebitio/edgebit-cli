@@ -28,6 +28,7 @@ const (
 // LoginServiceClient is a client for the edgebit.platform.v1alpha.LoginService service.
 type LoginServiceClient interface {
 	PasswordLogin(context.Context, *connect_go.Request[v1alpha.PasswordLoginRequest]) (*connect_go.Response[v1alpha.PasswordLoginResponse], error)
+	ExchangeInviteToken(context.Context, *connect_go.Request[v1alpha.ExchangeInviteTokenRequest]) (*connect_go.Response[v1alpha.ExchangeInviteTokenResponse], error)
 	APIAccessTokenLogin(context.Context, *connect_go.Request[v1alpha.APIAccessTokenLoginRequest]) (*connect_go.Response[v1alpha.APIAccessTokenLoginResponse], error)
 }
 
@@ -46,6 +47,11 @@ func NewLoginServiceClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+"/edgebit.platform.v1alpha.LoginService/PasswordLogin",
 			opts...,
 		),
+		exchangeInviteToken: connect_go.NewClient[v1alpha.ExchangeInviteTokenRequest, v1alpha.ExchangeInviteTokenResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.LoginService/ExchangeInviteToken",
+			opts...,
+		),
 		aPIAccessTokenLogin: connect_go.NewClient[v1alpha.APIAccessTokenLoginRequest, v1alpha.APIAccessTokenLoginResponse](
 			httpClient,
 			baseURL+"/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin",
@@ -57,12 +63,18 @@ func NewLoginServiceClient(httpClient connect_go.HTTPClient, baseURL string, opt
 // loginServiceClient implements LoginServiceClient.
 type loginServiceClient struct {
 	passwordLogin       *connect_go.Client[v1alpha.PasswordLoginRequest, v1alpha.PasswordLoginResponse]
+	exchangeInviteToken *connect_go.Client[v1alpha.ExchangeInviteTokenRequest, v1alpha.ExchangeInviteTokenResponse]
 	aPIAccessTokenLogin *connect_go.Client[v1alpha.APIAccessTokenLoginRequest, v1alpha.APIAccessTokenLoginResponse]
 }
 
 // PasswordLogin calls edgebit.platform.v1alpha.LoginService.PasswordLogin.
 func (c *loginServiceClient) PasswordLogin(ctx context.Context, req *connect_go.Request[v1alpha.PasswordLoginRequest]) (*connect_go.Response[v1alpha.PasswordLoginResponse], error) {
 	return c.passwordLogin.CallUnary(ctx, req)
+}
+
+// ExchangeInviteToken calls edgebit.platform.v1alpha.LoginService.ExchangeInviteToken.
+func (c *loginServiceClient) ExchangeInviteToken(ctx context.Context, req *connect_go.Request[v1alpha.ExchangeInviteTokenRequest]) (*connect_go.Response[v1alpha.ExchangeInviteTokenResponse], error) {
+	return c.exchangeInviteToken.CallUnary(ctx, req)
 }
 
 // APIAccessTokenLogin calls edgebit.platform.v1alpha.LoginService.APIAccessTokenLogin.
@@ -73,6 +85,7 @@ func (c *loginServiceClient) APIAccessTokenLogin(ctx context.Context, req *conne
 // LoginServiceHandler is an implementation of the edgebit.platform.v1alpha.LoginService service.
 type LoginServiceHandler interface {
 	PasswordLogin(context.Context, *connect_go.Request[v1alpha.PasswordLoginRequest]) (*connect_go.Response[v1alpha.PasswordLoginResponse], error)
+	ExchangeInviteToken(context.Context, *connect_go.Request[v1alpha.ExchangeInviteTokenRequest]) (*connect_go.Response[v1alpha.ExchangeInviteTokenResponse], error)
 	APIAccessTokenLogin(context.Context, *connect_go.Request[v1alpha.APIAccessTokenLoginRequest]) (*connect_go.Response[v1alpha.APIAccessTokenLoginResponse], error)
 }
 
@@ -88,6 +101,11 @@ func NewLoginServiceHandler(svc LoginServiceHandler, opts ...connect_go.HandlerO
 		svc.PasswordLogin,
 		opts...,
 	))
+	mux.Handle("/edgebit.platform.v1alpha.LoginService/ExchangeInviteToken", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.LoginService/ExchangeInviteToken",
+		svc.ExchangeInviteToken,
+		opts...,
+	))
 	mux.Handle("/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin", connect_go.NewUnaryHandler(
 		"/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin",
 		svc.APIAccessTokenLogin,
@@ -101,6 +119,10 @@ type UnimplementedLoginServiceHandler struct{}
 
 func (UnimplementedLoginServiceHandler) PasswordLogin(context.Context, *connect_go.Request[v1alpha.PasswordLoginRequest]) (*connect_go.Response[v1alpha.PasswordLoginResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.LoginService.PasswordLogin is not implemented"))
+}
+
+func (UnimplementedLoginServiceHandler) ExchangeInviteToken(context.Context, *connect_go.Request[v1alpha.ExchangeInviteTokenRequest]) (*connect_go.Response[v1alpha.ExchangeInviteTokenResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.LoginService.ExchangeInviteToken is not implemented"))
 }
 
 func (UnimplementedLoginServiceHandler) APIAccessTokenLogin(context.Context, *connect_go.Request[v1alpha.APIAccessTokenLoginRequest]) (*connect_go.Response[v1alpha.APIAccessTokenLoginResponse], error) {
