@@ -32,6 +32,9 @@ type EdgeBitPublicAPIServiceClient interface {
 	ListProjects(context.Context, *connect_go.Request[v1alpha.ListProjectsRequest]) (*connect_go.Response[v1alpha.ListProjectsResponse], error)
 	// Agent Deployment Token Management (project-scoped)
 	GenerateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error)
+	CreateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error)
+	ListAgentDeployTokens(context.Context, *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error)
+	DeleteAgentDeployToken(context.Context, *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
 	// Machine Management (project-scoped)
 	ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error)
 	// Inventory Exploration (project-scoped)
@@ -46,6 +49,17 @@ type EdgeBitPublicAPIServiceClient interface {
 	ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error)
 	GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error)
 	GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error)
+	// Componeent Management (project-scoped)
+	ListComponents(context.Context, *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error)
+	GetComponent(context.Context, *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error)
+	CreateComponent(context.Context, *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error)
+	UpdateComponent(context.Context, *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error)
+	DeleteComponent(context.Context, *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error)
+	// Component Tags Management (project-scoped)
+	ListComponentTags(context.Context, *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error)
+	GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error)
+	SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error)
+	DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error)
 	// CI/CD Integration (project-scoped)
 	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
 }
@@ -69,6 +83,21 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL 
 		generateAgentDeployToken: connect_go.NewClient[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse](
 			httpClient,
 			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken",
+			opts...,
+		),
+		createAgentDeployToken: connect_go.NewClient[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateAgentDeployToken",
+			opts...,
+		),
+		listAgentDeployTokens: connect_go.NewClient[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListAgentDeployTokens",
+			opts...,
+		),
+		deleteAgentDeployToken: connect_go.NewClient[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteAgentDeployToken",
 			opts...,
 		),
 		listMachines: connect_go.NewClient[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse](
@@ -121,6 +150,51 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL 
 			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory",
 			opts...,
 		),
+		listComponents: connect_go.NewClient[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents",
+			opts...,
+		),
+		getComponent: connect_go.NewClient[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponent",
+			opts...,
+		),
+		createComponent: connect_go.NewClient[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateComponent",
+			opts...,
+		),
+		updateComponent: connect_go.NewClient[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponent",
+			opts...,
+		),
+		deleteComponent: connect_go.NewClient[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent",
+			opts...,
+		),
+		listComponentTags: connect_go.NewClient[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags",
+			opts...,
+		),
+		getComponentTag: connect_go.NewClient[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTag",
+			opts...,
+		),
+		setComponentTag: connect_go.NewClient[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetComponentTag",
+			opts...,
+		),
+		deleteComponentTag: connect_go.NewClient[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse](
+			httpClient,
+			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponentTag",
+			opts...,
+		),
 		getCIBotComment: connect_go.NewClient[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse](
 			httpClient,
 			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment",
@@ -133,6 +207,9 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL 
 type edgeBitPublicAPIServiceClient struct {
 	listProjects             *connect_go.Client[v1alpha.ListProjectsRequest, v1alpha.ListProjectsResponse]
 	generateAgentDeployToken *connect_go.Client[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse]
+	createAgentDeployToken   *connect_go.Client[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse]
+	listAgentDeployTokens    *connect_go.Client[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse]
+	deleteAgentDeployToken   *connect_go.Client[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse]
 	listMachines             *connect_go.Client[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse]
 	getMachineInventory      *connect_go.Client[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse]
 	overview                 *connect_go.Client[v1alpha.OverviewRequest, v1alpha.OverviewResponse]
@@ -143,6 +220,15 @@ type edgeBitPublicAPIServiceClient struct {
 	listSBOMs                *connect_go.Client[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse]
 	getSBOM                  *connect_go.Client[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse]
 	getSBOMInventory         *connect_go.Client[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse]
+	listComponents           *connect_go.Client[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse]
+	getComponent             *connect_go.Client[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse]
+	createComponent          *connect_go.Client[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse]
+	updateComponent          *connect_go.Client[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse]
+	deleteComponent          *connect_go.Client[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse]
+	listComponentTags        *connect_go.Client[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse]
+	getComponentTag          *connect_go.Client[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse]
+	setComponentTag          *connect_go.Client[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse]
+	deleteComponentTag       *connect_go.Client[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse]
 	getCIBotComment          *connect_go.Client[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse]
 }
 
@@ -155,6 +241,24 @@ func (c *edgeBitPublicAPIServiceClient) ListProjects(ctx context.Context, req *c
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateAgentDeployToken.
 func (c *edgeBitPublicAPIServiceClient) GenerateAgentDeployToken(ctx context.Context, req *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error) {
 	return c.generateAgentDeployToken.CallUnary(ctx, req)
+}
+
+// CreateAgentDeployToken calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateAgentDeployToken.
+func (c *edgeBitPublicAPIServiceClient) CreateAgentDeployToken(ctx context.Context, req *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error) {
+	return c.createAgentDeployToken.CallUnary(ctx, req)
+}
+
+// ListAgentDeployTokens calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListAgentDeployTokens.
+func (c *edgeBitPublicAPIServiceClient) ListAgentDeployTokens(ctx context.Context, req *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error) {
+	return c.listAgentDeployTokens.CallUnary(ctx, req)
+}
+
+// DeleteAgentDeployToken calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteAgentDeployToken.
+func (c *edgeBitPublicAPIServiceClient) DeleteAgentDeployToken(ctx context.Context, req *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error) {
+	return c.deleteAgentDeployToken.CallUnary(ctx, req)
 }
 
 // ListMachines calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListMachines.
@@ -207,6 +311,51 @@ func (c *edgeBitPublicAPIServiceClient) GetSBOMInventory(ctx context.Context, re
 	return c.getSBOMInventory.CallUnary(ctx, req)
 }
 
+// ListComponents calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponents.
+func (c *edgeBitPublicAPIServiceClient) ListComponents(ctx context.Context, req *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error) {
+	return c.listComponents.CallUnary(ctx, req)
+}
+
+// GetComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponent.
+func (c *edgeBitPublicAPIServiceClient) GetComponent(ctx context.Context, req *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error) {
+	return c.getComponent.CallUnary(ctx, req)
+}
+
+// CreateComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateComponent.
+func (c *edgeBitPublicAPIServiceClient) CreateComponent(ctx context.Context, req *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error) {
+	return c.createComponent.CallUnary(ctx, req)
+}
+
+// UpdateComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateComponent.
+func (c *edgeBitPublicAPIServiceClient) UpdateComponent(ctx context.Context, req *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error) {
+	return c.updateComponent.CallUnary(ctx, req)
+}
+
+// DeleteComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponent.
+func (c *edgeBitPublicAPIServiceClient) DeleteComponent(ctx context.Context, req *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error) {
+	return c.deleteComponent.CallUnary(ctx, req)
+}
+
+// ListComponentTags calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentTags.
+func (c *edgeBitPublicAPIServiceClient) ListComponentTags(ctx context.Context, req *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error) {
+	return c.listComponentTags.CallUnary(ctx, req)
+}
+
+// GetComponentTag calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTag.
+func (c *edgeBitPublicAPIServiceClient) GetComponentTag(ctx context.Context, req *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error) {
+	return c.getComponentTag.CallUnary(ctx, req)
+}
+
+// SetComponentTag calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.SetComponentTag.
+func (c *edgeBitPublicAPIServiceClient) SetComponentTag(ctx context.Context, req *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error) {
+	return c.setComponentTag.CallUnary(ctx, req)
+}
+
+// DeleteComponentTag calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponentTag.
+func (c *edgeBitPublicAPIServiceClient) DeleteComponentTag(ctx context.Context, req *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error) {
+	return c.deleteComponentTag.CallUnary(ctx, req)
+}
+
 // GetCIBotComment calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment.
 func (c *edgeBitPublicAPIServiceClient) GetCIBotComment(ctx context.Context, req *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
 	return c.getCIBotComment.CallUnary(ctx, req)
@@ -219,6 +368,9 @@ type EdgeBitPublicAPIServiceHandler interface {
 	ListProjects(context.Context, *connect_go.Request[v1alpha.ListProjectsRequest]) (*connect_go.Response[v1alpha.ListProjectsResponse], error)
 	// Agent Deployment Token Management (project-scoped)
 	GenerateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error)
+	CreateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error)
+	ListAgentDeployTokens(context.Context, *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error)
+	DeleteAgentDeployToken(context.Context, *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
 	// Machine Management (project-scoped)
 	ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error)
 	// Inventory Exploration (project-scoped)
@@ -233,6 +385,17 @@ type EdgeBitPublicAPIServiceHandler interface {
 	ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error)
 	GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error)
 	GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error)
+	// Componeent Management (project-scoped)
+	ListComponents(context.Context, *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error)
+	GetComponent(context.Context, *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error)
+	CreateComponent(context.Context, *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error)
+	UpdateComponent(context.Context, *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error)
+	DeleteComponent(context.Context, *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error)
+	// Component Tags Management (project-scoped)
+	ListComponentTags(context.Context, *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error)
+	GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error)
+	SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error)
+	DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error)
 	// CI/CD Integration (project-scoped)
 	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
 }
@@ -252,6 +415,21 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken", connect_go.NewUnaryHandler(
 		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken",
 		svc.GenerateAgentDeployToken,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateAgentDeployToken", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateAgentDeployToken",
+		svc.CreateAgentDeployToken,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListAgentDeployTokens", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListAgentDeployTokens",
+		svc.ListAgentDeployTokens,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteAgentDeployToken", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteAgentDeployToken",
+		svc.DeleteAgentDeployToken,
 		opts...,
 	))
 	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListMachines", connect_go.NewUnaryHandler(
@@ -304,6 +482,51 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 		svc.GetSBOMInventory,
 		opts...,
 	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents",
+		svc.ListComponents,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponent", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponent",
+		svc.GetComponent,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateComponent", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateComponent",
+		svc.CreateComponent,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponent", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponent",
+		svc.UpdateComponent,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent",
+		svc.DeleteComponent,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags",
+		svc.ListComponentTags,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTag", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTag",
+		svc.GetComponentTag,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetComponentTag", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetComponentTag",
+		svc.SetComponentTag,
+		opts...,
+	))
+	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponentTag", connect_go.NewUnaryHandler(
+		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponentTag",
+		svc.DeleteComponentTag,
+		opts...,
+	))
 	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment", connect_go.NewUnaryHandler(
 		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment",
 		svc.GetCIBotComment,
@@ -321,6 +544,18 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) ListProjects(context.Context,
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) GenerateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateAgentDeployToken is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateAgentDeployToken is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListAgentDeployTokens(context.Context, *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListAgentDeployTokens is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteAgentDeployToken(context.Context, *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteAgentDeployToken is not implemented"))
 }
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error) {
@@ -361,6 +596,42 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOM(context.Context, *con
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMInventory is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponents(context.Context, *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponents is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponent(context.Context, *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponent is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateComponent(context.Context, *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateComponent is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateComponent(context.Context, *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateComponent is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteComponent(context.Context, *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponent is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentTags(context.Context, *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentTags is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTag is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.SetComponentTag is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponentTag is not implemented"))
 }
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
