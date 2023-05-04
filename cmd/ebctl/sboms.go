@@ -24,16 +24,25 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 	cmd.Flags().String("commit", "", "Source commit ID to tag the SBOM with")
 	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
 	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
+	cmd.Flags().String("component", "", "Component name to associate the SBOM with")
+	cmd.Flags().StringSlice("tag", nil, "EdgeBit Component tags to associate the SBOM with (can be specified multiple times)")
 }
 
-func parseUploadSBOMArgs(cmd *cobra.Command, args []string) UploadSBOMArgs {
-	return UploadSBOMArgs{
-		FileName: args[0],
-		Repo:     cmd.Flag("repo").Value.String(),
-		Commit:   cmd.Flag("commit").Value.String(),
-		ImageID:  cmd.Flag("image-id").Value.String(),
-		ImageTag: cmd.Flag("image-tag").Value.String(),
+func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, error) {
+	tags, err := cmd.Flags().GetStringSlice("tag")
+	if err != nil {
+		return UploadSBOMArgs{}, err
 	}
+
+	return UploadSBOMArgs{
+		FileName:      args[0],
+		Repo:          cmd.Flag("repo").Value.String(),
+		Commit:        cmd.Flag("commit").Value.String(),
+		ImageID:       cmd.Flag("image-id").Value.String(),
+		ImageTag:      cmd.Flag("image-tag").Value.String(),
+		ComponentName: cmd.Flag("component").Value.String(),
+		Tags:          tags,
+	}, nil
 }
 
 func uploadSBOMCommand() *cobra.Command {
@@ -47,7 +56,12 @@ func uploadSBOMCommand() *cobra.Command {
 				return err
 			}
 
-			sbomID, err := cli.uploadSBOM(ctx, parseUploadSBOMArgs(cmd, args))
+			uploadArgs, err := parseUploadSBOMArgs(cmd, args)
+			if err != nil {
+				return err
+			}
+
+			sbomID, err := cli.uploadSBOM(ctx, uploadArgs)
 			if err != nil {
 				return err
 			}
@@ -74,8 +88,13 @@ func uploadSBOMCommandForCI() *cobra.Command {
 				return err
 			}
 
+			uploadArgs, err := parseUploadSBOMArgs(cmd, args)
+			if err != nil {
+				return err
+			}
+
 			out, err := cli.uploadSBOMForCI(ctx, UploadSBOMForCIArgs{
-				UploadSBOMArgs: parseUploadSBOMArgs(cmd, args),
+				UploadSBOMArgs: uploadArgs,
 				BaseCommit:     cmd.Flag("base-commit").Value.String(),
 				CommentFlavor:  cmd.Flag("comment-flavor").Value.String(),
 			})
@@ -154,11 +173,13 @@ func (c *CLI) uploadSBOMRequest(ctx context.Context) *connect.ClientStreamForCli
 }
 
 type UploadSBOMArgs struct {
-	FileName string
-	ImageID  string
-	ImageTag string
-	Repo     string
-	Commit   string
+	FileName      string
+	ImageID       string
+	ImageTag      string
+	Repo          string
+	Commit        string
+	ComponentName string
+	Tags          []string
 }
 
 func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, error) {
@@ -212,6 +233,10 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 		imageTag = args.ImageTag
 	}
 
+	if len(args.Tags) > 0 && args.ComponentName == "" {
+		return "", errors.New("component name is required when specifying tags")
+	}
+
 	uploadRequest := cli.uploadSBOMRequest(ctx)
 
 	err = uploadRequest.Send(&platform.UploadSBOMRequest{
@@ -230,6 +255,8 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 						},
 					},
 				},
+				ComponentName: args.ComponentName,
+				Tags:          args.Tags,
 			},
 		},
 	})
