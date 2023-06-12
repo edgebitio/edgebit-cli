@@ -25,6 +25,25 @@ const (
 	LoginServiceName = "edgebit.platform.v1alpha.LoginService"
 )
 
+// These constants are the fully-qualified names of the RPCs defined in this package. They're
+// exposed at runtime as Spec.Procedure and as the final two segments of the HTTP route.
+//
+// Note that these are different from the fully-qualified method names used by
+// google.golang.org/protobuf/reflect/protoreflect. To convert from these constants to
+// reflection-formatted method names, remove the leading slash and convert the remaining slash to a
+// period.
+const (
+	// LoginServicePasswordLoginProcedure is the fully-qualified name of the LoginService's
+	// PasswordLogin RPC.
+	LoginServicePasswordLoginProcedure = "/edgebit.platform.v1alpha.LoginService/PasswordLogin"
+	// LoginServiceExchangeInviteTokenProcedure is the fully-qualified name of the LoginService's
+	// ExchangeInviteToken RPC.
+	LoginServiceExchangeInviteTokenProcedure = "/edgebit.platform.v1alpha.LoginService/ExchangeInviteToken"
+	// LoginServiceAPIAccessTokenLoginProcedure is the fully-qualified name of the LoginService's
+	// APIAccessTokenLogin RPC.
+	LoginServiceAPIAccessTokenLoginProcedure = "/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin"
+)
+
 // LoginServiceClient is a client for the edgebit.platform.v1alpha.LoginService service.
 type LoginServiceClient interface {
 	PasswordLogin(context.Context, *connect_go.Request[v1alpha.PasswordLoginRequest]) (*connect_go.Response[v1alpha.PasswordLoginResponse], error)
@@ -44,17 +63,17 @@ func NewLoginServiceClient(httpClient connect_go.HTTPClient, baseURL string, opt
 	return &loginServiceClient{
 		passwordLogin: connect_go.NewClient[v1alpha.PasswordLoginRequest, v1alpha.PasswordLoginResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.LoginService/PasswordLogin",
+			baseURL+LoginServicePasswordLoginProcedure,
 			opts...,
 		),
 		exchangeInviteToken: connect_go.NewClient[v1alpha.ExchangeInviteTokenRequest, v1alpha.ExchangeInviteTokenResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.LoginService/ExchangeInviteToken",
+			baseURL+LoginServiceExchangeInviteTokenProcedure,
 			opts...,
 		),
 		aPIAccessTokenLogin: connect_go.NewClient[v1alpha.APIAccessTokenLoginRequest, v1alpha.APIAccessTokenLoginResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin",
+			baseURL+LoginServiceAPIAccessTokenLoginProcedure,
 			opts...,
 		),
 	}
@@ -96,18 +115,18 @@ type LoginServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewLoginServiceHandler(svc LoginServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle("/edgebit.platform.v1alpha.LoginService/PasswordLogin", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.LoginService/PasswordLogin",
+	mux.Handle(LoginServicePasswordLoginProcedure, connect_go.NewUnaryHandler(
+		LoginServicePasswordLoginProcedure,
 		svc.PasswordLogin,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.LoginService/ExchangeInviteToken", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.LoginService/ExchangeInviteToken",
+	mux.Handle(LoginServiceExchangeInviteTokenProcedure, connect_go.NewUnaryHandler(
+		LoginServiceExchangeInviteTokenProcedure,
 		svc.ExchangeInviteToken,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin",
+	mux.Handle(LoginServiceAPIAccessTokenLoginProcedure, connect_go.NewUnaryHandler(
+		LoginServiceAPIAccessTokenLoginProcedure,
 		svc.APIAccessTokenLogin,
 		opts...,
 	))

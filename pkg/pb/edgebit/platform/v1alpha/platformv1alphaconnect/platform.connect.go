@@ -25,6 +25,103 @@ const (
 	EdgeBitPublicAPIServiceName = "edgebit.platform.v1alpha.EdgeBitPublicAPIService"
 )
 
+// These constants are the fully-qualified names of the RPCs defined in this package. They're
+// exposed at runtime as Spec.Procedure and as the final two segments of the HTTP route.
+//
+// Note that these are different from the fully-qualified method names used by
+// google.golang.org/protobuf/reflect/protoreflect. To convert from these constants to
+// reflection-formatted method names, remove the leading slash and convert the remaining slash to a
+// period.
+const (
+	// EdgeBitPublicAPIServiceListProjectsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListProjects RPC.
+	EdgeBitPublicAPIServiceListProjectsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListProjects"
+	// EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GenerateAgentDeployToken RPC.
+	EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken"
+	// EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CreateAgentDeployToken RPC.
+	EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateAgentDeployToken"
+	// EdgeBitPublicAPIServiceListAgentDeployTokensProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListAgentDeployTokens RPC.
+	EdgeBitPublicAPIServiceListAgentDeployTokensProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListAgentDeployTokens"
+	// EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's DeleteAgentDeployToken RPC.
+	EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteAgentDeployToken"
+	// EdgeBitPublicAPIServiceListMachinesProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListMachines RPC.
+	EdgeBitPublicAPIServiceListMachinesProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListMachines"
+	// EdgeBitPublicAPIServiceGetMachineInventoryProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetMachineInventory RPC.
+	EdgeBitPublicAPIServiceGetMachineInventoryProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetMachineInventory"
+	// EdgeBitPublicAPIServiceOverviewProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's Overview RPC.
+	EdgeBitPublicAPIServiceOverviewProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview"
+	// EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CreateOrgAccessToken RPC.
+	EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken"
+	// EdgeBitPublicAPIServiceListOrgAccessTokensProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListOrgAccessTokens RPC.
+	EdgeBitPublicAPIServiceListOrgAccessTokensProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListOrgAccessTokens"
+	// EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's DeleteOrgAccessToken RPC.
+	EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteOrgAccessToken"
+	// EdgeBitPublicAPIServiceUploadSBOMProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UploadSBOM RPC.
+	EdgeBitPublicAPIServiceUploadSBOMProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UploadSBOM"
+	// EdgeBitPublicAPIServiceListSBOMsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListSBOMs RPC.
+	EdgeBitPublicAPIServiceListSBOMsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListSBOMs"
+	// EdgeBitPublicAPIServiceGetSBOMProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetSBOM RPC.
+	EdgeBitPublicAPIServiceGetSBOMProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOM"
+	// EdgeBitPublicAPIServiceGetSBOMInventoryProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetSBOMInventory RPC.
+	EdgeBitPublicAPIServiceGetSBOMInventoryProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory"
+	// EdgeBitPublicAPIServiceListComponentsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListComponents RPC.
+	EdgeBitPublicAPIServiceListComponentsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents"
+	// EdgeBitPublicAPIServiceGetComponentProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetComponent RPC.
+	EdgeBitPublicAPIServiceGetComponentProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponent"
+	// EdgeBitPublicAPIServiceCreateComponentProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CreateComponent RPC.
+	EdgeBitPublicAPIServiceCreateComponentProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateComponent"
+	// EdgeBitPublicAPIServiceUpdateComponentProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateComponent RPC.
+	EdgeBitPublicAPIServiceUpdateComponentProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponent"
+	// EdgeBitPublicAPIServiceDeleteComponentProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's DeleteComponent RPC.
+	EdgeBitPublicAPIServiceDeleteComponentProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent"
+	// EdgeBitPublicAPIServiceListComponentTagsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListComponentTags RPC.
+	EdgeBitPublicAPIServiceListComponentTagsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags"
+	// EdgeBitPublicAPIServiceGetComponentTagProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetComponentTag RPC.
+	EdgeBitPublicAPIServiceGetComponentTagProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTag"
+	// EdgeBitPublicAPIServiceSetComponentTagProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's SetComponentTag RPC.
+	EdgeBitPublicAPIServiceSetComponentTagProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetComponentTag"
+	// EdgeBitPublicAPIServiceDeleteComponentTagProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's DeleteComponentTag RPC.
+	EdgeBitPublicAPIServiceDeleteComponentTagProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponentTag"
+	// EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetComponentTagsOverview RPC.
+	EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTagsOverview"
+	// EdgeBitPublicAPIServiceGetCIBotCommentProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetCIBotComment RPC.
+	EdgeBitPublicAPIServiceGetCIBotCommentProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment"
+	// EdgeBitPublicAPIServiceListWorkloadsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListWorkloads RPC.
+	EdgeBitPublicAPIServiceListWorkloadsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListWorkloads"
+	// EdgeBitPublicAPIServiceGetWorkloadProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetWorkload RPC.
+	EdgeBitPublicAPIServiceGetWorkloadProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetWorkload"
+	// EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetSBOMDownloadUrl RPC.
+	EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMDownloadUrl"
+)
+
 // EdgeBitPublicAPIServiceClient is a client for the
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService service.
 type EdgeBitPublicAPIServiceClient interface {
@@ -60,8 +157,14 @@ type EdgeBitPublicAPIServiceClient interface {
 	GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error)
 	SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error)
 	DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error)
+	GetComponentTagsOverview(context.Context, *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error)
 	// CI/CD Integration (project-scoped)
 	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
+	// Workload Management (project-scoped)
+	ListWorkloads(context.Context, *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error)
+	GetWorkload(context.Context, *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error)
+	// Get Sbom Download Url
+	GetSBOMDownloadUrl(context.Context, *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceClient constructs a client for the
@@ -77,127 +180,147 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL 
 	return &edgeBitPublicAPIServiceClient{
 		listProjects: connect_go.NewClient[v1alpha.ListProjectsRequest, v1alpha.ListProjectsResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListProjects",
+			baseURL+EdgeBitPublicAPIServiceListProjectsProcedure,
 			opts...,
 		),
 		generateAgentDeployToken: connect_go.NewClient[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken",
+			baseURL+EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure,
 			opts...,
 		),
 		createAgentDeployToken: connect_go.NewClient[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateAgentDeployToken",
+			baseURL+EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure,
 			opts...,
 		),
 		listAgentDeployTokens: connect_go.NewClient[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListAgentDeployTokens",
+			baseURL+EdgeBitPublicAPIServiceListAgentDeployTokensProcedure,
 			opts...,
 		),
 		deleteAgentDeployToken: connect_go.NewClient[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteAgentDeployToken",
+			baseURL+EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure,
 			opts...,
 		),
 		listMachines: connect_go.NewClient[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListMachines",
+			baseURL+EdgeBitPublicAPIServiceListMachinesProcedure,
 			opts...,
 		),
 		getMachineInventory: connect_go.NewClient[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetMachineInventory",
+			baseURL+EdgeBitPublicAPIServiceGetMachineInventoryProcedure,
 			opts...,
 		),
 		overview: connect_go.NewClient[v1alpha.OverviewRequest, v1alpha.OverviewResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview",
+			baseURL+EdgeBitPublicAPIServiceOverviewProcedure,
 			opts...,
 		),
 		createOrgAccessToken: connect_go.NewClient[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken",
+			baseURL+EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure,
 			opts...,
 		),
 		listOrgAccessTokens: connect_go.NewClient[v1alpha.ListOrgAccessTokensRequest, v1alpha.ListOrgAccessTokensResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListOrgAccessTokens",
+			baseURL+EdgeBitPublicAPIServiceListOrgAccessTokensProcedure,
 			opts...,
 		),
 		deleteOrgAccessToken: connect_go.NewClient[v1alpha.DeleteOrgAccessTokenRequest, v1alpha.DeleteOrgAccessTokenResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteOrgAccessToken",
+			baseURL+EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure,
 			opts...,
 		),
 		uploadSBOM: connect_go.NewClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UploadSBOM",
+			baseURL+EdgeBitPublicAPIServiceUploadSBOMProcedure,
 			opts...,
 		),
 		listSBOMs: connect_go.NewClient[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListSBOMs",
+			baseURL+EdgeBitPublicAPIServiceListSBOMsProcedure,
 			opts...,
 		),
 		getSBOM: connect_go.NewClient[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOM",
+			baseURL+EdgeBitPublicAPIServiceGetSBOMProcedure,
 			opts...,
 		),
 		getSBOMInventory: connect_go.NewClient[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory",
+			baseURL+EdgeBitPublicAPIServiceGetSBOMInventoryProcedure,
 			opts...,
 		),
 		listComponents: connect_go.NewClient[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents",
+			baseURL+EdgeBitPublicAPIServiceListComponentsProcedure,
 			opts...,
 		),
 		getComponent: connect_go.NewClient[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponent",
+			baseURL+EdgeBitPublicAPIServiceGetComponentProcedure,
 			opts...,
 		),
 		createComponent: connect_go.NewClient[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateComponent",
+			baseURL+EdgeBitPublicAPIServiceCreateComponentProcedure,
 			opts...,
 		),
 		updateComponent: connect_go.NewClient[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponent",
+			baseURL+EdgeBitPublicAPIServiceUpdateComponentProcedure,
 			opts...,
 		),
 		deleteComponent: connect_go.NewClient[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent",
+			baseURL+EdgeBitPublicAPIServiceDeleteComponentProcedure,
 			opts...,
 		),
 		listComponentTags: connect_go.NewClient[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags",
+			baseURL+EdgeBitPublicAPIServiceListComponentTagsProcedure,
 			opts...,
 		),
 		getComponentTag: connect_go.NewClient[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTag",
+			baseURL+EdgeBitPublicAPIServiceGetComponentTagProcedure,
 			opts...,
 		),
 		setComponentTag: connect_go.NewClient[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetComponentTag",
+			baseURL+EdgeBitPublicAPIServiceSetComponentTagProcedure,
 			opts...,
 		),
 		deleteComponentTag: connect_go.NewClient[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponentTag",
+			baseURL+EdgeBitPublicAPIServiceDeleteComponentTagProcedure,
+			opts...,
+		),
+		getComponentTagsOverview: connect_go.NewClient[v1alpha.GetComponentTagsOverviewRequest, v1alpha.GetComponentTagsOverviewResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure,
 			opts...,
 		),
 		getCIBotComment: connect_go.NewClient[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse](
 			httpClient,
-			baseURL+"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment",
+			baseURL+EdgeBitPublicAPIServiceGetCIBotCommentProcedure,
+			opts...,
+		),
+		listWorkloads: connect_go.NewClient[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListWorkloadsProcedure,
+			opts...,
+		),
+		getWorkload: connect_go.NewClient[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetWorkloadProcedure,
+			opts...,
+		),
+		getSBOMDownloadUrl: connect_go.NewClient[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure,
 			opts...,
 		),
 	}
@@ -229,7 +352,11 @@ type edgeBitPublicAPIServiceClient struct {
 	getComponentTag          *connect_go.Client[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse]
 	setComponentTag          *connect_go.Client[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse]
 	deleteComponentTag       *connect_go.Client[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse]
+	getComponentTagsOverview *connect_go.Client[v1alpha.GetComponentTagsOverviewRequest, v1alpha.GetComponentTagsOverviewResponse]
 	getCIBotComment          *connect_go.Client[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse]
+	listWorkloads            *connect_go.Client[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse]
+	getWorkload              *connect_go.Client[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse]
+	getSBOMDownloadUrl       *connect_go.Client[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse]
 }
 
 // ListProjects calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListProjects.
@@ -356,9 +483,30 @@ func (c *edgeBitPublicAPIServiceClient) DeleteComponentTag(ctx context.Context, 
 	return c.deleteComponentTag.CallUnary(ctx, req)
 }
 
+// GetComponentTagsOverview calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTagsOverview.
+func (c *edgeBitPublicAPIServiceClient) GetComponentTagsOverview(ctx context.Context, req *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error) {
+	return c.getComponentTagsOverview.CallUnary(ctx, req)
+}
+
 // GetCIBotComment calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment.
 func (c *edgeBitPublicAPIServiceClient) GetCIBotComment(ctx context.Context, req *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
 	return c.getCIBotComment.CallUnary(ctx, req)
+}
+
+// ListWorkloads calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloads.
+func (c *edgeBitPublicAPIServiceClient) ListWorkloads(ctx context.Context, req *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error) {
+	return c.listWorkloads.CallUnary(ctx, req)
+}
+
+// GetWorkload calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetWorkload.
+func (c *edgeBitPublicAPIServiceClient) GetWorkload(ctx context.Context, req *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error) {
+	return c.getWorkload.CallUnary(ctx, req)
+}
+
+// GetSBOMDownloadUrl calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMDownloadUrl.
+func (c *edgeBitPublicAPIServiceClient) GetSBOMDownloadUrl(ctx context.Context, req *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error) {
+	return c.getSBOMDownloadUrl.CallUnary(ctx, req)
 }
 
 // EdgeBitPublicAPIServiceHandler is an implementation of the
@@ -396,8 +544,14 @@ type EdgeBitPublicAPIServiceHandler interface {
 	GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error)
 	SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error)
 	DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error)
+	GetComponentTagsOverview(context.Context, *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error)
 	// CI/CD Integration (project-scoped)
 	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
+	// Workload Management (project-scoped)
+	ListWorkloads(context.Context, *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error)
+	GetWorkload(context.Context, *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error)
+	// Get Sbom Download Url
+	GetSBOMDownloadUrl(context.Context, *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceHandler builds an HTTP handler from the service implementation. It
@@ -407,129 +561,149 @@ type EdgeBitPublicAPIServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListProjects", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListProjects",
+	mux.Handle(EdgeBitPublicAPIServiceListProjectsProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListProjectsProcedure,
 		svc.ListProjects,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken",
+	mux.Handle(EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure,
 		svc.GenerateAgentDeployToken,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateAgentDeployToken", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateAgentDeployToken",
+	mux.Handle(EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure,
 		svc.CreateAgentDeployToken,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListAgentDeployTokens", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListAgentDeployTokens",
+	mux.Handle(EdgeBitPublicAPIServiceListAgentDeployTokensProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListAgentDeployTokensProcedure,
 		svc.ListAgentDeployTokens,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteAgentDeployToken", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteAgentDeployToken",
+	mux.Handle(EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure,
 		svc.DeleteAgentDeployToken,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListMachines", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListMachines",
+	mux.Handle(EdgeBitPublicAPIServiceListMachinesProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListMachinesProcedure,
 		svc.ListMachines,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetMachineInventory", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetMachineInventory",
+	mux.Handle(EdgeBitPublicAPIServiceGetMachineInventoryProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetMachineInventoryProcedure,
 		svc.GetMachineInventory,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview",
+	mux.Handle(EdgeBitPublicAPIServiceOverviewProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceOverviewProcedure,
 		svc.Overview,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken",
+	mux.Handle(EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure,
 		svc.CreateOrgAccessToken,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListOrgAccessTokens", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListOrgAccessTokens",
+	mux.Handle(EdgeBitPublicAPIServiceListOrgAccessTokensProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListOrgAccessTokensProcedure,
 		svc.ListOrgAccessTokens,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteOrgAccessToken", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteOrgAccessToken",
+	mux.Handle(EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure,
 		svc.DeleteOrgAccessToken,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UploadSBOM", connect_go.NewClientStreamHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UploadSBOM",
+	mux.Handle(EdgeBitPublicAPIServiceUploadSBOMProcedure, connect_go.NewClientStreamHandler(
+		EdgeBitPublicAPIServiceUploadSBOMProcedure,
 		svc.UploadSBOM,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListSBOMs", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListSBOMs",
+	mux.Handle(EdgeBitPublicAPIServiceListSBOMsProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListSBOMsProcedure,
 		svc.ListSBOMs,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOM", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOM",
+	mux.Handle(EdgeBitPublicAPIServiceGetSBOMProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetSBOMProcedure,
 		svc.GetSBOM,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory",
+	mux.Handle(EdgeBitPublicAPIServiceGetSBOMInventoryProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetSBOMInventoryProcedure,
 		svc.GetSBOMInventory,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents",
+	mux.Handle(EdgeBitPublicAPIServiceListComponentsProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListComponentsProcedure,
 		svc.ListComponents,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponent", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponent",
+	mux.Handle(EdgeBitPublicAPIServiceGetComponentProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetComponentProcedure,
 		svc.GetComponent,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateComponent", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateComponent",
+	mux.Handle(EdgeBitPublicAPIServiceCreateComponentProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCreateComponentProcedure,
 		svc.CreateComponent,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponent", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponent",
+	mux.Handle(EdgeBitPublicAPIServiceUpdateComponentProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateComponentProcedure,
 		svc.UpdateComponent,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent",
+	mux.Handle(EdgeBitPublicAPIServiceDeleteComponentProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceDeleteComponentProcedure,
 		svc.DeleteComponent,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags",
+	mux.Handle(EdgeBitPublicAPIServiceListComponentTagsProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListComponentTagsProcedure,
 		svc.ListComponentTags,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTag", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTag",
+	mux.Handle(EdgeBitPublicAPIServiceGetComponentTagProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetComponentTagProcedure,
 		svc.GetComponentTag,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetComponentTag", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetComponentTag",
+	mux.Handle(EdgeBitPublicAPIServiceSetComponentTagProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceSetComponentTagProcedure,
 		svc.SetComponentTag,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponentTag", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponentTag",
+	mux.Handle(EdgeBitPublicAPIServiceDeleteComponentTagProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceDeleteComponentTagProcedure,
 		svc.DeleteComponentTag,
 		opts...,
 	))
-	mux.Handle("/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment", connect_go.NewUnaryHandler(
-		"/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment",
+	mux.Handle(EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure,
+		svc.GetComponentTagsOverview,
+		opts...,
+	))
+	mux.Handle(EdgeBitPublicAPIServiceGetCIBotCommentProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetCIBotCommentProcedure,
 		svc.GetCIBotComment,
+		opts...,
+	))
+	mux.Handle(EdgeBitPublicAPIServiceListWorkloadsProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListWorkloadsProcedure,
+		svc.ListWorkloads,
+		opts...,
+	))
+	mux.Handle(EdgeBitPublicAPIServiceGetWorkloadProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetWorkloadProcedure,
+		svc.GetWorkload,
+		opts...,
+	))
+	mux.Handle(EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure, connect_go.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure,
+		svc.GetSBOMDownloadUrl,
 		opts...,
 	))
 	return "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/", mux
@@ -634,6 +808,22 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteComponentTag(context.Co
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponentTag is not implemented"))
 }
 
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentTagsOverview(context.Context, *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTagsOverview is not implemented"))
+}
+
 func (UnimplementedEdgeBitPublicAPIServiceHandler) GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListWorkloads(context.Context, *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloads is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetWorkload(context.Context, *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetWorkload is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMDownloadUrl(context.Context, *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMDownloadUrl is not implemented"))
 }

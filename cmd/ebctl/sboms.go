@@ -307,6 +307,7 @@ type UploadSBOMForCIArgs struct {
 
 type UploadSBOMForCIOutput struct {
 	CommentBody string `json:"comment_body"`
+	SkipComment bool
 }
 
 func (cli *CLI) uploadSBOMForCI(ctx context.Context, args UploadSBOMForCIArgs) (*UploadSBOMForCIOutput, error) {
@@ -346,5 +347,6 @@ func (cli *CLI) uploadSBOMForCI(ctx context.Context, args UploadSBOMForCIArgs) (
 
 	return &UploadSBOMForCIOutput{
 		CommentBody: commentRes.Msg.CommentBody,
+		SkipComment: commentRes.Msg.SkipComment,
 	}, nil
 }
