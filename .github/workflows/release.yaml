@@ -5,17 +5,25 @@ on:
     tags:
       - 'v*'
 
-permissions:
-  contents: write
-
 jobs:
   goreleaser:
+    permissions:
+      id-token: write  # For AWS OIDC
+      contents: write  # For publishing a release
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Authenticate to AWS
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::881267199659:role/S3EdgeBitReleasesUpload
+
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
