@@ -225,9 +225,6 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 	if args.ImageID != "" {
 		imageID = args.ImageID
 	}
-	if imageID == "" {
-		return "", errors.New("image ID cannot be inferred from this SBOM format, specify it with --image-id")
-	}
 
 	if args.ImageTag != "" {
 		imageTag = args.ImageTag
