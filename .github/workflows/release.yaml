@@ -42,4 +42,4 @@ jobs:
         uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
-          PATHS: "edgebit-releases/releases/edgebit-cli/latest/*"
+          PATHS: "/edgebit-releases/releases/edgebit-cli/latest/*"
