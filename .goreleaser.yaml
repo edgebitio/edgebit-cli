@@ -36,3 +36,13 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+blobs:
+  - provider: s3
+    region: us-east-1
+    bucket: edgebit-releases
+    folder: "releases/edgebit-cli/v{{.Version}}"
+
+  - provider: s3
+    region: us-east-1
+    bucket: edgebit-releases
+    folder: "releases/edgebit-cli/latest"
