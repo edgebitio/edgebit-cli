@@ -29,7 +29,12 @@ jobs:
         with:
           go-version: '1.20'
 
+      - name: Download Syft
+        id: syft
+        uses: anchore/sbom-action/download-syft@v0.14.2
+
       - name: Run GoReleaser
+        id: goreleaser
         uses: goreleaser/goreleaser-action@v4
         with:
           distribution: goreleaser
@@ -43,3 +48,15 @@ jobs:
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
           PATHS: "/releases/edgebit-cli/latest/*"
+
+      - name: Find Linux SBOM
+        run: echo "LINUX_SBOM=jq -r '.[] | select(.name | contains(\"linux_amd64.sbom\")) | .name' ${{ steps.goreleaser.outputs.metadata }}" >> $GITHUB_ENV
+
+      - name: Upload SBOM to EdgeBit
+        uses: edgebitio/edgebit-build@v1
+        with:
+          edgebit-url: "https://edgebit.edgebit.io"
+          token: ${{ secrets.EDGEBIT_TOKEN }}
+          sbom-file: "dist/$LINUX_SBOM"
+          component: "edgebitio-edgebit-build"
+          tags: ${{ github.ref == 'refs/heads/main' && 'latest' || '' }}, ${{ github.ref == 'refs/tags/v*' && github.ref || '' }}
