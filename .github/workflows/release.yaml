@@ -50,7 +50,7 @@ jobs:
           PATHS: "/releases/edgebit-cli/latest/*"
 
       - name: Find Linux SBOM
-        run: echo "LINUX_SBOM=jq -r '.[] | select(.name | contains(\"linux_amd64.sbom\")) | .name' ${{ steps.goreleaser.outputs.metadata }}" >> $GITHUB_ENV
+        run: echo "LINUX_SBOM=$(jq -r '.[] | select(.name | contains(\"linux_amd64.sbom\")) | .name' ${{ steps.goreleaser.outputs.metadata }})" >> $GITHUB_ENV
 
       - name: Upload SBOM to EdgeBit
         uses: edgebitio/edgebit-build@v1
