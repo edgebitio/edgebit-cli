@@ -58,5 +58,5 @@ jobs:
           edgebit-url: "https://edgebit.edgebit.io"
           token: ${{ secrets.EDGEBIT_TOKEN }}
           sbom-file: "dist/$LINUX_SBOM"
-          component: "edgebitio-edgebit-build"
+          component: "edgebitio-edgebit-cli"
           tags: ${{ github.ref == 'refs/heads/main' && 'latest' || '' }}, ${{ github.ref == 'refs/tags/v*' && github.ref || '' }}
