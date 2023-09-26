@@ -46,3 +46,6 @@ blobs:
     region: us-east-1
     bucket: edgebit-releases
     folder: "releases/edgebit-cli/latest"
+
+sboms:
+  - artifacts: binary
