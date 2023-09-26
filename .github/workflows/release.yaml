@@ -57,6 +57,7 @@ jobs:
         with:
           edgebit-url: "https://edgebit.edgebit.io"
           token: ${{ secrets.EDGEBIT_TOKEN }}
-          sbom-file: "dist/$LINUX_SBOM"
+          sbom-file: "dist/${{ env.LINUX_SBOM }}"
           component: "edgebitio-edgebit-cli"
-          tags: ${{ github.ref == 'refs/heads/main' && 'latest' || '' }}, ${{ github.ref == 'refs/tags/v*' && github.ref || '' }}
+          # note: this assumes we are always releasing the most recent github tag
+          tags: latest, ${{ github.ref_type == 'tag' && github.ref_name || '' }}
