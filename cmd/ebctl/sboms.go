@@ -26,10 +26,16 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
 	cmd.Flags().String("component", "", "Component name to associate the SBOM with")
 	cmd.Flags().StringSlice("tag", nil, "EdgeBit Component tags to associate the SBOM with (can be specified multiple times)")
+	cmd.Flags().StringToString("labels", nil, "Key/value labels to associate with the SBOM (can be specified multiple times)")
 }
 
 func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, error) {
 	tags, err := cmd.Flags().GetStringSlice("tag")
+	if err != nil {
+		return UploadSBOMArgs{}, err
+	}
+
+	labels, err := cmd.Flags().GetStringToString("labels")
 	if err != nil {
 		return UploadSBOMArgs{}, err
 	}
@@ -42,6 +48,7 @@ func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, err
 		ImageTag:      cmd.Flag("image-tag").Value.String(),
 		ComponentName: cmd.Flag("component").Value.String(),
 		Tags:          tags,
+		Labels:        labels,
 	}, nil
 }
 
@@ -180,6 +187,7 @@ type UploadSBOMArgs struct {
 	Commit        string
 	ComponentName string
 	Tags          []string
+	Labels        map[string]string
 }
 
 func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, error) {
@@ -241,7 +249,7 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 			Header: &platform.UploadSBOMHeader{
 				ProjectId:      cli.ProjectID,
 				Format:         uploadFormat,
-				Labels:         map[string]string{},
+				Labels:         args.Labels,
 				SourceRepoUrl:  args.Repo,
 				SourceCommitId: args.Commit,
 				ImageId:        imageID,
