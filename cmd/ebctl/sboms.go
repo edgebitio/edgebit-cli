@@ -179,6 +179,46 @@ func (c *CLI) uploadSBOMRequest(ctx context.Context) *connect.ClientStreamForCli
 	return uploadRequest
 }
 
+type inferredSBOMInfo struct {
+	ImageID  string
+	ImageTag string
+	Format   platform.SBOMFormat
+}
+
+func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomFile string) (*inferredSBOMInfo, error) {
+	file, err := os.Open(sbomFile)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open '%s': %w", sbomFile, err)
+	}
+
+	sbom, format, err := formats.Decode(file)
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode SBOM: %w", err)
+	}
+
+	file.Close()
+
+	sbomInfo := inferredSBOMInfo{}
+
+	switch format.ID() {
+	case syftjson.ID:
+		sbomInfo.ImageID = sbom.Source.ImageMetadata.ID
+		if len(sbom.Source.ImageMetadata.Tags) > 0 {
+			sbomInfo.ImageTag = sbom.Source.ImageMetadata.Tags[0]
+		}
+
+		sbomInfo.Format = platform.SBOMFormat_SBOM_FORMAT_SYFT
+
+	case spdxjson.ID:
+		sbomInfo.Format = platform.SBOMFormat_SBOM_FORMAT_SPDX_JSON
+
+	default:
+		return nil, fmt.Errorf("unsupported SBOM format: %s", format.ID())
+	}
+
+	return &sbomInfo, nil
+}
+
 type UploadSBOMArgs struct {
 	FileName      string
 	ImageID       string
@@ -196,44 +236,19 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 		return "", errors.New("sbom file is required")
 	}
 
-	file, err := os.Open(sbomFile)
+	inferredInfo, err := cli.inferSBOMInfo(ctx, sbomFile)
 	if err != nil {
-		return "", fmt.Errorf("failed to open '%s': %w", sbomFile, err)
+		return "", err
 	}
 
-	sbom, format, err := formats.Decode(file)
-	if err != nil {
-		return "", fmt.Errorf("failed to decode sbom: %w", err)
-	}
+	uploadFormat := inferredInfo.Format
 
-	file.Close()
-
-	var imageID string
-	var imageTag string
-
-	var uploadFormat platform.SBOMFormat
-
-	switch format.ID() {
-	case syftjson.ID:
-		imageID = sbom.Source.ImageMetadata.ID
-		if len(sbom.Source.ImageMetadata.Tags) > 0 {
-			imageTag = sbom.Source.ImageMetadata.Tags[0]
-		}
-
-		uploadFormat = platform.SBOMFormat_SBOM_FORMAT_SYFT
-
-	case spdxjson.ID:
-		uploadFormat = platform.SBOMFormat_SBOM_FORMAT_SPDX_JSON
-
-	default:
-		return "", fmt.Errorf("unsupported SBOM format: %s", format.ID())
-	}
-
-	// If an image ID or tag was specified, use that. Otherwise, use whatever we were able to infer from the SBOM.
+	imageID := inferredInfo.ImageID
 	if args.ImageID != "" {
 		imageID = args.ImageID
 	}
 
+	imageTag := inferredInfo.ImageTag
 	if args.ImageTag != "" {
 		imageTag = args.ImageTag
 	}
@@ -269,7 +284,7 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 		return "", fmt.Errorf("failed to send upload request: %w", err)
 	}
 
-	file, err = os.Open(sbomFile)
+	file, err := os.Open(sbomFile)
 	if err != nil {
 		return "", fmt.Errorf("failed to open '%s': %w", sbomFile, err)
 	}
