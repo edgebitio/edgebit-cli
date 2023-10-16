@@ -25,6 +25,8 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
 	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
 	cmd.Flags().String("component", "", "Component name to associate the SBOM with")
+	cmd.Flags().Bool("force", false, "Ignore errors parsing the local SBOM and attempt to upload it anyway")
+	cmd.Flags().String("format", "", "SBOM format (optional, will be inferred from file contents if not specified)")
 	cmd.Flags().StringSlice("tag", nil, "EdgeBit Component tags to associate the SBOM with (can be specified multiple times)")
 	cmd.Flags().StringToString("labels", nil, "Key/value labels to associate with the SBOM (can be specified multiple times)")
 }
@@ -40,6 +42,11 @@ func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, err
 		return UploadSBOMArgs{}, err
 	}
 
+	force, err := cmd.Flags().GetBool("force")
+	if err != nil {
+		return UploadSBOMArgs{}, err
+	}
+
 	return UploadSBOMArgs{
 		FileName:      args[0],
 		Repo:          cmd.Flag("repo").Value.String(),
@@ -47,6 +54,8 @@ func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, err
 		ImageID:       cmd.Flag("image-id").Value.String(),
 		ImageTag:      cmd.Flag("image-tag").Value.String(),
 		ComponentName: cmd.Flag("component").Value.String(),
+		Format:        cmd.Flag("format").Value.String(),
+		Force:         force,
 		Tags:          tags,
 		Labels:        labels,
 	}, nil
@@ -200,20 +209,18 @@ func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomFile string) (*inferredSB
 
 	sbomInfo := inferredSBOMInfo{}
 
-	switch format.ID() {
-	case syftjson.ID:
+	sbomInfo.Format, err = formatFromID(string(format.ID()))
+	if err != nil {
+		return nil, err
+	}
+
+	// Format-specific inferences of additional fields
+	switch sbomInfo.Format {
+	case platform.SBOMFormat_SBOM_FORMAT_SYFT:
 		sbomInfo.ImageID = sbom.Source.ImageMetadata.ID
 		if len(sbom.Source.ImageMetadata.Tags) > 0 {
 			sbomInfo.ImageTag = sbom.Source.ImageMetadata.Tags[0]
 		}
-
-		sbomInfo.Format = platform.SBOMFormat_SBOM_FORMAT_SYFT
-
-	case spdxjson.ID:
-		sbomInfo.Format = platform.SBOMFormat_SBOM_FORMAT_SPDX_JSON
-
-	default:
-		return nil, fmt.Errorf("unsupported SBOM format: %s", format.ID())
 	}
 
 	return &sbomInfo, nil
@@ -226,6 +233,8 @@ type UploadSBOMArgs struct {
 	Repo          string
 	Commit        string
 	ComponentName string
+	Format        string
+	Force         bool
 	Tags          []string
 	Labels        map[string]string
 }
@@ -238,10 +247,24 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 
 	inferredInfo, err := cli.inferSBOMInfo(ctx, sbomFile)
 	if err != nil {
-		return "", err
+		if !args.Force {
+			return "", err
+		} else {
+			inferredInfo = &inferredSBOMInfo{}
+			fmt.Printf("WARNING: ignoring SBOM inspection error: %s\n", err)
+		}
 	}
 
 	uploadFormat := inferredInfo.Format
+	if args.Format != "" {
+		uploadFormat, err = formatFromID(args.Format)
+		if err != nil {
+			return "", err
+		}
+	}
+	if uploadFormat == platform.SBOMFormat_SBOM_FORMAT_UNSPECIFIED {
+		return "", errors.New("SBOM format is required")
+	}
 
 	imageID := inferredInfo.ImageID
 	if args.ImageID != "" {
@@ -369,4 +392,17 @@ func (cli *CLI) uploadSBOMForCI(ctx context.Context, args UploadSBOMForCIArgs) (
 		CommentBody: commentRes.Msg.CommentBody,
 		SkipComment: commentRes.Msg.SkipComment,
 	}, nil
+}
+
+func formatFromID(id string) (platform.SBOMFormat, error) {
+	switch id {
+	case string(syftjson.ID):
+		return platform.SBOMFormat_SBOM_FORMAT_SYFT, nil
+
+	case string(spdxjson.ID):
+		return platform.SBOMFormat_SBOM_FORMAT_SPDX_JSON, nil
+
+	default:
+		return platform.SBOMFormat_SBOM_FORMAT_UNSPECIFIED, fmt.Errorf("unknown SBOM format: %s", id)
+	}
 }
