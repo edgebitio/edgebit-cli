@@ -15,6 +15,7 @@ import (
 	"github.com/anchore/syft/syft/formats"
 	"github.com/anchore/syft/syft/formats/spdxjson"
 	"github.com/anchore/syft/syft/formats/syftjson"
+	"github.com/anchore/syft/syft/source"
 	"github.com/bufbuild/connect-go"
 	"github.com/spf13/cobra"
 )
@@ -217,9 +218,12 @@ func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomFile string) (*inferredSB
 	// Format-specific inferences of additional fields
 	switch sbomInfo.Format {
 	case platform.SBOMFormat_SBOM_FORMAT_SYFT:
-		sbomInfo.ImageID = sbom.Source.ImageMetadata.ID
-		if len(sbom.Source.ImageMetadata.Tags) > 0 {
-			sbomInfo.ImageTag = sbom.Source.ImageMetadata.Tags[0]
+		metadata, ok := sbom.Source.Metadata.(source.StereoscopeImageSourceMetadata)
+		if ok {
+			sbomInfo.ImageID = metadata.ID
+			if len(metadata.Tags) > 0 {
+				sbomInfo.ImageTag = metadata.Tags[0]
+			}
 		}
 	}
 
