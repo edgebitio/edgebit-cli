@@ -1,0 +1,14 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/edgebitio/edgebit-cli/pkg/pb
+plugins:
+  - name: go
+    out: ./pkg/pb
+    opt: paths=source_relative
+    path: ["go", "run", "google.golang.org/protobuf/cmd/protoc-gen-go"]
+  - name: connect-go
+    out: pkg/pb
+    opt: paths=source_relative
+    path: ["go", "run", "connectrpc.com/connect/cmd/protoc-gen-connect-go"]
