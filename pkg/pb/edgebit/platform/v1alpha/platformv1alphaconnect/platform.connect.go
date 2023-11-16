@@ -5,9 +5,9 @@
 package platformv1alphaconnect
 
 import (
+	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	connect_go "github.com/bufbuild/connect-go"
 	v1alpha "github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha"
 	http "net/http"
 	strings "strings"
@@ -18,7 +18,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect_go.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion0_1_0
 
 const (
 	// EdgeBitPublicAPIServiceName is the fully-qualified name of the EdgeBitPublicAPIService service.
@@ -36,6 +36,15 @@ const (
 	// EdgeBitPublicAPIServiceListProjectsProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's ListProjects RPC.
 	EdgeBitPublicAPIServiceListProjectsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListProjects"
+	// EdgeBitPublicAPIServiceCreateProjectProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CreateProject RPC.
+	EdgeBitPublicAPIServiceCreateProjectProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateProject"
+	// EdgeBitPublicAPIServiceGetProjectProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetProject RPC.
+	EdgeBitPublicAPIServiceGetProjectProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetProject"
+	// EdgeBitPublicAPIServiceUpdateProjectProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateProject RPC.
+	EdgeBitPublicAPIServiceUpdateProjectProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateProject"
 	// EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GenerateAgentDeployToken RPC.
 	EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateAgentDeployToken"
@@ -57,6 +66,9 @@ const (
 	// EdgeBitPublicAPIServiceOverviewProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's Overview RPC.
 	EdgeBitPublicAPIServiceOverviewProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/Overview"
+	// EdgeBitPublicAPIServiceListWorkloadsForMachineProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListWorkloadsForMachine RPC.
+	EdgeBitPublicAPIServiceListWorkloadsForMachineProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListWorkloadsForMachine"
 	// EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's CreateOrgAccessToken RPC.
 	EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CreateOrgAccessToken"
@@ -78,6 +90,9 @@ const (
 	// EdgeBitPublicAPIServiceGetSBOMInventoryProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetSBOMInventory RPC.
 	EdgeBitPublicAPIServiceGetSBOMInventoryProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMInventory"
+	// EdgeBitPublicAPIServiceGetSBOMAttestationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetSBOMAttestation RPC.
+	EdgeBitPublicAPIServiceGetSBOMAttestationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMAttestation"
 	// EdgeBitPublicAPIServiceListComponentsProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's ListComponents RPC.
 	EdgeBitPublicAPIServiceListComponentsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponents"
@@ -93,6 +108,9 @@ const (
 	// EdgeBitPublicAPIServiceDeleteComponentProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's DeleteComponent RPC.
 	EdgeBitPublicAPIServiceDeleteComponentProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DeleteComponent"
+	// EdgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationProcedure is the fully-qualified name
+	// of the EdgeBitPublicAPIService's GetComponentDefaultTagSBOMAttestation RPC.
+	EdgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentDefaultTagSBOMAttestation"
 	// EdgeBitPublicAPIServiceListComponentTagsProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's ListComponentTags RPC.
 	EdgeBitPublicAPIServiceListComponentTagsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentTags"
@@ -108,6 +126,21 @@ const (
 	// EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetComponentTagsOverview RPC.
 	EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentTagsOverview"
+	// EdgeBitPublicAPIServiceListComponentIssuesProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListComponentIssues RPC.
+	EdgeBitPublicAPIServiceListComponentIssuesProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentIssues"
+	// EdgeBitPublicAPIServiceGetComponentIssueProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetComponentIssue RPC.
+	EdgeBitPublicAPIServiceGetComponentIssueProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentIssue"
+	// EdgeBitPublicAPIServiceUpdateComponentIssueProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateComponentIssue RPC.
+	EdgeBitPublicAPIServiceUpdateComponentIssueProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateComponentIssue"
+	// EdgeBitPublicAPIServiceGetComponentIssueTrendProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetComponentIssueTrend RPC.
+	EdgeBitPublicAPIServiceGetComponentIssueTrendProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentIssueTrend"
+	// EdgeBitPublicAPIServiceListComponentIssuesByStateForProjectProcedure is the fully-qualified name
+	// of the EdgeBitPublicAPIService's ListComponentIssuesByStateForProject RPC.
+	EdgeBitPublicAPIServiceListComponentIssuesByStateForProjectProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentIssuesByStateForProject"
 	// EdgeBitPublicAPIServiceGetCIBotCommentProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetCIBotComment RPC.
 	EdgeBitPublicAPIServiceGetCIBotCommentProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetCIBotComment"
@@ -117,54 +150,169 @@ const (
 	// EdgeBitPublicAPIServiceGetWorkloadProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetWorkload RPC.
 	EdgeBitPublicAPIServiceGetWorkloadProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetWorkload"
+	// EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's DebugWorkloadPackageInUse RPC.
+	EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/DebugWorkloadPackageInUse"
 	// EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetSBOMDownloadUrl RPC.
 	EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMDownloadUrl"
+	// EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetVexDownloadUrl RPC.
+	EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetVexDownloadUrl"
+	// EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListComponentsWithMetrics RPC.
+	EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentsWithMetrics"
+	// EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetServerSBOMRoutingPolicy RPC.
+	EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetServerSBOMRoutingPolicy"
+	// EdgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateServerSbomRoutingPolicy RPC.
+	EdgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateServerSbomRoutingPolicy"
+	// EdgeBitPublicAPIServiceSetProjectIssueSLAPolicyProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's SetProjectIssueSLAPolicy RPC.
+	EdgeBitPublicAPIServiceSetProjectIssueSLAPolicyProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/SetProjectIssueSLAPolicy"
+	// EdgeBitPublicAPIServiceGetProjectIssueSLAPolicyProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetProjectIssueSLAPolicy RPC.
+	EdgeBitPublicAPIServiceGetProjectIssueSLAPolicyProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetProjectIssueSLAPolicy"
+	// EdgeBitPublicAPIServiceCompleteGitHubAppInstallProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CompleteGitHubAppInstall RPC.
+	EdgeBitPublicAPIServiceCompleteGitHubAppInstallProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CompleteGitHubAppInstall"
+	// EdgeBitPublicAPIServiceGetProjectIssueTrendProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetProjectIssueTrend RPC.
+	EdgeBitPublicAPIServiceGetProjectIssueTrendProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetProjectIssueTrend"
+	// EdgeBitPublicAPIServiceListGitHubIntegrationsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListGitHubIntegrations RPC.
+	EdgeBitPublicAPIServiceListGitHubIntegrationsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListGitHubIntegrations"
+	// EdgeBitPublicAPIServiceGetGitHubIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetGitHubIntegration RPC.
+	EdgeBitPublicAPIServiceGetGitHubIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetGitHubIntegration"
+	// EdgeBitPublicAPIServiceHasGitHubIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's HasGitHubIntegration RPC.
+	EdgeBitPublicAPIServiceHasGitHubIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/HasGitHubIntegration"
+	// EdgeBitPublicAPIServiceUpdateGitHubIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateGitHubIntegration RPC.
+	EdgeBitPublicAPIServiceUpdateGitHubIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateGitHubIntegration"
+	// EdgeBitPublicAPIServiceListGitHubRepositoriesProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListGitHubRepositories RPC.
+	EdgeBitPublicAPIServiceListGitHubRepositoriesProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListGitHubRepositories"
+	// EdgeBitPublicAPIServiceAnalyzeGitHubRepoProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's AnalyzeGitHubRepo RPC.
+	EdgeBitPublicAPIServiceAnalyzeGitHubRepoProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/AnalyzeGitHubRepo"
+	// EdgeBitPublicAPIServiceImportGitHubReposProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ImportGitHubRepos RPC.
+	EdgeBitPublicAPIServiceImportGitHubReposProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ImportGitHubRepos"
+	// EdgeBitPublicAPIServiceIgnoreIssueProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's IgnoreIssue RPC.
+	EdgeBitPublicAPIServiceIgnoreIssueProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/IgnoreIssue"
+	// EdgeBitPublicAPIServiceListIntegrationsProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListIntegrations RPC.
+	EdgeBitPublicAPIServiceListIntegrationsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListIntegrations"
+	// EdgeBitPublicAPIServiceBeginJiraInstallProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's BeginJiraInstall RPC.
+	EdgeBitPublicAPIServiceBeginJiraInstallProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/BeginJiraInstall"
+	// EdgeBitPublicAPIServiceCompleteJiraInstallProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CompleteJiraInstall RPC.
+	EdgeBitPublicAPIServiceCompleteJiraInstallProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CompleteJiraInstall"
+	// EdgeBitPublicAPIServiceGetJiraIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetJiraIntegration RPC.
+	EdgeBitPublicAPIServiceGetJiraIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetJiraIntegration"
+	// EdgeBitPublicAPIServiceUpdateJiraIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateJiraIntegration RPC.
+	EdgeBitPublicAPIServiceUpdateJiraIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateJiraIntegration"
+	// EdgeBitPublicAPIServiceListComponentIssueStateChangesProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListComponentIssueStateChanges RPC.
+	EdgeBitPublicAPIServiceListComponentIssueStateChangesProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentIssueStateChanges"
+	// EdgeBitPublicAPIServiceLookupEPSSDataProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's LookupEPSSData RPC.
+	EdgeBitPublicAPIServiceLookupEPSSDataProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/LookupEPSSData"
 )
 
 // EdgeBitPublicAPIServiceClient is a client for the
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService service.
 type EdgeBitPublicAPIServiceClient interface {
 	// Project Management (org-scoped)
-	ListProjects(context.Context, *connect_go.Request[v1alpha.ListProjectsRequest]) (*connect_go.Response[v1alpha.ListProjectsResponse], error)
+	ListProjects(context.Context, *connect.Request[v1alpha.ListProjectsRequest]) (*connect.Response[v1alpha.ListProjectsResponse], error)
+	CreateProject(context.Context, *connect.Request[v1alpha.CreateProjectRequest]) (*connect.Response[v1alpha.CreateProjectResponse], error)
+	GetProject(context.Context, *connect.Request[v1alpha.GetProjectRequest]) (*connect.Response[v1alpha.GetProjectResponse], error)
+	UpdateProject(context.Context, *connect.Request[v1alpha.UpdateProjectRequest]) (*connect.Response[v1alpha.UpdateProjectResponse], error)
 	// Agent Deployment Token Management (project-scoped)
-	GenerateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error)
-	CreateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error)
-	ListAgentDeployTokens(context.Context, *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error)
-	DeleteAgentDeployToken(context.Context, *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
+	GenerateAgentDeployToken(context.Context, *connect.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect.Response[v1alpha.GenerateAgentDeployTokenResponse], error)
+	CreateAgentDeployToken(context.Context, *connect.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect.Response[v1alpha.CreateAgentDeployTokenResponse], error)
+	ListAgentDeployTokens(context.Context, *connect.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect.Response[v1alpha.ListAgentDeployTokensResponse], error)
+	DeleteAgentDeployToken(context.Context, *connect.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
 	// Machine Management (project-scoped)
-	ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error)
+	ListMachines(context.Context, *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error)
 	// Inventory Exploration (project-scoped)
-	GetMachineInventory(context.Context, *connect_go.Request[v1alpha.GetMachineInventoryRequest]) (*connect_go.Response[v1alpha.GetMachineInventoryResponse], error)
-	Overview(context.Context, *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error)
+	GetMachineInventory(context.Context, *connect.Request[v1alpha.GetMachineInventoryRequest]) (*connect.Response[v1alpha.GetMachineInventoryResponse], error)
+	Overview(context.Context, *connect.Request[v1alpha.OverviewRequest]) (*connect.Response[v1alpha.OverviewResponse], error)
+	ListWorkloadsForMachine(context.Context, *connect.Request[v1alpha.ListWorkloadsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadsForMachineResponse], error)
 	// Org (Project) Access Token Management (project-scoped)
-	CreateOrgAccessToken(context.Context, *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error)
-	ListOrgAccessTokens(context.Context, *connect_go.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect_go.Response[v1alpha.ListOrgAccessTokensResponse], error)
-	DeleteOrgAccessToken(context.Context, *connect_go.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.DeleteOrgAccessTokenResponse], error)
+	CreateOrgAccessToken(context.Context, *connect.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect.Response[v1alpha.CreateOrgAccessTokenResponse], error)
+	ListOrgAccessTokens(context.Context, *connect.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect.Response[v1alpha.ListOrgAccessTokensResponse], error)
+	DeleteOrgAccessToken(context.Context, *connect.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect.Response[v1alpha.DeleteOrgAccessTokenResponse], error)
 	// SBOM Management (project-scoped)
-	UploadSBOM(context.Context) *connect_go.ClientStreamForClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse]
-	ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error)
-	GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error)
-	GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error)
+	UploadSBOM(context.Context) *connect.ClientStreamForClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse]
+	ListSBOMs(context.Context, *connect.Request[v1alpha.ListSBOMsRequest]) (*connect.Response[v1alpha.ListSBOMsResponse], error)
+	GetSBOM(context.Context, *connect.Request[v1alpha.GetSBOMRequest]) (*connect.Response[v1alpha.GetSBOMResponse], error)
+	GetSBOMInventory(context.Context, *connect.Request[v1alpha.GetSBOMInventoryRequest]) (*connect.Response[v1alpha.GetSBOMInventoryResponse], error)
+	GetSBOMAttestation(context.Context, *connect.Request[v1alpha.GetSBOMAttestationRequest]) (*connect.Response[v1alpha.GetSBOMAttestationResponse], error)
 	// Componeent Management (project-scoped)
-	ListComponents(context.Context, *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error)
-	GetComponent(context.Context, *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error)
-	CreateComponent(context.Context, *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error)
-	UpdateComponent(context.Context, *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error)
-	DeleteComponent(context.Context, *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error)
+	ListComponents(context.Context, *connect.Request[v1alpha.ListComponentsRequest]) (*connect.Response[v1alpha.ListComponentsResponse], error)
+	GetComponent(context.Context, *connect.Request[v1alpha.GetComponentRequest]) (*connect.Response[v1alpha.GetComponentResponse], error)
+	CreateComponent(context.Context, *connect.Request[v1alpha.CreateComponentRequest]) (*connect.Response[v1alpha.CreateComponentResponse], error)
+	UpdateComponent(context.Context, *connect.Request[v1alpha.UpdateComponentRequest]) (*connect.Response[v1alpha.UpdateComponentResponse], error)
+	DeleteComponent(context.Context, *connect.Request[v1alpha.DeleteComponentRequest]) (*connect.Response[v1alpha.DeleteComponentResponse], error)
+	GetComponentDefaultTagSBOMAttestation(context.Context, *connect.Request[v1alpha.GetComponentDefaultTagSBOMAttestationRequest]) (*connect.Response[v1alpha.GetComponentDefaultTagSBOMAttestationResponse], error)
 	// Component Tags Management (project-scoped)
-	ListComponentTags(context.Context, *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error)
-	GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error)
-	SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error)
-	DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error)
-	GetComponentTagsOverview(context.Context, *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error)
+	ListComponentTags(context.Context, *connect.Request[v1alpha.ListComponentTagsRequest]) (*connect.Response[v1alpha.ListComponentTagsResponse], error)
+	GetComponentTag(context.Context, *connect.Request[v1alpha.GetComponentTagRequest]) (*connect.Response[v1alpha.GetComponentTagResponse], error)
+	SetComponentTag(context.Context, *connect.Request[v1alpha.SetComponentTagRequest]) (*connect.Response[v1alpha.SetComponentTagResponse], error)
+	DeleteComponentTag(context.Context, *connect.Request[v1alpha.DeleteComponentTagRequest]) (*connect.Response[v1alpha.DeleteComponentTagResponse], error)
+	GetComponentTagsOverview(context.Context, *connect.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect.Response[v1alpha.GetComponentTagsOverviewResponse], error)
+	// Component Vulnerabilities Management (project-scoped)
+	ListComponentIssues(context.Context, *connect.Request[v1alpha.ListComponentIssuesRequest]) (*connect.Response[v1alpha.ListComponentIssuesResponse], error)
+	GetComponentIssue(context.Context, *connect.Request[v1alpha.GetComponentIssueRequest]) (*connect.Response[v1alpha.GetComponentIssueResponse], error)
+	UpdateComponentIssue(context.Context, *connect.Request[v1alpha.UpdateComponentIssueRequest]) (*connect.Response[v1alpha.UpdateComponentIssueResponse], error)
+	GetComponentIssueTrend(context.Context, *connect.Request[v1alpha.GetComponentIssueTrendRequest]) (*connect.Response[v1alpha.GetComponentIssueTrendResponse], error)
+	ListComponentIssuesByStateForProject(context.Context, *connect.Request[v1alpha.ListComponentIssuesByStateForProjectRequest]) (*connect.Response[v1alpha.ListComponentIssuesByStateForProjectResponse], error)
 	// CI/CD Integration (project-scoped)
-	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
+	GetCIBotComment(context.Context, *connect.Request[v1alpha.GetCIBotCommentRequest]) (*connect.Response[v1alpha.GetCIBotCommentResponse], error)
 	// Workload Management (project-scoped)
-	ListWorkloads(context.Context, *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error)
-	GetWorkload(context.Context, *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error)
+	ListWorkloads(context.Context, *connect.Request[v1alpha.ListWorkloadsRequest]) (*connect.Response[v1alpha.ListWorkloadsResponse], error)
+	GetWorkload(context.Context, *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error)
+	DebugWorkloadPackageInUse(context.Context, *connect.Request[v1alpha.DebugWorkloadPackageInUseRequest]) (*connect.Response[v1alpha.DebugWorkloadPackageInUseResponse], error)
 	// Get Sbom Download Url
-	GetSBOMDownloadUrl(context.Context, *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
+	GetSBOMDownloadUrl(context.Context, *connect.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
+	// Get Vex Download Url
+	GetVexDownloadUrl(context.Context, *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error)
+	// Get Component With Metrics
+	ListComponentsWithMetrics(context.Context, *connect.Request[v1alpha.ListComponentsWithMetricsRequest]) (*connect.Response[v1alpha.ListComponentsWithMetricsResponse], error)
+	// Server Sbom Routing Policies
+	GetServerSBOMRoutingPolicy(context.Context, *connect.Request[v1alpha.GetServerSBOMRoutingPolicyRequest]) (*connect.Response[v1alpha.GetServerSBOMRoutingPolicyResponse], error)
+	UpdateServerSbomRoutingPolicy(context.Context, *connect.Request[v1alpha.UpdateServerSbomRoutingPolicyRequest]) (*connect.Response[v1alpha.UpdateServerSbomRoutingPolicyResponse], error)
+	SetProjectIssueSLAPolicy(context.Context, *connect.Request[v1alpha.SetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.SetProjectIssueSLAPolicyResponse], error)
+	GetProjectIssueSLAPolicy(context.Context, *connect.Request[v1alpha.GetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.GetProjectIssueSLAPolicyResponse], error)
+	// Last step in the GH app installation that create the association in the platform
+	CompleteGitHubAppInstall(context.Context, *connect.Request[v1alpha.CompleteGitHubAppInstallRequest]) (*connect.Response[v1alpha.CompleteGitHubAppInstallResponse], error)
+	GetProjectIssueTrend(context.Context, *connect.Request[v1alpha.GetProjectIssueTrendRequest]) (*connect.Response[v1alpha.GetProjectIssueTrendResponse], error)
+	// Returns a summary for each integration (does not include settings)
+	ListGitHubIntegrations(context.Context, *connect.Request[v1alpha.ListGitHubIntegrationsRequest]) (*connect.Response[v1alpha.ListGitHubIntegrationsResponse], error)
+	GetGitHubIntegration(context.Context, *connect.Request[v1alpha.GetGitHubIntegrationRequest]) (*connect.Response[v1alpha.GetGitHubIntegrationResponse], error)
+	HasGitHubIntegration(context.Context, *connect.Request[v1alpha.HasGitHubIntegrationRequest]) (*connect.Response[v1alpha.HasGitHubIntegrationResponse], error)
+	UpdateGitHubIntegration(context.Context, *connect.Request[v1alpha.UpdateGitHubIntegrationRequest]) (*connect.Response[v1alpha.UpdateGitHubIntegrationResponse], error)
+	// Lists all the repos accessible by the EdgeBit org
+	ListGitHubRepositories(context.Context, *connect.Request[v1alpha.ListGitHubRepositoriesRequest]) (*connect.Response[v1alpha.ListGitHubRepositoriesResponse], error)
+	AnalyzeGitHubRepo(context.Context, *connect.Request[v1alpha.AnalyzeGitHubRepoRequest]) (*connect.Response[v1alpha.AnalyzeGitHubRepoResponse], error)
+	ImportGitHubRepos(context.Context, *connect.Request[v1alpha.ImportGitHubReposRequest]) (*connect.Response[v1alpha.ImportGitHubReposResponse], error)
+	// Ignore Issue
+	IgnoreIssue(context.Context, *connect.Request[v1alpha.IgnoreIssueRequest]) (*connect.Response[v1alpha.IgnoreIssueResponse], error)
+	ListIntegrations(context.Context, *connect.Request[v1alpha.ListIntegrationsRequest]) (*connect.Response[v1alpha.ListIntegrationsResponse], error)
+	BeginJiraInstall(context.Context, *connect.Request[v1alpha.BeginJiraInstallRequest]) (*connect.Response[v1alpha.BeginJiraInstallResponse], error)
+	CompleteJiraInstall(context.Context, *connect.Request[v1alpha.CompleteJiraInstallRequest]) (*connect.Response[v1alpha.CompleteJiraInstallResponse], error)
+	GetJiraIntegration(context.Context, *connect.Request[v1alpha.GetJiraIntegrationRequest]) (*connect.Response[v1alpha.GetJiraIntegrationResponse], error)
+	UpdateJiraIntegration(context.Context, *connect.Request[v1alpha.UpdateJiraIntegrationRequest]) (*connect.Response[v1alpha.UpdateJiraIntegrationResponse], error)
+	ListComponentIssueStateChanges(context.Context, *connect.Request[v1alpha.ListComponentIssueStateChangesRequest]) (*connect.Response[v1alpha.ListComponentIssueStateChangesResponse], error)
+	LookupEPSSData(context.Context, *connect.Request[v1alpha.LookupEPSSDataRequest]) (*connect.Response[v1alpha.LookupEPSSDataResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceClient constructs a client for the
@@ -175,152 +323,327 @@ type EdgeBitPublicAPIServiceClient interface {
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) EdgeBitPublicAPIServiceClient {
+func NewEdgeBitPublicAPIServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) EdgeBitPublicAPIServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &edgeBitPublicAPIServiceClient{
-		listProjects: connect_go.NewClient[v1alpha.ListProjectsRequest, v1alpha.ListProjectsResponse](
+		listProjects: connect.NewClient[v1alpha.ListProjectsRequest, v1alpha.ListProjectsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListProjectsProcedure,
 			opts...,
 		),
-		generateAgentDeployToken: connect_go.NewClient[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse](
+		createProject: connect.NewClient[v1alpha.CreateProjectRequest, v1alpha.CreateProjectResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceCreateProjectProcedure,
+			opts...,
+		),
+		getProject: connect.NewClient[v1alpha.GetProjectRequest, v1alpha.GetProjectResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetProjectProcedure,
+			opts...,
+		),
+		updateProject: connect.NewClient[v1alpha.UpdateProjectRequest, v1alpha.UpdateProjectResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceUpdateProjectProcedure,
+			opts...,
+		),
+		generateAgentDeployToken: connect.NewClient[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure,
 			opts...,
 		),
-		createAgentDeployToken: connect_go.NewClient[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse](
+		createAgentDeployToken: connect.NewClient[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure,
 			opts...,
 		),
-		listAgentDeployTokens: connect_go.NewClient[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse](
+		listAgentDeployTokens: connect.NewClient[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListAgentDeployTokensProcedure,
 			opts...,
 		),
-		deleteAgentDeployToken: connect_go.NewClient[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse](
+		deleteAgentDeployToken: connect.NewClient[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure,
 			opts...,
 		),
-		listMachines: connect_go.NewClient[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse](
+		listMachines: connect.NewClient[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListMachinesProcedure,
 			opts...,
 		),
-		getMachineInventory: connect_go.NewClient[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse](
+		getMachineInventory: connect.NewClient[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetMachineInventoryProcedure,
 			opts...,
 		),
-		overview: connect_go.NewClient[v1alpha.OverviewRequest, v1alpha.OverviewResponse](
+		overview: connect.NewClient[v1alpha.OverviewRequest, v1alpha.OverviewResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceOverviewProcedure,
 			opts...,
 		),
-		createOrgAccessToken: connect_go.NewClient[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse](
+		listWorkloadsForMachine: connect.NewClient[v1alpha.ListWorkloadsForMachineRequest, v1alpha.ListWorkloadsForMachineResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListWorkloadsForMachineProcedure,
+			opts...,
+		),
+		createOrgAccessToken: connect.NewClient[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure,
 			opts...,
 		),
-		listOrgAccessTokens: connect_go.NewClient[v1alpha.ListOrgAccessTokensRequest, v1alpha.ListOrgAccessTokensResponse](
+		listOrgAccessTokens: connect.NewClient[v1alpha.ListOrgAccessTokensRequest, v1alpha.ListOrgAccessTokensResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListOrgAccessTokensProcedure,
 			opts...,
 		),
-		deleteOrgAccessToken: connect_go.NewClient[v1alpha.DeleteOrgAccessTokenRequest, v1alpha.DeleteOrgAccessTokenResponse](
+		deleteOrgAccessToken: connect.NewClient[v1alpha.DeleteOrgAccessTokenRequest, v1alpha.DeleteOrgAccessTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure,
 			opts...,
 		),
-		uploadSBOM: connect_go.NewClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse](
+		uploadSBOM: connect.NewClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUploadSBOMProcedure,
 			opts...,
 		),
-		listSBOMs: connect_go.NewClient[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse](
+		listSBOMs: connect.NewClient[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListSBOMsProcedure,
 			opts...,
 		),
-		getSBOM: connect_go.NewClient[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse](
+		getSBOM: connect.NewClient[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetSBOMProcedure,
 			opts...,
 		),
-		getSBOMInventory: connect_go.NewClient[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse](
+		getSBOMInventory: connect.NewClient[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetSBOMInventoryProcedure,
 			opts...,
 		),
-		listComponents: connect_go.NewClient[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse](
+		getSBOMAttestation: connect.NewClient[v1alpha.GetSBOMAttestationRequest, v1alpha.GetSBOMAttestationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetSBOMAttestationProcedure,
+			opts...,
+		),
+		listComponents: connect.NewClient[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentsProcedure,
 			opts...,
 		),
-		getComponent: connect_go.NewClient[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse](
+		getComponent: connect.NewClient[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentProcedure,
 			opts...,
 		),
-		createComponent: connect_go.NewClient[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse](
+		createComponent: connect.NewClient[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCreateComponentProcedure,
 			opts...,
 		),
-		updateComponent: connect_go.NewClient[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse](
+		updateComponent: connect.NewClient[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUpdateComponentProcedure,
 			opts...,
 		),
-		deleteComponent: connect_go.NewClient[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse](
+		deleteComponent: connect.NewClient[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteComponentProcedure,
 			opts...,
 		),
-		listComponentTags: connect_go.NewClient[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse](
+		getComponentDefaultTagSBOMAttestation: connect.NewClient[v1alpha.GetComponentDefaultTagSBOMAttestationRequest, v1alpha.GetComponentDefaultTagSBOMAttestationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationProcedure,
+			opts...,
+		),
+		listComponentTags: connect.NewClient[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentTagsProcedure,
 			opts...,
 		),
-		getComponentTag: connect_go.NewClient[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse](
+		getComponentTag: connect.NewClient[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentTagProcedure,
 			opts...,
 		),
-		setComponentTag: connect_go.NewClient[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse](
+		setComponentTag: connect.NewClient[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceSetComponentTagProcedure,
 			opts...,
 		),
-		deleteComponentTag: connect_go.NewClient[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse](
+		deleteComponentTag: connect.NewClient[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteComponentTagProcedure,
 			opts...,
 		),
-		getComponentTagsOverview: connect_go.NewClient[v1alpha.GetComponentTagsOverviewRequest, v1alpha.GetComponentTagsOverviewResponse](
+		getComponentTagsOverview: connect.NewClient[v1alpha.GetComponentTagsOverviewRequest, v1alpha.GetComponentTagsOverviewResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure,
 			opts...,
 		),
-		getCIBotComment: connect_go.NewClient[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse](
+		listComponentIssues: connect.NewClient[v1alpha.ListComponentIssuesRequest, v1alpha.ListComponentIssuesResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListComponentIssuesProcedure,
+			opts...,
+		),
+		getComponentIssue: connect.NewClient[v1alpha.GetComponentIssueRequest, v1alpha.GetComponentIssueResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetComponentIssueProcedure,
+			opts...,
+		),
+		updateComponentIssue: connect.NewClient[v1alpha.UpdateComponentIssueRequest, v1alpha.UpdateComponentIssueResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceUpdateComponentIssueProcedure,
+			opts...,
+		),
+		getComponentIssueTrend: connect.NewClient[v1alpha.GetComponentIssueTrendRequest, v1alpha.GetComponentIssueTrendResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetComponentIssueTrendProcedure,
+			opts...,
+		),
+		listComponentIssuesByStateForProject: connect.NewClient[v1alpha.ListComponentIssuesByStateForProjectRequest, v1alpha.ListComponentIssuesByStateForProjectResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListComponentIssuesByStateForProjectProcedure,
+			opts...,
+		),
+		getCIBotComment: connect.NewClient[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetCIBotCommentProcedure,
 			opts...,
 		),
-		listWorkloads: connect_go.NewClient[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse](
+		listWorkloads: connect.NewClient[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListWorkloadsProcedure,
 			opts...,
 		),
-		getWorkload: connect_go.NewClient[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse](
+		getWorkload: connect.NewClient[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetWorkloadProcedure,
 			opts...,
 		),
-		getSBOMDownloadUrl: connect_go.NewClient[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse](
+		debugWorkloadPackageInUse: connect.NewClient[v1alpha.DebugWorkloadPackageInUseRequest, v1alpha.DebugWorkloadPackageInUseResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure,
+			opts...,
+		),
+		getSBOMDownloadUrl: connect.NewClient[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure,
+			opts...,
+		),
+		getVexDownloadUrl: connect.NewClient[v1alpha.GetVexDownloadUrlRequest, v1alpha.GetVexDownloadUrlResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure,
+			opts...,
+		),
+		listComponentsWithMetrics: connect.NewClient[v1alpha.ListComponentsWithMetricsRequest, v1alpha.ListComponentsWithMetricsResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure,
+			opts...,
+		),
+		getServerSBOMRoutingPolicy: connect.NewClient[v1alpha.GetServerSBOMRoutingPolicyRequest, v1alpha.GetServerSBOMRoutingPolicyResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure,
+			opts...,
+		),
+		updateServerSbomRoutingPolicy: connect.NewClient[v1alpha.UpdateServerSbomRoutingPolicyRequest, v1alpha.UpdateServerSbomRoutingPolicyResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyProcedure,
+			opts...,
+		),
+		setProjectIssueSLAPolicy: connect.NewClient[v1alpha.SetProjectIssueSLAPolicyRequest, v1alpha.SetProjectIssueSLAPolicyResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceSetProjectIssueSLAPolicyProcedure,
+			opts...,
+		),
+		getProjectIssueSLAPolicy: connect.NewClient[v1alpha.GetProjectIssueSLAPolicyRequest, v1alpha.GetProjectIssueSLAPolicyResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetProjectIssueSLAPolicyProcedure,
+			opts...,
+		),
+		completeGitHubAppInstall: connect.NewClient[v1alpha.CompleteGitHubAppInstallRequest, v1alpha.CompleteGitHubAppInstallResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceCompleteGitHubAppInstallProcedure,
+			opts...,
+		),
+		getProjectIssueTrend: connect.NewClient[v1alpha.GetProjectIssueTrendRequest, v1alpha.GetProjectIssueTrendResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetProjectIssueTrendProcedure,
+			opts...,
+		),
+		listGitHubIntegrations: connect.NewClient[v1alpha.ListGitHubIntegrationsRequest, v1alpha.ListGitHubIntegrationsResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListGitHubIntegrationsProcedure,
+			opts...,
+		),
+		getGitHubIntegration: connect.NewClient[v1alpha.GetGitHubIntegrationRequest, v1alpha.GetGitHubIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetGitHubIntegrationProcedure,
+			opts...,
+		),
+		hasGitHubIntegration: connect.NewClient[v1alpha.HasGitHubIntegrationRequest, v1alpha.HasGitHubIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceHasGitHubIntegrationProcedure,
+			opts...,
+		),
+		updateGitHubIntegration: connect.NewClient[v1alpha.UpdateGitHubIntegrationRequest, v1alpha.UpdateGitHubIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceUpdateGitHubIntegrationProcedure,
+			opts...,
+		),
+		listGitHubRepositories: connect.NewClient[v1alpha.ListGitHubRepositoriesRequest, v1alpha.ListGitHubRepositoriesResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListGitHubRepositoriesProcedure,
+			opts...,
+		),
+		analyzeGitHubRepo: connect.NewClient[v1alpha.AnalyzeGitHubRepoRequest, v1alpha.AnalyzeGitHubRepoResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceAnalyzeGitHubRepoProcedure,
+			opts...,
+		),
+		importGitHubRepos: connect.NewClient[v1alpha.ImportGitHubReposRequest, v1alpha.ImportGitHubReposResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceImportGitHubReposProcedure,
+			opts...,
+		),
+		ignoreIssue: connect.NewClient[v1alpha.IgnoreIssueRequest, v1alpha.IgnoreIssueResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceIgnoreIssueProcedure,
+			opts...,
+		),
+		listIntegrations: connect.NewClient[v1alpha.ListIntegrationsRequest, v1alpha.ListIntegrationsResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListIntegrationsProcedure,
+			opts...,
+		),
+		beginJiraInstall: connect.NewClient[v1alpha.BeginJiraInstallRequest, v1alpha.BeginJiraInstallResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceBeginJiraInstallProcedure,
+			opts...,
+		),
+		completeJiraInstall: connect.NewClient[v1alpha.CompleteJiraInstallRequest, v1alpha.CompleteJiraInstallResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceCompleteJiraInstallProcedure,
+			opts...,
+		),
+		getJiraIntegration: connect.NewClient[v1alpha.GetJiraIntegrationRequest, v1alpha.GetJiraIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetJiraIntegrationProcedure,
+			opts...,
+		),
+		updateJiraIntegration: connect.NewClient[v1alpha.UpdateJiraIntegrationRequest, v1alpha.UpdateJiraIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceUpdateJiraIntegrationProcedure,
+			opts...,
+		),
+		listComponentIssueStateChanges: connect.NewClient[v1alpha.ListComponentIssueStateChangesRequest, v1alpha.ListComponentIssueStateChangesResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListComponentIssueStateChangesProcedure,
+			opts...,
+		),
+		lookupEPSSData: connect.NewClient[v1alpha.LookupEPSSDataRequest, v1alpha.LookupEPSSDataResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceLookupEPSSDataProcedure,
 			opts...,
 		),
 	}
@@ -328,230 +651,499 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect_go.HTTPClient, baseURL 
 
 // edgeBitPublicAPIServiceClient implements EdgeBitPublicAPIServiceClient.
 type edgeBitPublicAPIServiceClient struct {
-	listProjects             *connect_go.Client[v1alpha.ListProjectsRequest, v1alpha.ListProjectsResponse]
-	generateAgentDeployToken *connect_go.Client[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse]
-	createAgentDeployToken   *connect_go.Client[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse]
-	listAgentDeployTokens    *connect_go.Client[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse]
-	deleteAgentDeployToken   *connect_go.Client[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse]
-	listMachines             *connect_go.Client[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse]
-	getMachineInventory      *connect_go.Client[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse]
-	overview                 *connect_go.Client[v1alpha.OverviewRequest, v1alpha.OverviewResponse]
-	createOrgAccessToken     *connect_go.Client[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse]
-	listOrgAccessTokens      *connect_go.Client[v1alpha.ListOrgAccessTokensRequest, v1alpha.ListOrgAccessTokensResponse]
-	deleteOrgAccessToken     *connect_go.Client[v1alpha.DeleteOrgAccessTokenRequest, v1alpha.DeleteOrgAccessTokenResponse]
-	uploadSBOM               *connect_go.Client[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse]
-	listSBOMs                *connect_go.Client[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse]
-	getSBOM                  *connect_go.Client[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse]
-	getSBOMInventory         *connect_go.Client[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse]
-	listComponents           *connect_go.Client[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse]
-	getComponent             *connect_go.Client[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse]
-	createComponent          *connect_go.Client[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse]
-	updateComponent          *connect_go.Client[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse]
-	deleteComponent          *connect_go.Client[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse]
-	listComponentTags        *connect_go.Client[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse]
-	getComponentTag          *connect_go.Client[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse]
-	setComponentTag          *connect_go.Client[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse]
-	deleteComponentTag       *connect_go.Client[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse]
-	getComponentTagsOverview *connect_go.Client[v1alpha.GetComponentTagsOverviewRequest, v1alpha.GetComponentTagsOverviewResponse]
-	getCIBotComment          *connect_go.Client[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse]
-	listWorkloads            *connect_go.Client[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse]
-	getWorkload              *connect_go.Client[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse]
-	getSBOMDownloadUrl       *connect_go.Client[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse]
+	listProjects                          *connect.Client[v1alpha.ListProjectsRequest, v1alpha.ListProjectsResponse]
+	createProject                         *connect.Client[v1alpha.CreateProjectRequest, v1alpha.CreateProjectResponse]
+	getProject                            *connect.Client[v1alpha.GetProjectRequest, v1alpha.GetProjectResponse]
+	updateProject                         *connect.Client[v1alpha.UpdateProjectRequest, v1alpha.UpdateProjectResponse]
+	generateAgentDeployToken              *connect.Client[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse]
+	createAgentDeployToken                *connect.Client[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse]
+	listAgentDeployTokens                 *connect.Client[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse]
+	deleteAgentDeployToken                *connect.Client[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse]
+	listMachines                          *connect.Client[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse]
+	getMachineInventory                   *connect.Client[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse]
+	overview                              *connect.Client[v1alpha.OverviewRequest, v1alpha.OverviewResponse]
+	listWorkloadsForMachine               *connect.Client[v1alpha.ListWorkloadsForMachineRequest, v1alpha.ListWorkloadsForMachineResponse]
+	createOrgAccessToken                  *connect.Client[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse]
+	listOrgAccessTokens                   *connect.Client[v1alpha.ListOrgAccessTokensRequest, v1alpha.ListOrgAccessTokensResponse]
+	deleteOrgAccessToken                  *connect.Client[v1alpha.DeleteOrgAccessTokenRequest, v1alpha.DeleteOrgAccessTokenResponse]
+	uploadSBOM                            *connect.Client[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse]
+	listSBOMs                             *connect.Client[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse]
+	getSBOM                               *connect.Client[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse]
+	getSBOMInventory                      *connect.Client[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse]
+	getSBOMAttestation                    *connect.Client[v1alpha.GetSBOMAttestationRequest, v1alpha.GetSBOMAttestationResponse]
+	listComponents                        *connect.Client[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse]
+	getComponent                          *connect.Client[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse]
+	createComponent                       *connect.Client[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse]
+	updateComponent                       *connect.Client[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse]
+	deleteComponent                       *connect.Client[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse]
+	getComponentDefaultTagSBOMAttestation *connect.Client[v1alpha.GetComponentDefaultTagSBOMAttestationRequest, v1alpha.GetComponentDefaultTagSBOMAttestationResponse]
+	listComponentTags                     *connect.Client[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse]
+	getComponentTag                       *connect.Client[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse]
+	setComponentTag                       *connect.Client[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse]
+	deleteComponentTag                    *connect.Client[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse]
+	getComponentTagsOverview              *connect.Client[v1alpha.GetComponentTagsOverviewRequest, v1alpha.GetComponentTagsOverviewResponse]
+	listComponentIssues                   *connect.Client[v1alpha.ListComponentIssuesRequest, v1alpha.ListComponentIssuesResponse]
+	getComponentIssue                     *connect.Client[v1alpha.GetComponentIssueRequest, v1alpha.GetComponentIssueResponse]
+	updateComponentIssue                  *connect.Client[v1alpha.UpdateComponentIssueRequest, v1alpha.UpdateComponentIssueResponse]
+	getComponentIssueTrend                *connect.Client[v1alpha.GetComponentIssueTrendRequest, v1alpha.GetComponentIssueTrendResponse]
+	listComponentIssuesByStateForProject  *connect.Client[v1alpha.ListComponentIssuesByStateForProjectRequest, v1alpha.ListComponentIssuesByStateForProjectResponse]
+	getCIBotComment                       *connect.Client[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse]
+	listWorkloads                         *connect.Client[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse]
+	getWorkload                           *connect.Client[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse]
+	debugWorkloadPackageInUse             *connect.Client[v1alpha.DebugWorkloadPackageInUseRequest, v1alpha.DebugWorkloadPackageInUseResponse]
+	getSBOMDownloadUrl                    *connect.Client[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse]
+	getVexDownloadUrl                     *connect.Client[v1alpha.GetVexDownloadUrlRequest, v1alpha.GetVexDownloadUrlResponse]
+	listComponentsWithMetrics             *connect.Client[v1alpha.ListComponentsWithMetricsRequest, v1alpha.ListComponentsWithMetricsResponse]
+	getServerSBOMRoutingPolicy            *connect.Client[v1alpha.GetServerSBOMRoutingPolicyRequest, v1alpha.GetServerSBOMRoutingPolicyResponse]
+	updateServerSbomRoutingPolicy         *connect.Client[v1alpha.UpdateServerSbomRoutingPolicyRequest, v1alpha.UpdateServerSbomRoutingPolicyResponse]
+	setProjectIssueSLAPolicy              *connect.Client[v1alpha.SetProjectIssueSLAPolicyRequest, v1alpha.SetProjectIssueSLAPolicyResponse]
+	getProjectIssueSLAPolicy              *connect.Client[v1alpha.GetProjectIssueSLAPolicyRequest, v1alpha.GetProjectIssueSLAPolicyResponse]
+	completeGitHubAppInstall              *connect.Client[v1alpha.CompleteGitHubAppInstallRequest, v1alpha.CompleteGitHubAppInstallResponse]
+	getProjectIssueTrend                  *connect.Client[v1alpha.GetProjectIssueTrendRequest, v1alpha.GetProjectIssueTrendResponse]
+	listGitHubIntegrations                *connect.Client[v1alpha.ListGitHubIntegrationsRequest, v1alpha.ListGitHubIntegrationsResponse]
+	getGitHubIntegration                  *connect.Client[v1alpha.GetGitHubIntegrationRequest, v1alpha.GetGitHubIntegrationResponse]
+	hasGitHubIntegration                  *connect.Client[v1alpha.HasGitHubIntegrationRequest, v1alpha.HasGitHubIntegrationResponse]
+	updateGitHubIntegration               *connect.Client[v1alpha.UpdateGitHubIntegrationRequest, v1alpha.UpdateGitHubIntegrationResponse]
+	listGitHubRepositories                *connect.Client[v1alpha.ListGitHubRepositoriesRequest, v1alpha.ListGitHubRepositoriesResponse]
+	analyzeGitHubRepo                     *connect.Client[v1alpha.AnalyzeGitHubRepoRequest, v1alpha.AnalyzeGitHubRepoResponse]
+	importGitHubRepos                     *connect.Client[v1alpha.ImportGitHubReposRequest, v1alpha.ImportGitHubReposResponse]
+	ignoreIssue                           *connect.Client[v1alpha.IgnoreIssueRequest, v1alpha.IgnoreIssueResponse]
+	listIntegrations                      *connect.Client[v1alpha.ListIntegrationsRequest, v1alpha.ListIntegrationsResponse]
+	beginJiraInstall                      *connect.Client[v1alpha.BeginJiraInstallRequest, v1alpha.BeginJiraInstallResponse]
+	completeJiraInstall                   *connect.Client[v1alpha.CompleteJiraInstallRequest, v1alpha.CompleteJiraInstallResponse]
+	getJiraIntegration                    *connect.Client[v1alpha.GetJiraIntegrationRequest, v1alpha.GetJiraIntegrationResponse]
+	updateJiraIntegration                 *connect.Client[v1alpha.UpdateJiraIntegrationRequest, v1alpha.UpdateJiraIntegrationResponse]
+	listComponentIssueStateChanges        *connect.Client[v1alpha.ListComponentIssueStateChangesRequest, v1alpha.ListComponentIssueStateChangesResponse]
+	lookupEPSSData                        *connect.Client[v1alpha.LookupEPSSDataRequest, v1alpha.LookupEPSSDataResponse]
 }
 
 // ListProjects calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListProjects.
-func (c *edgeBitPublicAPIServiceClient) ListProjects(ctx context.Context, req *connect_go.Request[v1alpha.ListProjectsRequest]) (*connect_go.Response[v1alpha.ListProjectsResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListProjects(ctx context.Context, req *connect.Request[v1alpha.ListProjectsRequest]) (*connect.Response[v1alpha.ListProjectsResponse], error) {
 	return c.listProjects.CallUnary(ctx, req)
+}
+
+// CreateProject calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateProject.
+func (c *edgeBitPublicAPIServiceClient) CreateProject(ctx context.Context, req *connect.Request[v1alpha.CreateProjectRequest]) (*connect.Response[v1alpha.CreateProjectResponse], error) {
+	return c.createProject.CallUnary(ctx, req)
+}
+
+// GetProject calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetProject.
+func (c *edgeBitPublicAPIServiceClient) GetProject(ctx context.Context, req *connect.Request[v1alpha.GetProjectRequest]) (*connect.Response[v1alpha.GetProjectResponse], error) {
+	return c.getProject.CallUnary(ctx, req)
+}
+
+// UpdateProject calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateProject.
+func (c *edgeBitPublicAPIServiceClient) UpdateProject(ctx context.Context, req *connect.Request[v1alpha.UpdateProjectRequest]) (*connect.Response[v1alpha.UpdateProjectResponse], error) {
+	return c.updateProject.CallUnary(ctx, req)
 }
 
 // GenerateAgentDeployToken calls
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateAgentDeployToken.
-func (c *edgeBitPublicAPIServiceClient) GenerateAgentDeployToken(ctx context.Context, req *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GenerateAgentDeployToken(ctx context.Context, req *connect.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect.Response[v1alpha.GenerateAgentDeployTokenResponse], error) {
 	return c.generateAgentDeployToken.CallUnary(ctx, req)
 }
 
 // CreateAgentDeployToken calls
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateAgentDeployToken.
-func (c *edgeBitPublicAPIServiceClient) CreateAgentDeployToken(ctx context.Context, req *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) CreateAgentDeployToken(ctx context.Context, req *connect.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect.Response[v1alpha.CreateAgentDeployTokenResponse], error) {
 	return c.createAgentDeployToken.CallUnary(ctx, req)
 }
 
 // ListAgentDeployTokens calls
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListAgentDeployTokens.
-func (c *edgeBitPublicAPIServiceClient) ListAgentDeployTokens(ctx context.Context, req *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListAgentDeployTokens(ctx context.Context, req *connect.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect.Response[v1alpha.ListAgentDeployTokensResponse], error) {
 	return c.listAgentDeployTokens.CallUnary(ctx, req)
 }
 
 // DeleteAgentDeployToken calls
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteAgentDeployToken.
-func (c *edgeBitPublicAPIServiceClient) DeleteAgentDeployToken(ctx context.Context, req *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) DeleteAgentDeployToken(ctx context.Context, req *connect.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect.Response[v1alpha.DeleteAgentDeployTokenResponse], error) {
 	return c.deleteAgentDeployToken.CallUnary(ctx, req)
 }
 
 // ListMachines calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListMachines.
-func (c *edgeBitPublicAPIServiceClient) ListMachines(ctx context.Context, req *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListMachines(ctx context.Context, req *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error) {
 	return c.listMachines.CallUnary(ctx, req)
 }
 
 // GetMachineInventory calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetMachineInventory.
-func (c *edgeBitPublicAPIServiceClient) GetMachineInventory(ctx context.Context, req *connect_go.Request[v1alpha.GetMachineInventoryRequest]) (*connect_go.Response[v1alpha.GetMachineInventoryResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetMachineInventory(ctx context.Context, req *connect.Request[v1alpha.GetMachineInventoryRequest]) (*connect.Response[v1alpha.GetMachineInventoryResponse], error) {
 	return c.getMachineInventory.CallUnary(ctx, req)
 }
 
 // Overview calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.Overview.
-func (c *edgeBitPublicAPIServiceClient) Overview(ctx context.Context, req *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) Overview(ctx context.Context, req *connect.Request[v1alpha.OverviewRequest]) (*connect.Response[v1alpha.OverviewResponse], error) {
 	return c.overview.CallUnary(ctx, req)
 }
 
+// ListWorkloadsForMachine calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloadsForMachine.
+func (c *edgeBitPublicAPIServiceClient) ListWorkloadsForMachine(ctx context.Context, req *connect.Request[v1alpha.ListWorkloadsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadsForMachineResponse], error) {
+	return c.listWorkloadsForMachine.CallUnary(ctx, req)
+}
+
 // CreateOrgAccessToken calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateOrgAccessToken.
-func (c *edgeBitPublicAPIServiceClient) CreateOrgAccessToken(ctx context.Context, req *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) CreateOrgAccessToken(ctx context.Context, req *connect.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect.Response[v1alpha.CreateOrgAccessTokenResponse], error) {
 	return c.createOrgAccessToken.CallUnary(ctx, req)
 }
 
 // ListOrgAccessTokens calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListOrgAccessTokens.
-func (c *edgeBitPublicAPIServiceClient) ListOrgAccessTokens(ctx context.Context, req *connect_go.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect_go.Response[v1alpha.ListOrgAccessTokensResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListOrgAccessTokens(ctx context.Context, req *connect.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect.Response[v1alpha.ListOrgAccessTokensResponse], error) {
 	return c.listOrgAccessTokens.CallUnary(ctx, req)
 }
 
 // DeleteOrgAccessToken calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteOrgAccessToken.
-func (c *edgeBitPublicAPIServiceClient) DeleteOrgAccessToken(ctx context.Context, req *connect_go.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.DeleteOrgAccessTokenResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) DeleteOrgAccessToken(ctx context.Context, req *connect.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect.Response[v1alpha.DeleteOrgAccessTokenResponse], error) {
 	return c.deleteOrgAccessToken.CallUnary(ctx, req)
 }
 
 // UploadSBOM calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.UploadSBOM.
-func (c *edgeBitPublicAPIServiceClient) UploadSBOM(ctx context.Context) *connect_go.ClientStreamForClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse] {
+func (c *edgeBitPublicAPIServiceClient) UploadSBOM(ctx context.Context) *connect.ClientStreamForClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse] {
 	return c.uploadSBOM.CallClientStream(ctx)
 }
 
 // ListSBOMs calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListSBOMs.
-func (c *edgeBitPublicAPIServiceClient) ListSBOMs(ctx context.Context, req *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListSBOMs(ctx context.Context, req *connect.Request[v1alpha.ListSBOMsRequest]) (*connect.Response[v1alpha.ListSBOMsResponse], error) {
 	return c.listSBOMs.CallUnary(ctx, req)
 }
 
 // GetSBOM calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOM.
-func (c *edgeBitPublicAPIServiceClient) GetSBOM(ctx context.Context, req *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetSBOM(ctx context.Context, req *connect.Request[v1alpha.GetSBOMRequest]) (*connect.Response[v1alpha.GetSBOMResponse], error) {
 	return c.getSBOM.CallUnary(ctx, req)
 }
 
 // GetSBOMInventory calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMInventory.
-func (c *edgeBitPublicAPIServiceClient) GetSBOMInventory(ctx context.Context, req *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetSBOMInventory(ctx context.Context, req *connect.Request[v1alpha.GetSBOMInventoryRequest]) (*connect.Response[v1alpha.GetSBOMInventoryResponse], error) {
 	return c.getSBOMInventory.CallUnary(ctx, req)
 }
 
+// GetSBOMAttestation calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMAttestation.
+func (c *edgeBitPublicAPIServiceClient) GetSBOMAttestation(ctx context.Context, req *connect.Request[v1alpha.GetSBOMAttestationRequest]) (*connect.Response[v1alpha.GetSBOMAttestationResponse], error) {
+	return c.getSBOMAttestation.CallUnary(ctx, req)
+}
+
 // ListComponents calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponents.
-func (c *edgeBitPublicAPIServiceClient) ListComponents(ctx context.Context, req *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListComponents(ctx context.Context, req *connect.Request[v1alpha.ListComponentsRequest]) (*connect.Response[v1alpha.ListComponentsResponse], error) {
 	return c.listComponents.CallUnary(ctx, req)
 }
 
 // GetComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponent.
-func (c *edgeBitPublicAPIServiceClient) GetComponent(ctx context.Context, req *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetComponent(ctx context.Context, req *connect.Request[v1alpha.GetComponentRequest]) (*connect.Response[v1alpha.GetComponentResponse], error) {
 	return c.getComponent.CallUnary(ctx, req)
 }
 
 // CreateComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateComponent.
-func (c *edgeBitPublicAPIServiceClient) CreateComponent(ctx context.Context, req *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) CreateComponent(ctx context.Context, req *connect.Request[v1alpha.CreateComponentRequest]) (*connect.Response[v1alpha.CreateComponentResponse], error) {
 	return c.createComponent.CallUnary(ctx, req)
 }
 
 // UpdateComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateComponent.
-func (c *edgeBitPublicAPIServiceClient) UpdateComponent(ctx context.Context, req *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) UpdateComponent(ctx context.Context, req *connect.Request[v1alpha.UpdateComponentRequest]) (*connect.Response[v1alpha.UpdateComponentResponse], error) {
 	return c.updateComponent.CallUnary(ctx, req)
 }
 
 // DeleteComponent calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponent.
-func (c *edgeBitPublicAPIServiceClient) DeleteComponent(ctx context.Context, req *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) DeleteComponent(ctx context.Context, req *connect.Request[v1alpha.DeleteComponentRequest]) (*connect.Response[v1alpha.DeleteComponentResponse], error) {
 	return c.deleteComponent.CallUnary(ctx, req)
 }
 
+// GetComponentDefaultTagSBOMAttestation calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentDefaultTagSBOMAttestation.
+func (c *edgeBitPublicAPIServiceClient) GetComponentDefaultTagSBOMAttestation(ctx context.Context, req *connect.Request[v1alpha.GetComponentDefaultTagSBOMAttestationRequest]) (*connect.Response[v1alpha.GetComponentDefaultTagSBOMAttestationResponse], error) {
+	return c.getComponentDefaultTagSBOMAttestation.CallUnary(ctx, req)
+}
+
 // ListComponentTags calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentTags.
-func (c *edgeBitPublicAPIServiceClient) ListComponentTags(ctx context.Context, req *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListComponentTags(ctx context.Context, req *connect.Request[v1alpha.ListComponentTagsRequest]) (*connect.Response[v1alpha.ListComponentTagsResponse], error) {
 	return c.listComponentTags.CallUnary(ctx, req)
 }
 
 // GetComponentTag calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTag.
-func (c *edgeBitPublicAPIServiceClient) GetComponentTag(ctx context.Context, req *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetComponentTag(ctx context.Context, req *connect.Request[v1alpha.GetComponentTagRequest]) (*connect.Response[v1alpha.GetComponentTagResponse], error) {
 	return c.getComponentTag.CallUnary(ctx, req)
 }
 
 // SetComponentTag calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.SetComponentTag.
-func (c *edgeBitPublicAPIServiceClient) SetComponentTag(ctx context.Context, req *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) SetComponentTag(ctx context.Context, req *connect.Request[v1alpha.SetComponentTagRequest]) (*connect.Response[v1alpha.SetComponentTagResponse], error) {
 	return c.setComponentTag.CallUnary(ctx, req)
 }
 
 // DeleteComponentTag calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponentTag.
-func (c *edgeBitPublicAPIServiceClient) DeleteComponentTag(ctx context.Context, req *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) DeleteComponentTag(ctx context.Context, req *connect.Request[v1alpha.DeleteComponentTagRequest]) (*connect.Response[v1alpha.DeleteComponentTagResponse], error) {
 	return c.deleteComponentTag.CallUnary(ctx, req)
 }
 
 // GetComponentTagsOverview calls
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTagsOverview.
-func (c *edgeBitPublicAPIServiceClient) GetComponentTagsOverview(ctx context.Context, req *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetComponentTagsOverview(ctx context.Context, req *connect.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect.Response[v1alpha.GetComponentTagsOverviewResponse], error) {
 	return c.getComponentTagsOverview.CallUnary(ctx, req)
 }
 
+// ListComponentIssues calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentIssues.
+func (c *edgeBitPublicAPIServiceClient) ListComponentIssues(ctx context.Context, req *connect.Request[v1alpha.ListComponentIssuesRequest]) (*connect.Response[v1alpha.ListComponentIssuesResponse], error) {
+	return c.listComponentIssues.CallUnary(ctx, req)
+}
+
+// GetComponentIssue calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentIssue.
+func (c *edgeBitPublicAPIServiceClient) GetComponentIssue(ctx context.Context, req *connect.Request[v1alpha.GetComponentIssueRequest]) (*connect.Response[v1alpha.GetComponentIssueResponse], error) {
+	return c.getComponentIssue.CallUnary(ctx, req)
+}
+
+// UpdateComponentIssue calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateComponentIssue.
+func (c *edgeBitPublicAPIServiceClient) UpdateComponentIssue(ctx context.Context, req *connect.Request[v1alpha.UpdateComponentIssueRequest]) (*connect.Response[v1alpha.UpdateComponentIssueResponse], error) {
+	return c.updateComponentIssue.CallUnary(ctx, req)
+}
+
+// GetComponentIssueTrend calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentIssueTrend.
+func (c *edgeBitPublicAPIServiceClient) GetComponentIssueTrend(ctx context.Context, req *connect.Request[v1alpha.GetComponentIssueTrendRequest]) (*connect.Response[v1alpha.GetComponentIssueTrendResponse], error) {
+	return c.getComponentIssueTrend.CallUnary(ctx, req)
+}
+
+// ListComponentIssuesByStateForProject calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentIssuesByStateForProject.
+func (c *edgeBitPublicAPIServiceClient) ListComponentIssuesByStateForProject(ctx context.Context, req *connect.Request[v1alpha.ListComponentIssuesByStateForProjectRequest]) (*connect.Response[v1alpha.ListComponentIssuesByStateForProjectResponse], error) {
+	return c.listComponentIssuesByStateForProject.CallUnary(ctx, req)
+}
+
 // GetCIBotComment calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment.
-func (c *edgeBitPublicAPIServiceClient) GetCIBotComment(ctx context.Context, req *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetCIBotComment(ctx context.Context, req *connect.Request[v1alpha.GetCIBotCommentRequest]) (*connect.Response[v1alpha.GetCIBotCommentResponse], error) {
 	return c.getCIBotComment.CallUnary(ctx, req)
 }
 
 // ListWorkloads calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloads.
-func (c *edgeBitPublicAPIServiceClient) ListWorkloads(ctx context.Context, req *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) ListWorkloads(ctx context.Context, req *connect.Request[v1alpha.ListWorkloadsRequest]) (*connect.Response[v1alpha.ListWorkloadsResponse], error) {
 	return c.listWorkloads.CallUnary(ctx, req)
 }
 
 // GetWorkload calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetWorkload.
-func (c *edgeBitPublicAPIServiceClient) GetWorkload(ctx context.Context, req *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetWorkload(ctx context.Context, req *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error) {
 	return c.getWorkload.CallUnary(ctx, req)
 }
 
+// DebugWorkloadPackageInUse calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.DebugWorkloadPackageInUse.
+func (c *edgeBitPublicAPIServiceClient) DebugWorkloadPackageInUse(ctx context.Context, req *connect.Request[v1alpha.DebugWorkloadPackageInUseRequest]) (*connect.Response[v1alpha.DebugWorkloadPackageInUseResponse], error) {
+	return c.debugWorkloadPackageInUse.CallUnary(ctx, req)
+}
+
 // GetSBOMDownloadUrl calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMDownloadUrl.
-func (c *edgeBitPublicAPIServiceClient) GetSBOMDownloadUrl(ctx context.Context, req *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error) {
+func (c *edgeBitPublicAPIServiceClient) GetSBOMDownloadUrl(ctx context.Context, req *connect.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect.Response[v1alpha.GetSBOMDownloadUrlResponse], error) {
 	return c.getSBOMDownloadUrl.CallUnary(ctx, req)
+}
+
+// GetVexDownloadUrl calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetVexDownloadUrl.
+func (c *edgeBitPublicAPIServiceClient) GetVexDownloadUrl(ctx context.Context, req *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error) {
+	return c.getVexDownloadUrl.CallUnary(ctx, req)
+}
+
+// ListComponentsWithMetrics calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentsWithMetrics.
+func (c *edgeBitPublicAPIServiceClient) ListComponentsWithMetrics(ctx context.Context, req *connect.Request[v1alpha.ListComponentsWithMetricsRequest]) (*connect.Response[v1alpha.ListComponentsWithMetricsResponse], error) {
+	return c.listComponentsWithMetrics.CallUnary(ctx, req)
+}
+
+// GetServerSBOMRoutingPolicy calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetServerSBOMRoutingPolicy.
+func (c *edgeBitPublicAPIServiceClient) GetServerSBOMRoutingPolicy(ctx context.Context, req *connect.Request[v1alpha.GetServerSBOMRoutingPolicyRequest]) (*connect.Response[v1alpha.GetServerSBOMRoutingPolicyResponse], error) {
+	return c.getServerSBOMRoutingPolicy.CallUnary(ctx, req)
+}
+
+// UpdateServerSbomRoutingPolicy calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateServerSbomRoutingPolicy.
+func (c *edgeBitPublicAPIServiceClient) UpdateServerSbomRoutingPolicy(ctx context.Context, req *connect.Request[v1alpha.UpdateServerSbomRoutingPolicyRequest]) (*connect.Response[v1alpha.UpdateServerSbomRoutingPolicyResponse], error) {
+	return c.updateServerSbomRoutingPolicy.CallUnary(ctx, req)
+}
+
+// SetProjectIssueSLAPolicy calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.SetProjectIssueSLAPolicy.
+func (c *edgeBitPublicAPIServiceClient) SetProjectIssueSLAPolicy(ctx context.Context, req *connect.Request[v1alpha.SetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.SetProjectIssueSLAPolicyResponse], error) {
+	return c.setProjectIssueSLAPolicy.CallUnary(ctx, req)
+}
+
+// GetProjectIssueSLAPolicy calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetProjectIssueSLAPolicy.
+func (c *edgeBitPublicAPIServiceClient) GetProjectIssueSLAPolicy(ctx context.Context, req *connect.Request[v1alpha.GetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.GetProjectIssueSLAPolicyResponse], error) {
+	return c.getProjectIssueSLAPolicy.CallUnary(ctx, req)
+}
+
+// CompleteGitHubAppInstall calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteGitHubAppInstall.
+func (c *edgeBitPublicAPIServiceClient) CompleteGitHubAppInstall(ctx context.Context, req *connect.Request[v1alpha.CompleteGitHubAppInstallRequest]) (*connect.Response[v1alpha.CompleteGitHubAppInstallResponse], error) {
+	return c.completeGitHubAppInstall.CallUnary(ctx, req)
+}
+
+// GetProjectIssueTrend calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetProjectIssueTrend.
+func (c *edgeBitPublicAPIServiceClient) GetProjectIssueTrend(ctx context.Context, req *connect.Request[v1alpha.GetProjectIssueTrendRequest]) (*connect.Response[v1alpha.GetProjectIssueTrendResponse], error) {
+	return c.getProjectIssueTrend.CallUnary(ctx, req)
+}
+
+// ListGitHubIntegrations calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListGitHubIntegrations.
+func (c *edgeBitPublicAPIServiceClient) ListGitHubIntegrations(ctx context.Context, req *connect.Request[v1alpha.ListGitHubIntegrationsRequest]) (*connect.Response[v1alpha.ListGitHubIntegrationsResponse], error) {
+	return c.listGitHubIntegrations.CallUnary(ctx, req)
+}
+
+// GetGitHubIntegration calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetGitHubIntegration.
+func (c *edgeBitPublicAPIServiceClient) GetGitHubIntegration(ctx context.Context, req *connect.Request[v1alpha.GetGitHubIntegrationRequest]) (*connect.Response[v1alpha.GetGitHubIntegrationResponse], error) {
+	return c.getGitHubIntegration.CallUnary(ctx, req)
+}
+
+// HasGitHubIntegration calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.HasGitHubIntegration.
+func (c *edgeBitPublicAPIServiceClient) HasGitHubIntegration(ctx context.Context, req *connect.Request[v1alpha.HasGitHubIntegrationRequest]) (*connect.Response[v1alpha.HasGitHubIntegrationResponse], error) {
+	return c.hasGitHubIntegration.CallUnary(ctx, req)
+}
+
+// UpdateGitHubIntegration calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateGitHubIntegration.
+func (c *edgeBitPublicAPIServiceClient) UpdateGitHubIntegration(ctx context.Context, req *connect.Request[v1alpha.UpdateGitHubIntegrationRequest]) (*connect.Response[v1alpha.UpdateGitHubIntegrationResponse], error) {
+	return c.updateGitHubIntegration.CallUnary(ctx, req)
+}
+
+// ListGitHubRepositories calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListGitHubRepositories.
+func (c *edgeBitPublicAPIServiceClient) ListGitHubRepositories(ctx context.Context, req *connect.Request[v1alpha.ListGitHubRepositoriesRequest]) (*connect.Response[v1alpha.ListGitHubRepositoriesResponse], error) {
+	return c.listGitHubRepositories.CallUnary(ctx, req)
+}
+
+// AnalyzeGitHubRepo calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.AnalyzeGitHubRepo.
+func (c *edgeBitPublicAPIServiceClient) AnalyzeGitHubRepo(ctx context.Context, req *connect.Request[v1alpha.AnalyzeGitHubRepoRequest]) (*connect.Response[v1alpha.AnalyzeGitHubRepoResponse], error) {
+	return c.analyzeGitHubRepo.CallUnary(ctx, req)
+}
+
+// ImportGitHubRepos calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ImportGitHubRepos.
+func (c *edgeBitPublicAPIServiceClient) ImportGitHubRepos(ctx context.Context, req *connect.Request[v1alpha.ImportGitHubReposRequest]) (*connect.Response[v1alpha.ImportGitHubReposResponse], error) {
+	return c.importGitHubRepos.CallUnary(ctx, req)
+}
+
+// IgnoreIssue calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.IgnoreIssue.
+func (c *edgeBitPublicAPIServiceClient) IgnoreIssue(ctx context.Context, req *connect.Request[v1alpha.IgnoreIssueRequest]) (*connect.Response[v1alpha.IgnoreIssueResponse], error) {
+	return c.ignoreIssue.CallUnary(ctx, req)
+}
+
+// ListIntegrations calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListIntegrations.
+func (c *edgeBitPublicAPIServiceClient) ListIntegrations(ctx context.Context, req *connect.Request[v1alpha.ListIntegrationsRequest]) (*connect.Response[v1alpha.ListIntegrationsResponse], error) {
+	return c.listIntegrations.CallUnary(ctx, req)
+}
+
+// BeginJiraInstall calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.BeginJiraInstall.
+func (c *edgeBitPublicAPIServiceClient) BeginJiraInstall(ctx context.Context, req *connect.Request[v1alpha.BeginJiraInstallRequest]) (*connect.Response[v1alpha.BeginJiraInstallResponse], error) {
+	return c.beginJiraInstall.CallUnary(ctx, req)
+}
+
+// CompleteJiraInstall calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteJiraInstall.
+func (c *edgeBitPublicAPIServiceClient) CompleteJiraInstall(ctx context.Context, req *connect.Request[v1alpha.CompleteJiraInstallRequest]) (*connect.Response[v1alpha.CompleteJiraInstallResponse], error) {
+	return c.completeJiraInstall.CallUnary(ctx, req)
+}
+
+// GetJiraIntegration calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetJiraIntegration.
+func (c *edgeBitPublicAPIServiceClient) GetJiraIntegration(ctx context.Context, req *connect.Request[v1alpha.GetJiraIntegrationRequest]) (*connect.Response[v1alpha.GetJiraIntegrationResponse], error) {
+	return c.getJiraIntegration.CallUnary(ctx, req)
+}
+
+// UpdateJiraIntegration calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateJiraIntegration.
+func (c *edgeBitPublicAPIServiceClient) UpdateJiraIntegration(ctx context.Context, req *connect.Request[v1alpha.UpdateJiraIntegrationRequest]) (*connect.Response[v1alpha.UpdateJiraIntegrationResponse], error) {
+	return c.updateJiraIntegration.CallUnary(ctx, req)
+}
+
+// ListComponentIssueStateChanges calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentIssueStateChanges.
+func (c *edgeBitPublicAPIServiceClient) ListComponentIssueStateChanges(ctx context.Context, req *connect.Request[v1alpha.ListComponentIssueStateChangesRequest]) (*connect.Response[v1alpha.ListComponentIssueStateChangesResponse], error) {
+	return c.listComponentIssueStateChanges.CallUnary(ctx, req)
+}
+
+// LookupEPSSData calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.LookupEPSSData.
+func (c *edgeBitPublicAPIServiceClient) LookupEPSSData(ctx context.Context, req *connect.Request[v1alpha.LookupEPSSDataRequest]) (*connect.Response[v1alpha.LookupEPSSDataResponse], error) {
+	return c.lookupEPSSData.CallUnary(ctx, req)
 }
 
 // EdgeBitPublicAPIServiceHandler is an implementation of the
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService service.
 type EdgeBitPublicAPIServiceHandler interface {
 	// Project Management (org-scoped)
-	ListProjects(context.Context, *connect_go.Request[v1alpha.ListProjectsRequest]) (*connect_go.Response[v1alpha.ListProjectsResponse], error)
+	ListProjects(context.Context, *connect.Request[v1alpha.ListProjectsRequest]) (*connect.Response[v1alpha.ListProjectsResponse], error)
+	CreateProject(context.Context, *connect.Request[v1alpha.CreateProjectRequest]) (*connect.Response[v1alpha.CreateProjectResponse], error)
+	GetProject(context.Context, *connect.Request[v1alpha.GetProjectRequest]) (*connect.Response[v1alpha.GetProjectResponse], error)
+	UpdateProject(context.Context, *connect.Request[v1alpha.UpdateProjectRequest]) (*connect.Response[v1alpha.UpdateProjectResponse], error)
 	// Agent Deployment Token Management (project-scoped)
-	GenerateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error)
-	CreateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error)
-	ListAgentDeployTokens(context.Context, *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error)
-	DeleteAgentDeployToken(context.Context, *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
+	GenerateAgentDeployToken(context.Context, *connect.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect.Response[v1alpha.GenerateAgentDeployTokenResponse], error)
+	CreateAgentDeployToken(context.Context, *connect.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect.Response[v1alpha.CreateAgentDeployTokenResponse], error)
+	ListAgentDeployTokens(context.Context, *connect.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect.Response[v1alpha.ListAgentDeployTokensResponse], error)
+	DeleteAgentDeployToken(context.Context, *connect.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
 	// Machine Management (project-scoped)
-	ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error)
+	ListMachines(context.Context, *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error)
 	// Inventory Exploration (project-scoped)
-	GetMachineInventory(context.Context, *connect_go.Request[v1alpha.GetMachineInventoryRequest]) (*connect_go.Response[v1alpha.GetMachineInventoryResponse], error)
-	Overview(context.Context, *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error)
+	GetMachineInventory(context.Context, *connect.Request[v1alpha.GetMachineInventoryRequest]) (*connect.Response[v1alpha.GetMachineInventoryResponse], error)
+	Overview(context.Context, *connect.Request[v1alpha.OverviewRequest]) (*connect.Response[v1alpha.OverviewResponse], error)
+	ListWorkloadsForMachine(context.Context, *connect.Request[v1alpha.ListWorkloadsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadsForMachineResponse], error)
 	// Org (Project) Access Token Management (project-scoped)
-	CreateOrgAccessToken(context.Context, *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error)
-	ListOrgAccessTokens(context.Context, *connect_go.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect_go.Response[v1alpha.ListOrgAccessTokensResponse], error)
-	DeleteOrgAccessToken(context.Context, *connect_go.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.DeleteOrgAccessTokenResponse], error)
+	CreateOrgAccessToken(context.Context, *connect.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect.Response[v1alpha.CreateOrgAccessTokenResponse], error)
+	ListOrgAccessTokens(context.Context, *connect.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect.Response[v1alpha.ListOrgAccessTokensResponse], error)
+	DeleteOrgAccessToken(context.Context, *connect.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect.Response[v1alpha.DeleteOrgAccessTokenResponse], error)
 	// SBOM Management (project-scoped)
-	UploadSBOM(context.Context, *connect_go.ClientStream[v1alpha.UploadSBOMRequest]) (*connect_go.Response[v1alpha.UploadSBOMResponse], error)
-	ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error)
-	GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error)
-	GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error)
+	UploadSBOM(context.Context, *connect.ClientStream[v1alpha.UploadSBOMRequest]) (*connect.Response[v1alpha.UploadSBOMResponse], error)
+	ListSBOMs(context.Context, *connect.Request[v1alpha.ListSBOMsRequest]) (*connect.Response[v1alpha.ListSBOMsResponse], error)
+	GetSBOM(context.Context, *connect.Request[v1alpha.GetSBOMRequest]) (*connect.Response[v1alpha.GetSBOMResponse], error)
+	GetSBOMInventory(context.Context, *connect.Request[v1alpha.GetSBOMInventoryRequest]) (*connect.Response[v1alpha.GetSBOMInventoryResponse], error)
+	GetSBOMAttestation(context.Context, *connect.Request[v1alpha.GetSBOMAttestationRequest]) (*connect.Response[v1alpha.GetSBOMAttestationResponse], error)
 	// Componeent Management (project-scoped)
-	ListComponents(context.Context, *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error)
-	GetComponent(context.Context, *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error)
-	CreateComponent(context.Context, *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error)
-	UpdateComponent(context.Context, *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error)
-	DeleteComponent(context.Context, *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error)
+	ListComponents(context.Context, *connect.Request[v1alpha.ListComponentsRequest]) (*connect.Response[v1alpha.ListComponentsResponse], error)
+	GetComponent(context.Context, *connect.Request[v1alpha.GetComponentRequest]) (*connect.Response[v1alpha.GetComponentResponse], error)
+	CreateComponent(context.Context, *connect.Request[v1alpha.CreateComponentRequest]) (*connect.Response[v1alpha.CreateComponentResponse], error)
+	UpdateComponent(context.Context, *connect.Request[v1alpha.UpdateComponentRequest]) (*connect.Response[v1alpha.UpdateComponentResponse], error)
+	DeleteComponent(context.Context, *connect.Request[v1alpha.DeleteComponentRequest]) (*connect.Response[v1alpha.DeleteComponentResponse], error)
+	GetComponentDefaultTagSBOMAttestation(context.Context, *connect.Request[v1alpha.GetComponentDefaultTagSBOMAttestationRequest]) (*connect.Response[v1alpha.GetComponentDefaultTagSBOMAttestationResponse], error)
 	// Component Tags Management (project-scoped)
-	ListComponentTags(context.Context, *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error)
-	GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error)
-	SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error)
-	DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error)
-	GetComponentTagsOverview(context.Context, *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error)
+	ListComponentTags(context.Context, *connect.Request[v1alpha.ListComponentTagsRequest]) (*connect.Response[v1alpha.ListComponentTagsResponse], error)
+	GetComponentTag(context.Context, *connect.Request[v1alpha.GetComponentTagRequest]) (*connect.Response[v1alpha.GetComponentTagResponse], error)
+	SetComponentTag(context.Context, *connect.Request[v1alpha.SetComponentTagRequest]) (*connect.Response[v1alpha.SetComponentTagResponse], error)
+	DeleteComponentTag(context.Context, *connect.Request[v1alpha.DeleteComponentTagRequest]) (*connect.Response[v1alpha.DeleteComponentTagResponse], error)
+	GetComponentTagsOverview(context.Context, *connect.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect.Response[v1alpha.GetComponentTagsOverviewResponse], error)
+	// Component Vulnerabilities Management (project-scoped)
+	ListComponentIssues(context.Context, *connect.Request[v1alpha.ListComponentIssuesRequest]) (*connect.Response[v1alpha.ListComponentIssuesResponse], error)
+	GetComponentIssue(context.Context, *connect.Request[v1alpha.GetComponentIssueRequest]) (*connect.Response[v1alpha.GetComponentIssueResponse], error)
+	UpdateComponentIssue(context.Context, *connect.Request[v1alpha.UpdateComponentIssueRequest]) (*connect.Response[v1alpha.UpdateComponentIssueResponse], error)
+	GetComponentIssueTrend(context.Context, *connect.Request[v1alpha.GetComponentIssueTrendRequest]) (*connect.Response[v1alpha.GetComponentIssueTrendResponse], error)
+	ListComponentIssuesByStateForProject(context.Context, *connect.Request[v1alpha.ListComponentIssuesByStateForProjectRequest]) (*connect.Response[v1alpha.ListComponentIssuesByStateForProjectResponse], error)
 	// CI/CD Integration (project-scoped)
-	GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error)
+	GetCIBotComment(context.Context, *connect.Request[v1alpha.GetCIBotCommentRequest]) (*connect.Response[v1alpha.GetCIBotCommentResponse], error)
 	// Workload Management (project-scoped)
-	ListWorkloads(context.Context, *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error)
-	GetWorkload(context.Context, *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error)
+	ListWorkloads(context.Context, *connect.Request[v1alpha.ListWorkloadsRequest]) (*connect.Response[v1alpha.ListWorkloadsResponse], error)
+	GetWorkload(context.Context, *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error)
+	DebugWorkloadPackageInUse(context.Context, *connect.Request[v1alpha.DebugWorkloadPackageInUseRequest]) (*connect.Response[v1alpha.DebugWorkloadPackageInUseResponse], error)
 	// Get Sbom Download Url
-	GetSBOMDownloadUrl(context.Context, *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
+	GetSBOMDownloadUrl(context.Context, *connect.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
+	// Get Vex Download Url
+	GetVexDownloadUrl(context.Context, *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error)
+	// Get Component With Metrics
+	ListComponentsWithMetrics(context.Context, *connect.Request[v1alpha.ListComponentsWithMetricsRequest]) (*connect.Response[v1alpha.ListComponentsWithMetricsResponse], error)
+	// Server Sbom Routing Policies
+	GetServerSBOMRoutingPolicy(context.Context, *connect.Request[v1alpha.GetServerSBOMRoutingPolicyRequest]) (*connect.Response[v1alpha.GetServerSBOMRoutingPolicyResponse], error)
+	UpdateServerSbomRoutingPolicy(context.Context, *connect.Request[v1alpha.UpdateServerSbomRoutingPolicyRequest]) (*connect.Response[v1alpha.UpdateServerSbomRoutingPolicyResponse], error)
+	SetProjectIssueSLAPolicy(context.Context, *connect.Request[v1alpha.SetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.SetProjectIssueSLAPolicyResponse], error)
+	GetProjectIssueSLAPolicy(context.Context, *connect.Request[v1alpha.GetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.GetProjectIssueSLAPolicyResponse], error)
+	// Last step in the GH app installation that create the association in the platform
+	CompleteGitHubAppInstall(context.Context, *connect.Request[v1alpha.CompleteGitHubAppInstallRequest]) (*connect.Response[v1alpha.CompleteGitHubAppInstallResponse], error)
+	GetProjectIssueTrend(context.Context, *connect.Request[v1alpha.GetProjectIssueTrendRequest]) (*connect.Response[v1alpha.GetProjectIssueTrendResponse], error)
+	// Returns a summary for each integration (does not include settings)
+	ListGitHubIntegrations(context.Context, *connect.Request[v1alpha.ListGitHubIntegrationsRequest]) (*connect.Response[v1alpha.ListGitHubIntegrationsResponse], error)
+	GetGitHubIntegration(context.Context, *connect.Request[v1alpha.GetGitHubIntegrationRequest]) (*connect.Response[v1alpha.GetGitHubIntegrationResponse], error)
+	HasGitHubIntegration(context.Context, *connect.Request[v1alpha.HasGitHubIntegrationRequest]) (*connect.Response[v1alpha.HasGitHubIntegrationResponse], error)
+	UpdateGitHubIntegration(context.Context, *connect.Request[v1alpha.UpdateGitHubIntegrationRequest]) (*connect.Response[v1alpha.UpdateGitHubIntegrationResponse], error)
+	// Lists all the repos accessible by the EdgeBit org
+	ListGitHubRepositories(context.Context, *connect.Request[v1alpha.ListGitHubRepositoriesRequest]) (*connect.Response[v1alpha.ListGitHubRepositoriesResponse], error)
+	AnalyzeGitHubRepo(context.Context, *connect.Request[v1alpha.AnalyzeGitHubRepoRequest]) (*connect.Response[v1alpha.AnalyzeGitHubRepoResponse], error)
+	ImportGitHubRepos(context.Context, *connect.Request[v1alpha.ImportGitHubReposRequest]) (*connect.Response[v1alpha.ImportGitHubReposResponse], error)
+	// Ignore Issue
+	IgnoreIssue(context.Context, *connect.Request[v1alpha.IgnoreIssueRequest]) (*connect.Response[v1alpha.IgnoreIssueResponse], error)
+	ListIntegrations(context.Context, *connect.Request[v1alpha.ListIntegrationsRequest]) (*connect.Response[v1alpha.ListIntegrationsResponse], error)
+	BeginJiraInstall(context.Context, *connect.Request[v1alpha.BeginJiraInstallRequest]) (*connect.Response[v1alpha.BeginJiraInstallResponse], error)
+	CompleteJiraInstall(context.Context, *connect.Request[v1alpha.CompleteJiraInstallRequest]) (*connect.Response[v1alpha.CompleteJiraInstallResponse], error)
+	GetJiraIntegration(context.Context, *connect.Request[v1alpha.GetJiraIntegrationRequest]) (*connect.Response[v1alpha.GetJiraIntegrationResponse], error)
+	UpdateJiraIntegration(context.Context, *connect.Request[v1alpha.UpdateJiraIntegrationRequest]) (*connect.Response[v1alpha.UpdateJiraIntegrationResponse], error)
+	ListComponentIssueStateChanges(context.Context, *connect.Request[v1alpha.ListComponentIssueStateChangesRequest]) (*connect.Response[v1alpha.ListComponentIssueStateChangesResponse], error)
+	LookupEPSSData(context.Context, *connect.Request[v1alpha.LookupEPSSDataRequest]) (*connect.Response[v1alpha.LookupEPSSDataResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceHandler builds an HTTP handler from the service implementation. It
@@ -559,271 +1151,718 @@ type EdgeBitPublicAPIServiceHandler interface {
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(EdgeBitPublicAPIServiceListProjectsProcedure, connect_go.NewUnaryHandler(
+func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	edgeBitPublicAPIServiceListProjectsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListProjectsProcedure,
 		svc.ListProjects,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceCreateProjectHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCreateProjectProcedure,
+		svc.CreateProject,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetProjectHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetProjectProcedure,
+		svc.GetProject,
+		opts...,
+	)
+	edgeBitPublicAPIServiceUpdateProjectHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateProjectProcedure,
+		svc.UpdateProject,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGenerateAgentDeployTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure,
 		svc.GenerateAgentDeployToken,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceCreateAgentDeployTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure,
 		svc.CreateAgentDeployToken,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceListAgentDeployTokensProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceListAgentDeployTokensHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListAgentDeployTokensProcedure,
 		svc.ListAgentDeployTokens,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceDeleteAgentDeployTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure,
 		svc.DeleteAgentDeployToken,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceListMachinesProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceListMachinesHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListMachinesProcedure,
 		svc.ListMachines,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetMachineInventoryProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetMachineInventoryHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetMachineInventoryProcedure,
 		svc.GetMachineInventory,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceOverviewProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceOverviewHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceOverviewProcedure,
 		svc.Overview,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceListWorkloadsForMachineHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListWorkloadsForMachineProcedure,
+		svc.ListWorkloadsForMachine,
+		opts...,
+	)
+	edgeBitPublicAPIServiceCreateOrgAccessTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure,
 		svc.CreateOrgAccessToken,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceListOrgAccessTokensProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceListOrgAccessTokensHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListOrgAccessTokensProcedure,
 		svc.ListOrgAccessTokens,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceDeleteOrgAccessTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure,
 		svc.DeleteOrgAccessToken,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceUploadSBOMProcedure, connect_go.NewClientStreamHandler(
+	)
+	edgeBitPublicAPIServiceUploadSBOMHandler := connect.NewClientStreamHandler(
 		EdgeBitPublicAPIServiceUploadSBOMProcedure,
 		svc.UploadSBOM,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceListSBOMsProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceListSBOMsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListSBOMsProcedure,
 		svc.ListSBOMs,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetSBOMProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetSBOMHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetSBOMProcedure,
 		svc.GetSBOM,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetSBOMInventoryProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetSBOMInventoryHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetSBOMInventoryProcedure,
 		svc.GetSBOMInventory,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceListComponentsProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetSBOMAttestationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetSBOMAttestationProcedure,
+		svc.GetSBOMAttestation,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListComponentsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentsProcedure,
 		svc.ListComponents,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetComponentProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentProcedure,
 		svc.GetComponent,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceCreateComponentProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceCreateComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCreateComponentProcedure,
 		svc.CreateComponent,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceUpdateComponentProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceUpdateComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceUpdateComponentProcedure,
 		svc.UpdateComponent,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceDeleteComponentProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceDeleteComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteComponentProcedure,
 		svc.DeleteComponent,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceListComponentTagsProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationProcedure,
+		svc.GetComponentDefaultTagSBOMAttestation,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListComponentTagsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentTagsProcedure,
 		svc.ListComponentTags,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetComponentTagProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetComponentTagHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentTagProcedure,
 		svc.GetComponentTag,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceSetComponentTagProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceSetComponentTagHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceSetComponentTagProcedure,
 		svc.SetComponentTag,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceDeleteComponentTagProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceDeleteComponentTagHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteComponentTagProcedure,
 		svc.DeleteComponentTag,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetComponentTagsOverviewHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure,
 		svc.GetComponentTagsOverview,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetCIBotCommentProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceListComponentIssuesHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListComponentIssuesProcedure,
+		svc.ListComponentIssues,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetComponentIssueHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetComponentIssueProcedure,
+		svc.GetComponentIssue,
+		opts...,
+	)
+	edgeBitPublicAPIServiceUpdateComponentIssueHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateComponentIssueProcedure,
+		svc.UpdateComponentIssue,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetComponentIssueTrendHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetComponentIssueTrendProcedure,
+		svc.GetComponentIssueTrend,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListComponentIssuesByStateForProjectHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListComponentIssuesByStateForProjectProcedure,
+		svc.ListComponentIssuesByStateForProject,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetCIBotCommentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetCIBotCommentProcedure,
 		svc.GetCIBotComment,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceListWorkloadsProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceListWorkloadsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListWorkloadsProcedure,
 		svc.ListWorkloads,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetWorkloadProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceGetWorkloadHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetWorkloadProcedure,
 		svc.GetWorkload,
 		opts...,
-	))
-	mux.Handle(EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure, connect_go.NewUnaryHandler(
+	)
+	edgeBitPublicAPIServiceDebugWorkloadPackageInUseHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure,
+		svc.DebugWorkloadPackageInUse,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetSBOMDownloadUrlHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure,
 		svc.GetSBOMDownloadUrl,
 		opts...,
-	))
-	return "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/", mux
+	)
+	edgeBitPublicAPIServiceGetVexDownloadUrlHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure,
+		svc.GetVexDownloadUrl,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListComponentsWithMetricsHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure,
+		svc.ListComponentsWithMetrics,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetServerSBOMRoutingPolicyHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure,
+		svc.GetServerSBOMRoutingPolicy,
+		opts...,
+	)
+	edgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyProcedure,
+		svc.UpdateServerSbomRoutingPolicy,
+		opts...,
+	)
+	edgeBitPublicAPIServiceSetProjectIssueSLAPolicyHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceSetProjectIssueSLAPolicyProcedure,
+		svc.SetProjectIssueSLAPolicy,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetProjectIssueSLAPolicyHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetProjectIssueSLAPolicyProcedure,
+		svc.GetProjectIssueSLAPolicy,
+		opts...,
+	)
+	edgeBitPublicAPIServiceCompleteGitHubAppInstallHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCompleteGitHubAppInstallProcedure,
+		svc.CompleteGitHubAppInstall,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetProjectIssueTrendHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetProjectIssueTrendProcedure,
+		svc.GetProjectIssueTrend,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListGitHubIntegrationsHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListGitHubIntegrationsProcedure,
+		svc.ListGitHubIntegrations,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetGitHubIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetGitHubIntegrationProcedure,
+		svc.GetGitHubIntegration,
+		opts...,
+	)
+	edgeBitPublicAPIServiceHasGitHubIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceHasGitHubIntegrationProcedure,
+		svc.HasGitHubIntegration,
+		opts...,
+	)
+	edgeBitPublicAPIServiceUpdateGitHubIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateGitHubIntegrationProcedure,
+		svc.UpdateGitHubIntegration,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListGitHubRepositoriesHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListGitHubRepositoriesProcedure,
+		svc.ListGitHubRepositories,
+		opts...,
+	)
+	edgeBitPublicAPIServiceAnalyzeGitHubRepoHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceAnalyzeGitHubRepoProcedure,
+		svc.AnalyzeGitHubRepo,
+		opts...,
+	)
+	edgeBitPublicAPIServiceImportGitHubReposHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceImportGitHubReposProcedure,
+		svc.ImportGitHubRepos,
+		opts...,
+	)
+	edgeBitPublicAPIServiceIgnoreIssueHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceIgnoreIssueProcedure,
+		svc.IgnoreIssue,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListIntegrationsHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListIntegrationsProcedure,
+		svc.ListIntegrations,
+		opts...,
+	)
+	edgeBitPublicAPIServiceBeginJiraInstallHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceBeginJiraInstallProcedure,
+		svc.BeginJiraInstall,
+		opts...,
+	)
+	edgeBitPublicAPIServiceCompleteJiraInstallHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCompleteJiraInstallProcedure,
+		svc.CompleteJiraInstall,
+		opts...,
+	)
+	edgeBitPublicAPIServiceGetJiraIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetJiraIntegrationProcedure,
+		svc.GetJiraIntegration,
+		opts...,
+	)
+	edgeBitPublicAPIServiceUpdateJiraIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateJiraIntegrationProcedure,
+		svc.UpdateJiraIntegration,
+		opts...,
+	)
+	edgeBitPublicAPIServiceListComponentIssueStateChangesHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListComponentIssueStateChangesProcedure,
+		svc.ListComponentIssueStateChanges,
+		opts...,
+	)
+	edgeBitPublicAPIServiceLookupEPSSDataHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceLookupEPSSDataProcedure,
+		svc.LookupEPSSData,
+		opts...,
+	)
+	return "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case EdgeBitPublicAPIServiceListProjectsProcedure:
+			edgeBitPublicAPIServiceListProjectsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCreateProjectProcedure:
+			edgeBitPublicAPIServiceCreateProjectHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetProjectProcedure:
+			edgeBitPublicAPIServiceGetProjectHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateProjectProcedure:
+			edgeBitPublicAPIServiceUpdateProjectHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure:
+			edgeBitPublicAPIServiceGenerateAgentDeployTokenHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure:
+			edgeBitPublicAPIServiceCreateAgentDeployTokenHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListAgentDeployTokensProcedure:
+			edgeBitPublicAPIServiceListAgentDeployTokensHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure:
+			edgeBitPublicAPIServiceDeleteAgentDeployTokenHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListMachinesProcedure:
+			edgeBitPublicAPIServiceListMachinesHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetMachineInventoryProcedure:
+			edgeBitPublicAPIServiceGetMachineInventoryHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceOverviewProcedure:
+			edgeBitPublicAPIServiceOverviewHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListWorkloadsForMachineProcedure:
+			edgeBitPublicAPIServiceListWorkloadsForMachineHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure:
+			edgeBitPublicAPIServiceCreateOrgAccessTokenHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListOrgAccessTokensProcedure:
+			edgeBitPublicAPIServiceListOrgAccessTokensHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure:
+			edgeBitPublicAPIServiceDeleteOrgAccessTokenHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUploadSBOMProcedure:
+			edgeBitPublicAPIServiceUploadSBOMHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListSBOMsProcedure:
+			edgeBitPublicAPIServiceListSBOMsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetSBOMProcedure:
+			edgeBitPublicAPIServiceGetSBOMHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetSBOMInventoryProcedure:
+			edgeBitPublicAPIServiceGetSBOMInventoryHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetSBOMAttestationProcedure:
+			edgeBitPublicAPIServiceGetSBOMAttestationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListComponentsProcedure:
+			edgeBitPublicAPIServiceListComponentsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetComponentProcedure:
+			edgeBitPublicAPIServiceGetComponentHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCreateComponentProcedure:
+			edgeBitPublicAPIServiceCreateComponentHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateComponentProcedure:
+			edgeBitPublicAPIServiceUpdateComponentHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceDeleteComponentProcedure:
+			edgeBitPublicAPIServiceDeleteComponentHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationProcedure:
+			edgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListComponentTagsProcedure:
+			edgeBitPublicAPIServiceListComponentTagsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetComponentTagProcedure:
+			edgeBitPublicAPIServiceGetComponentTagHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceSetComponentTagProcedure:
+			edgeBitPublicAPIServiceSetComponentTagHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceDeleteComponentTagProcedure:
+			edgeBitPublicAPIServiceDeleteComponentTagHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure:
+			edgeBitPublicAPIServiceGetComponentTagsOverviewHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListComponentIssuesProcedure:
+			edgeBitPublicAPIServiceListComponentIssuesHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetComponentIssueProcedure:
+			edgeBitPublicAPIServiceGetComponentIssueHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateComponentIssueProcedure:
+			edgeBitPublicAPIServiceUpdateComponentIssueHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetComponentIssueTrendProcedure:
+			edgeBitPublicAPIServiceGetComponentIssueTrendHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListComponentIssuesByStateForProjectProcedure:
+			edgeBitPublicAPIServiceListComponentIssuesByStateForProjectHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetCIBotCommentProcedure:
+			edgeBitPublicAPIServiceGetCIBotCommentHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListWorkloadsProcedure:
+			edgeBitPublicAPIServiceListWorkloadsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetWorkloadProcedure:
+			edgeBitPublicAPIServiceGetWorkloadHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure:
+			edgeBitPublicAPIServiceDebugWorkloadPackageInUseHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure:
+			edgeBitPublicAPIServiceGetSBOMDownloadUrlHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure:
+			edgeBitPublicAPIServiceGetVexDownloadUrlHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure:
+			edgeBitPublicAPIServiceListComponentsWithMetricsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure:
+			edgeBitPublicAPIServiceGetServerSBOMRoutingPolicyHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyProcedure:
+			edgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceSetProjectIssueSLAPolicyProcedure:
+			edgeBitPublicAPIServiceSetProjectIssueSLAPolicyHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetProjectIssueSLAPolicyProcedure:
+			edgeBitPublicAPIServiceGetProjectIssueSLAPolicyHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCompleteGitHubAppInstallProcedure:
+			edgeBitPublicAPIServiceCompleteGitHubAppInstallHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetProjectIssueTrendProcedure:
+			edgeBitPublicAPIServiceGetProjectIssueTrendHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListGitHubIntegrationsProcedure:
+			edgeBitPublicAPIServiceListGitHubIntegrationsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetGitHubIntegrationProcedure:
+			edgeBitPublicAPIServiceGetGitHubIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceHasGitHubIntegrationProcedure:
+			edgeBitPublicAPIServiceHasGitHubIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateGitHubIntegrationProcedure:
+			edgeBitPublicAPIServiceUpdateGitHubIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListGitHubRepositoriesProcedure:
+			edgeBitPublicAPIServiceListGitHubRepositoriesHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceAnalyzeGitHubRepoProcedure:
+			edgeBitPublicAPIServiceAnalyzeGitHubRepoHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceImportGitHubReposProcedure:
+			edgeBitPublicAPIServiceImportGitHubReposHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceIgnoreIssueProcedure:
+			edgeBitPublicAPIServiceIgnoreIssueHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListIntegrationsProcedure:
+			edgeBitPublicAPIServiceListIntegrationsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceBeginJiraInstallProcedure:
+			edgeBitPublicAPIServiceBeginJiraInstallHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCompleteJiraInstallProcedure:
+			edgeBitPublicAPIServiceCompleteJiraInstallHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetJiraIntegrationProcedure:
+			edgeBitPublicAPIServiceGetJiraIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateJiraIntegrationProcedure:
+			edgeBitPublicAPIServiceUpdateJiraIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListComponentIssueStateChangesProcedure:
+			edgeBitPublicAPIServiceListComponentIssueStateChangesHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceLookupEPSSDataProcedure:
+			edgeBitPublicAPIServiceLookupEPSSDataHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedEdgeBitPublicAPIServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedEdgeBitPublicAPIServiceHandler struct{}
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListProjects(context.Context, *connect_go.Request[v1alpha.ListProjectsRequest]) (*connect_go.Response[v1alpha.ListProjectsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListProjects is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListProjects(context.Context, *connect.Request[v1alpha.ListProjectsRequest]) (*connect.Response[v1alpha.ListProjectsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListProjects is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GenerateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.GenerateAgentDeployTokenResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateAgentDeployToken is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateProject(context.Context, *connect.Request[v1alpha.CreateProjectRequest]) (*connect.Response[v1alpha.CreateProjectResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateProject is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateAgentDeployToken(context.Context, *connect_go.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.CreateAgentDeployTokenResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateAgentDeployToken is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetProject(context.Context, *connect.Request[v1alpha.GetProjectRequest]) (*connect.Response[v1alpha.GetProjectResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetProject is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListAgentDeployTokens(context.Context, *connect_go.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect_go.Response[v1alpha.ListAgentDeployTokensResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListAgentDeployTokens is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateProject(context.Context, *connect.Request[v1alpha.UpdateProjectRequest]) (*connect.Response[v1alpha.UpdateProjectResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateProject is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteAgentDeployToken(context.Context, *connect_go.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect_go.Response[v1alpha.DeleteAgentDeployTokenResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteAgentDeployToken is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GenerateAgentDeployToken(context.Context, *connect.Request[v1alpha.GenerateAgentDeployTokenRequest]) (*connect.Response[v1alpha.GenerateAgentDeployTokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateAgentDeployToken is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListMachines(context.Context, *connect_go.Request[v1alpha.ListMachinesRequest]) (*connect_go.Response[v1alpha.ListMachinesResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListMachines is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateAgentDeployToken(context.Context, *connect.Request[v1alpha.CreateAgentDeployTokenRequest]) (*connect.Response[v1alpha.CreateAgentDeployTokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateAgentDeployToken is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetMachineInventory(context.Context, *connect_go.Request[v1alpha.GetMachineInventoryRequest]) (*connect_go.Response[v1alpha.GetMachineInventoryResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetMachineInventory is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListAgentDeployTokens(context.Context, *connect.Request[v1alpha.ListAgentDeployTokensRequest]) (*connect.Response[v1alpha.ListAgentDeployTokensResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListAgentDeployTokens is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) Overview(context.Context, *connect_go.Request[v1alpha.OverviewRequest]) (*connect_go.Response[v1alpha.OverviewResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.Overview is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteAgentDeployToken(context.Context, *connect.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect.Response[v1alpha.DeleteAgentDeployTokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteAgentDeployToken is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateOrgAccessToken(context.Context, *connect_go.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.CreateOrgAccessTokenResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateOrgAccessToken is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListMachines(context.Context, *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListMachines is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListOrgAccessTokens(context.Context, *connect_go.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect_go.Response[v1alpha.ListOrgAccessTokensResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListOrgAccessTokens is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetMachineInventory(context.Context, *connect.Request[v1alpha.GetMachineInventoryRequest]) (*connect.Response[v1alpha.GetMachineInventoryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetMachineInventory is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteOrgAccessToken(context.Context, *connect_go.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect_go.Response[v1alpha.DeleteOrgAccessTokenResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteOrgAccessToken is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) Overview(context.Context, *connect.Request[v1alpha.OverviewRequest]) (*connect.Response[v1alpha.OverviewResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.Overview is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) UploadSBOM(context.Context, *connect_go.ClientStream[v1alpha.UploadSBOMRequest]) (*connect_go.Response[v1alpha.UploadSBOMResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UploadSBOM is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListWorkloadsForMachine(context.Context, *connect.Request[v1alpha.ListWorkloadsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadsForMachineResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloadsForMachine is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListSBOMs(context.Context, *connect_go.Request[v1alpha.ListSBOMsRequest]) (*connect_go.Response[v1alpha.ListSBOMsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListSBOMs is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateOrgAccessToken(context.Context, *connect.Request[v1alpha.CreateOrgAccessTokenRequest]) (*connect.Response[v1alpha.CreateOrgAccessTokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateOrgAccessToken is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOM(context.Context, *connect_go.Request[v1alpha.GetSBOMRequest]) (*connect_go.Response[v1alpha.GetSBOMResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOM is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListOrgAccessTokens(context.Context, *connect.Request[v1alpha.ListOrgAccessTokensRequest]) (*connect.Response[v1alpha.ListOrgAccessTokensResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListOrgAccessTokens is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMInventory(context.Context, *connect_go.Request[v1alpha.GetSBOMInventoryRequest]) (*connect_go.Response[v1alpha.GetSBOMInventoryResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMInventory is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteOrgAccessToken(context.Context, *connect.Request[v1alpha.DeleteOrgAccessTokenRequest]) (*connect.Response[v1alpha.DeleteOrgAccessTokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteOrgAccessToken is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponents(context.Context, *connect_go.Request[v1alpha.ListComponentsRequest]) (*connect_go.Response[v1alpha.ListComponentsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponents is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UploadSBOM(context.Context, *connect.ClientStream[v1alpha.UploadSBOMRequest]) (*connect.Response[v1alpha.UploadSBOMResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UploadSBOM is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponent(context.Context, *connect_go.Request[v1alpha.GetComponentRequest]) (*connect_go.Response[v1alpha.GetComponentResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponent is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListSBOMs(context.Context, *connect.Request[v1alpha.ListSBOMsRequest]) (*connect.Response[v1alpha.ListSBOMsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListSBOMs is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateComponent(context.Context, *connect_go.Request[v1alpha.CreateComponentRequest]) (*connect_go.Response[v1alpha.CreateComponentResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateComponent is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOM(context.Context, *connect.Request[v1alpha.GetSBOMRequest]) (*connect.Response[v1alpha.GetSBOMResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOM is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateComponent(context.Context, *connect_go.Request[v1alpha.UpdateComponentRequest]) (*connect_go.Response[v1alpha.UpdateComponentResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateComponent is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMInventory(context.Context, *connect.Request[v1alpha.GetSBOMInventoryRequest]) (*connect.Response[v1alpha.GetSBOMInventoryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMInventory is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteComponent(context.Context, *connect_go.Request[v1alpha.DeleteComponentRequest]) (*connect_go.Response[v1alpha.DeleteComponentResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponent is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMAttestation(context.Context, *connect.Request[v1alpha.GetSBOMAttestationRequest]) (*connect.Response[v1alpha.GetSBOMAttestationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMAttestation is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentTags(context.Context, *connect_go.Request[v1alpha.ListComponentTagsRequest]) (*connect_go.Response[v1alpha.ListComponentTagsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentTags is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponents(context.Context, *connect.Request[v1alpha.ListComponentsRequest]) (*connect.Response[v1alpha.ListComponentsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponents is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentTag(context.Context, *connect_go.Request[v1alpha.GetComponentTagRequest]) (*connect_go.Response[v1alpha.GetComponentTagResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTag is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponent(context.Context, *connect.Request[v1alpha.GetComponentRequest]) (*connect.Response[v1alpha.GetComponentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponent is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) SetComponentTag(context.Context, *connect_go.Request[v1alpha.SetComponentTagRequest]) (*connect_go.Response[v1alpha.SetComponentTagResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.SetComponentTag is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CreateComponent(context.Context, *connect.Request[v1alpha.CreateComponentRequest]) (*connect.Response[v1alpha.CreateComponentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CreateComponent is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteComponentTag(context.Context, *connect_go.Request[v1alpha.DeleteComponentTagRequest]) (*connect_go.Response[v1alpha.DeleteComponentTagResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponentTag is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateComponent(context.Context, *connect.Request[v1alpha.UpdateComponentRequest]) (*connect.Response[v1alpha.UpdateComponentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateComponent is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentTagsOverview(context.Context, *connect_go.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect_go.Response[v1alpha.GetComponentTagsOverviewResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTagsOverview is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteComponent(context.Context, *connect.Request[v1alpha.DeleteComponentRequest]) (*connect.Response[v1alpha.DeleteComponentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponent is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetCIBotComment(context.Context, *connect_go.Request[v1alpha.GetCIBotCommentRequest]) (*connect_go.Response[v1alpha.GetCIBotCommentResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentDefaultTagSBOMAttestation(context.Context, *connect.Request[v1alpha.GetComponentDefaultTagSBOMAttestationRequest]) (*connect.Response[v1alpha.GetComponentDefaultTagSBOMAttestationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentDefaultTagSBOMAttestation is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) ListWorkloads(context.Context, *connect_go.Request[v1alpha.ListWorkloadsRequest]) (*connect_go.Response[v1alpha.ListWorkloadsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloads is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentTags(context.Context, *connect.Request[v1alpha.ListComponentTagsRequest]) (*connect.Response[v1alpha.ListComponentTagsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentTags is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetWorkload(context.Context, *connect_go.Request[v1alpha.GetWorkloadRequest]) (*connect_go.Response[v1alpha.GetWorkloadResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetWorkload is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentTag(context.Context, *connect.Request[v1alpha.GetComponentTagRequest]) (*connect.Response[v1alpha.GetComponentTagResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTag is not implemented"))
 }
 
-func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMDownloadUrl(context.Context, *connect_go.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect_go.Response[v1alpha.GetSBOMDownloadUrlResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMDownloadUrl is not implemented"))
+func (UnimplementedEdgeBitPublicAPIServiceHandler) SetComponentTag(context.Context, *connect.Request[v1alpha.SetComponentTagRequest]) (*connect.Response[v1alpha.SetComponentTagResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.SetComponentTag is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteComponentTag(context.Context, *connect.Request[v1alpha.DeleteComponentTagRequest]) (*connect.Response[v1alpha.DeleteComponentTagResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DeleteComponentTag is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentTagsOverview(context.Context, *connect.Request[v1alpha.GetComponentTagsOverviewRequest]) (*connect.Response[v1alpha.GetComponentTagsOverviewResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentTagsOverview is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentIssues(context.Context, *connect.Request[v1alpha.ListComponentIssuesRequest]) (*connect.Response[v1alpha.ListComponentIssuesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentIssues is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentIssue(context.Context, *connect.Request[v1alpha.GetComponentIssueRequest]) (*connect.Response[v1alpha.GetComponentIssueResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentIssue is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateComponentIssue(context.Context, *connect.Request[v1alpha.UpdateComponentIssueRequest]) (*connect.Response[v1alpha.UpdateComponentIssueResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateComponentIssue is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentIssueTrend(context.Context, *connect.Request[v1alpha.GetComponentIssueTrendRequest]) (*connect.Response[v1alpha.GetComponentIssueTrendResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentIssueTrend is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentIssuesByStateForProject(context.Context, *connect.Request[v1alpha.ListComponentIssuesByStateForProjectRequest]) (*connect.Response[v1alpha.ListComponentIssuesByStateForProjectResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentIssuesByStateForProject is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetCIBotComment(context.Context, *connect.Request[v1alpha.GetCIBotCommentRequest]) (*connect.Response[v1alpha.GetCIBotCommentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetCIBotComment is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListWorkloads(context.Context, *connect.Request[v1alpha.ListWorkloadsRequest]) (*connect.Response[v1alpha.ListWorkloadsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloads is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetWorkload(context.Context, *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetWorkload is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) DebugWorkloadPackageInUse(context.Context, *connect.Request[v1alpha.DebugWorkloadPackageInUseRequest]) (*connect.Response[v1alpha.DebugWorkloadPackageInUseResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.DebugWorkloadPackageInUse is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMDownloadUrl(context.Context, *connect.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect.Response[v1alpha.GetSBOMDownloadUrlResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMDownloadUrl is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetVexDownloadUrl(context.Context, *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetVexDownloadUrl is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentsWithMetrics(context.Context, *connect.Request[v1alpha.ListComponentsWithMetricsRequest]) (*connect.Response[v1alpha.ListComponentsWithMetricsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentsWithMetrics is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetServerSBOMRoutingPolicy(context.Context, *connect.Request[v1alpha.GetServerSBOMRoutingPolicyRequest]) (*connect.Response[v1alpha.GetServerSBOMRoutingPolicyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetServerSBOMRoutingPolicy is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateServerSbomRoutingPolicy(context.Context, *connect.Request[v1alpha.UpdateServerSbomRoutingPolicyRequest]) (*connect.Response[v1alpha.UpdateServerSbomRoutingPolicyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateServerSbomRoutingPolicy is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) SetProjectIssueSLAPolicy(context.Context, *connect.Request[v1alpha.SetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.SetProjectIssueSLAPolicyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.SetProjectIssueSLAPolicy is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetProjectIssueSLAPolicy(context.Context, *connect.Request[v1alpha.GetProjectIssueSLAPolicyRequest]) (*connect.Response[v1alpha.GetProjectIssueSLAPolicyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetProjectIssueSLAPolicy is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CompleteGitHubAppInstall(context.Context, *connect.Request[v1alpha.CompleteGitHubAppInstallRequest]) (*connect.Response[v1alpha.CompleteGitHubAppInstallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteGitHubAppInstall is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetProjectIssueTrend(context.Context, *connect.Request[v1alpha.GetProjectIssueTrendRequest]) (*connect.Response[v1alpha.GetProjectIssueTrendResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetProjectIssueTrend is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListGitHubIntegrations(context.Context, *connect.Request[v1alpha.ListGitHubIntegrationsRequest]) (*connect.Response[v1alpha.ListGitHubIntegrationsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListGitHubIntegrations is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetGitHubIntegration(context.Context, *connect.Request[v1alpha.GetGitHubIntegrationRequest]) (*connect.Response[v1alpha.GetGitHubIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetGitHubIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) HasGitHubIntegration(context.Context, *connect.Request[v1alpha.HasGitHubIntegrationRequest]) (*connect.Response[v1alpha.HasGitHubIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.HasGitHubIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateGitHubIntegration(context.Context, *connect.Request[v1alpha.UpdateGitHubIntegrationRequest]) (*connect.Response[v1alpha.UpdateGitHubIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateGitHubIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListGitHubRepositories(context.Context, *connect.Request[v1alpha.ListGitHubRepositoriesRequest]) (*connect.Response[v1alpha.ListGitHubRepositoriesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListGitHubRepositories is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) AnalyzeGitHubRepo(context.Context, *connect.Request[v1alpha.AnalyzeGitHubRepoRequest]) (*connect.Response[v1alpha.AnalyzeGitHubRepoResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.AnalyzeGitHubRepo is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ImportGitHubRepos(context.Context, *connect.Request[v1alpha.ImportGitHubReposRequest]) (*connect.Response[v1alpha.ImportGitHubReposResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ImportGitHubRepos is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) IgnoreIssue(context.Context, *connect.Request[v1alpha.IgnoreIssueRequest]) (*connect.Response[v1alpha.IgnoreIssueResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.IgnoreIssue is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListIntegrations(context.Context, *connect.Request[v1alpha.ListIntegrationsRequest]) (*connect.Response[v1alpha.ListIntegrationsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListIntegrations is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) BeginJiraInstall(context.Context, *connect.Request[v1alpha.BeginJiraInstallRequest]) (*connect.Response[v1alpha.BeginJiraInstallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.BeginJiraInstall is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CompleteJiraInstall(context.Context, *connect.Request[v1alpha.CompleteJiraInstallRequest]) (*connect.Response[v1alpha.CompleteJiraInstallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteJiraInstall is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetJiraIntegration(context.Context, *connect.Request[v1alpha.GetJiraIntegrationRequest]) (*connect.Response[v1alpha.GetJiraIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetJiraIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateJiraIntegration(context.Context, *connect.Request[v1alpha.UpdateJiraIntegrationRequest]) (*connect.Response[v1alpha.UpdateJiraIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateJiraIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentIssueStateChanges(context.Context, *connect.Request[v1alpha.ListComponentIssueStateChangesRequest]) (*connect.Response[v1alpha.ListComponentIssueStateChangesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListComponentIssueStateChanges is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) LookupEPSSData(context.Context, *connect.Request[v1alpha.LookupEPSSDataRequest]) (*connect.Response[v1alpha.LookupEPSSDataResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.LookupEPSSData is not implemented"))
 }

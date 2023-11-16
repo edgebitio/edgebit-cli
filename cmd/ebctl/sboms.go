@@ -12,11 +12,11 @@ import (
 	platform "github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha"
 	"github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha/platformv1alphaconnect"
 
+	connect "connectrpc.com/connect"
 	"github.com/anchore/syft/syft/formats"
 	"github.com/anchore/syft/syft/formats/spdxjson"
 	"github.com/anchore/syft/syft/formats/syftjson"
 	"github.com/anchore/syft/syft/source"
-	"github.com/bufbuild/connect-go"
 	"github.com/spf13/cobra"
 )
 
@@ -30,6 +30,7 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 	cmd.Flags().String("format", "", "SBOM format (optional, will be inferred from file contents if not specified)")
 	cmd.Flags().StringSlice("tag", nil, "EdgeBit Component tags to associate the SBOM with (can be specified multiple times)")
 	cmd.Flags().StringToString("labels", nil, "Key/value labels to associate with the SBOM (can be specified multiple times)")
+	cmd.Flags().String("pull-request", "", "Pull Request (or similar) URL to tag the SBOM with")
 }
 
 func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, error) {
@@ -59,6 +60,7 @@ func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, err
 		Force:         force,
 		Tags:          tags,
 		Labels:        labels,
+		PullRequest:   cmd.Flag("pull-request").Value.String(),
 	}, nil
 }
 
@@ -241,6 +243,7 @@ type UploadSBOMArgs struct {
 	Force         bool
 	Tags          []string
 	Labels        map[string]string
+	PullRequest   string
 }
 
 func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, error) {
@@ -304,6 +307,7 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 				},
 				ComponentName: args.ComponentName,
 				Tags:          args.Tags,
+				PullRequest:   args.PullRequest,
 			},
 		},
 	})
