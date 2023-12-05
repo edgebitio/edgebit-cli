@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -25,9 +24,10 @@ func main() {
 	cmd.AddCommand(uploadSBOMCommandForCI())
 	cmd.AddCommand(fetchSBOMCommand())
 
+	cmd.SilenceUsage = true
+
 	err := cmd.ExecuteContext(ctx)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }
