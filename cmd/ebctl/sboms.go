@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -8,9 +9,11 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 
 	platform "github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha"
 	"github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha/platformv1alphaconnect"
+	"github.com/edgebitio/edgebit-cli/pkg/sboms"
 
 	connect "connectrpc.com/connect"
 	"github.com/anchore/syft/syft/formats"
@@ -50,7 +53,7 @@ func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, err
 	}
 
 	return UploadSBOMArgs{
-		FileName:      args[0],
+		SBOMFilePath:  args[0],
 		Repo:          cmd.Flag("repo").Value.String(),
 		Commit:        cmd.Flag("commit").Value.String(),
 		ImageID:       cmd.Flag("image-id").Value.String(),
@@ -197,18 +200,11 @@ type inferredSBOMInfo struct {
 	Format   platform.SBOMFormat
 }
 
-func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomFile string) (*inferredSBOMInfo, error) {
-	file, err := os.Open(sbomFile)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open '%s': %w", sbomFile, err)
-	}
-
-	sbom, format, err := formats.Decode(file)
+func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomData []byte) (*inferredSBOMInfo, error) {
+	sbom, format, err := formats.Decode(bytes.NewReader(sbomData))
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode SBOM: %w", err)
 	}
-
-	file.Close()
 
 	sbomInfo := inferredSBOMInfo{}
 
@@ -233,7 +229,7 @@ func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomFile string) (*inferredSB
 }
 
 type UploadSBOMArgs struct {
-	FileName      string
+	SBOMFilePath  string
 	ImageID       string
 	ImageTag      string
 	Repo          string
@@ -247,12 +243,12 @@ type UploadSBOMArgs struct {
 }
 
 func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, error) {
-	sbomFile := args.FileName
-	if sbomFile == "" {
-		return "", errors.New("sbom file is required")
+	sbomData, err := loadSBOM(ctx, args.SBOMFilePath)
+	if err != nil {
+		return "", err
 	}
 
-	inferredInfo, err := cli.inferSBOMInfo(ctx, sbomFile)
+	inferredInfo, err := cli.inferSBOMInfo(ctx, sbomData)
 	if err != nil {
 		if !args.Force {
 			return "", err
@@ -315,15 +311,12 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 		return "", fmt.Errorf("failed to send upload request: %w", err)
 	}
 
-	file, err := os.Open(sbomFile)
-	if err != nil {
-		return "", fmt.Errorf("failed to open '%s': %w", sbomFile, err)
-	}
+	sbomReader := bytes.NewReader(sbomData)
 
 	chunk := make([]byte, 4*1024)
 
 	for {
-		size, err := file.Read(chunk)
+		size, err := sbomReader.Read(chunk)
 		if err != nil {
 			if errors.Is(err, io.EOF) {
 				break
@@ -413,4 +406,38 @@ func formatFromID(id string) (platform.SBOMFormat, error) {
 	default:
 		return platform.SBOMFormat_SBOM_FORMAT_UNSPECIFIED, fmt.Errorf("unknown SBOM format: %s", id)
 	}
+}
+
+// loadSBOM loads an SBOM from a local path or, if the path starts with "registry:",
+// from a remote registry, and returns a reader for the SBOM.
+func fetchSBOM(ctx context.Context, path string) (io.ReadCloser, error) {
+	if path == "" {
+		return nil, errors.New("SBOM path is required")
+	}
+
+	switch {
+	case strings.HasPrefix(path, "registry:"):
+		loader := sboms.NewDefaultRegistryLoader(ctx)
+		return loader.Load(ctx, strings.TrimPrefix(path, "registry:"))
+	}
+
+	return os.Open(path)
+}
+
+// loadSBOM loads an SBOM from a local path or, if the path starts with "registry:",
+// from a remote registry, and returns the raw bytes of the SBOM.
+func loadSBOM(ctx context.Context, path string) ([]byte, error) {
+	buf := bytes.Buffer{}
+
+	reader, err := fetchSBOM(ctx, path)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = io.Copy(&buf, reader)
+	if err != nil {
+		return nil, err
+	}
+
+	return buf.Bytes(), nil
 }
