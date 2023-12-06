@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -20,15 +21,26 @@ var (
 
 type RegistryLoader struct {
 	RegistryOpts []remote.Option
+	Platform     v1.Platform
 }
 
-func NewDefaultRegistryLoader(ctx context.Context) *RegistryLoader {
+type RegistryLoaderArgs struct {
+	Platform string
+}
+
+func NewDefaultRegistryLoader(ctx context.Context, args RegistryLoaderArgs) (*RegistryLoader, error) {
+	platform, err := v1.ParsePlatform(args.Platform)
+	if err != nil {
+		return nil, err
+	}
+
 	return &RegistryLoader{
 		RegistryOpts: []remote.Option{
 			remote.WithAuthFromKeychain(authn.DefaultKeychain),
 			remote.WithContext(ctx),
 		},
-	}
+		Platform: *platform,
+	}, nil
 }
 
 // extractDockerStyleSBOM extracts an SBOM stored in a Docker-style attestation.
@@ -285,6 +297,60 @@ func (r *RegistryLoader) extractSBOMFromStatementLayer(ctx context.Context, laye
 	return io.NopCloser(bytes.NewReader(statement.Predicate)), nil
 }
 
+// resolveImage attempts to resolve the given descriptor to a target image
+// based on the RegistryLoader's configured platform. If no platform is configured
+// this will fail when attempting to resolve a multi-platform index.
+func (r *RegistryLoader) resolveImage(ctx context.Context, desc *remote.Descriptor) (v1.Image, error) {
+	// If the descriptor is already an image, just return it.
+	if desc.MediaType.IsImage() {
+		return desc.Image()
+	}
+
+	index, err := desc.ImageIndex()
+	if err != nil {
+		return nil, err
+	}
+
+	indexManifest, err := index.IndexManifest()
+	if err != nil {
+		return nil, err
+	}
+
+	runnableImages := []v1.Descriptor{}
+
+	// Iterate through the index's manifests to try to make a list of "runnable" images
+	// (ie not "attestation-manifest" images, etc).
+	for _, desc := range indexManifest.Manifests {
+		if !desc.MediaType.IsImage() {
+			continue
+		}
+
+		if desc.Platform == nil || desc.Platform.Architecture == "" || desc.Platform.Architecture == "unknown" {
+			continue
+		}
+
+		// r.Platform is treated here as a set of "requirements", meaning fields which are
+		// not set are not used for filtering. So if r.Platform is parsed from an empty
+		// string, all images matching the criteria above will be considered runnable.
+		if desc.Platform.Satisfies(r.Platform) {
+			runnableImages = append(runnableImages, *desc.DeepCopy())
+		}
+	}
+
+	if len(runnableImages) == 0 {
+		return nil, fmt.Errorf("no runnable images match platform: %s", r.Platform.String())
+	} else if len(runnableImages) > 1 {
+		platforms := []string{}
+		for _, desc := range runnableImages {
+			platforms = append(platforms, desc.Platform.String())
+		}
+
+		return nil, fmt.Errorf("found multiple matching images in index: %s", strings.Join(platforms, ", "))
+	}
+
+	return index.Image(runnableImages[0].Digest)
+}
+
 // Load attempts to locate an SBOM for the given image reference, and returns an
 // io.ReadCloser which can be used to read the raw bytes of the SBOM.
 func (r *RegistryLoader) Load(ctx context.Context, refStr string) (io.ReadCloser, error) {
@@ -300,7 +366,7 @@ func (r *RegistryLoader) Load(ctx context.Context, refStr string) (io.ReadCloser
 	}
 
 	// Resolve the referenced manifest to a target image.
-	targetImage, err := desc.Image()
+	targetImage, err := r.resolveImage(ctx, desc)
 	if err != nil {
 		return nil, fmt.Errorf("error resolving '%s' to image: %w", refStr, err)
 	}
