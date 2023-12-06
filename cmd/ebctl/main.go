@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -19,6 +18,7 @@ func main() {
 		Use:     "ebctl",
 		Short:   "CLI for EdgeBit.io",
 		Version: version,
+		SilenceUsage: true,
 	}
 
 	cmd.AddCommand(uploadSBOMCommand())
@@ -26,7 +26,6 @@ func main() {
 
 	err := cmd.ExecuteContext(ctx)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }
