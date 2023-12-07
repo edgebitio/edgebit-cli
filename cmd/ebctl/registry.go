@@ -13,7 +13,10 @@ func fetchSBOMCommand() *cobra.Command {
 		Short: "Fetch an SBOM",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
-			sbom, err := fetchSBOM(ctx, args[0])
+
+			resolvePlatform := cmd.Flag("resolve-platform").Value.String()
+
+			sbom, err := fetchSBOM(ctx, resolvePlatform, args[0])
 			if err != nil {
 				return err
 			}
@@ -25,6 +28,8 @@ func fetchSBOMCommand() *cobra.Command {
 		},
 		Args: cobra.ExactArgs(1),
 	}
+
+	cmd.Flags().String("resolve-platform", "", "Resolve the SBOM for the given platform (e.g. linux/amd64)")
 
 	return cmd
 }

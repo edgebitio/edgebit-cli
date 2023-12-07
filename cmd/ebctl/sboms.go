@@ -34,6 +34,7 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 	cmd.Flags().StringSlice("tag", nil, "EdgeBit Component tags to associate the SBOM with (can be specified multiple times)")
 	cmd.Flags().StringToString("labels", nil, "Key/value labels to associate with the SBOM (can be specified multiple times)")
 	cmd.Flags().String("pull-request", "", "Pull Request (or similar) URL to tag the SBOM with")
+	cmd.Flags().String("resolve-platform", "", "Resolve the SBOM for the given platform (e.g. linux/amd64)")
 }
 
 func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, error) {
@@ -53,17 +54,18 @@ func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, err
 	}
 
 	return UploadSBOMArgs{
-		SBOMFilePath:  args[0],
-		Repo:          cmd.Flag("repo").Value.String(),
-		Commit:        cmd.Flag("commit").Value.String(),
-		ImageID:       cmd.Flag("image-id").Value.String(),
-		ImageTag:      cmd.Flag("image-tag").Value.String(),
-		ComponentName: cmd.Flag("component").Value.String(),
-		Format:        cmd.Flag("format").Value.String(),
-		Force:         force,
-		Tags:          tags,
-		Labels:        labels,
-		PullRequest:   cmd.Flag("pull-request").Value.String(),
+		SBOMFilePath:    args[0],
+		Repo:            cmd.Flag("repo").Value.String(),
+		Commit:          cmd.Flag("commit").Value.String(),
+		ImageID:         cmd.Flag("image-id").Value.String(),
+		ImageTag:        cmd.Flag("image-tag").Value.String(),
+		ComponentName:   cmd.Flag("component").Value.String(),
+		Format:          cmd.Flag("format").Value.String(),
+		Force:           force,
+		Tags:            tags,
+		Labels:          labels,
+		PullRequest:     cmd.Flag("pull-request").Value.String(),
+		ResolvePlatform: cmd.Flag("resolve-platform").Value.String(),
 	}, nil
 }
 
@@ -229,21 +231,22 @@ func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomData []byte) (*inferredSB
 }
 
 type UploadSBOMArgs struct {
-	SBOMFilePath  string
-	ImageID       string
-	ImageTag      string
-	Repo          string
-	Commit        string
-	ComponentName string
-	Format        string
-	Force         bool
-	Tags          []string
-	Labels        map[string]string
-	PullRequest   string
+	SBOMFilePath    string
+	ImageID         string
+	ImageTag        string
+	Repo            string
+	Commit          string
+	ComponentName   string
+	Format          string
+	Force           bool
+	Tags            []string
+	Labels          map[string]string
+	PullRequest     string
+	ResolvePlatform string
 }
 
 func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, error) {
-	sbomData, err := loadSBOM(ctx, args.SBOMFilePath)
+	sbomData, err := loadSBOM(ctx, args.ResolvePlatform, args.SBOMFilePath)
 	if err != nil {
 		return "", err
 	}
@@ -410,14 +413,20 @@ func formatFromID(id string) (platform.SBOMFormat, error) {
 
 // loadSBOM loads an SBOM from a local path or, if the path starts with "registry:",
 // from a remote registry, and returns a reader for the SBOM.
-func fetchSBOM(ctx context.Context, path string) (io.ReadCloser, error) {
+func fetchSBOM(ctx context.Context, platform, path string) (io.ReadCloser, error) {
 	if path == "" {
 		return nil, errors.New("SBOM path is required")
 	}
 
 	switch {
 	case strings.HasPrefix(path, "registry:"):
-		loader := sboms.NewDefaultRegistryLoader(ctx)
+		loader, err := sboms.NewDefaultRegistryLoader(ctx, sboms.RegistryLoaderArgs{
+			Platform: platform,
+		})
+		if err != nil {
+			return nil, err
+		}
+
 		return loader.Load(ctx, strings.TrimPrefix(path, "registry:"))
 	}
 
@@ -426,10 +435,10 @@ func fetchSBOM(ctx context.Context, path string) (io.ReadCloser, error) {
 
 // loadSBOM loads an SBOM from a local path or, if the path starts with "registry:",
 // from a remote registry, and returns the raw bytes of the SBOM.
-func loadSBOM(ctx context.Context, path string) ([]byte, error) {
+func loadSBOM(ctx context.Context, platform, path string) ([]byte, error) {
 	buf := bytes.Buffer{}
 
-	reader, err := fetchSBOM(ctx, path)
+	reader, err := fetchSBOM(ctx, platform, path)
 	if err != nil {
 		return nil, err
 	}
