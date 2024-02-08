@@ -59,5 +59,4 @@ jobs:
           token: ${{ secrets.EDGEBIT_TOKEN }}
           sbom-file: "dist/${{ env.LINUX_SBOM }}"
           component: "edgebitio-edgebit-cli"
-          # note: this assumes we are always releasing the most recent github tag
-          tags: latest, ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+          tags: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
