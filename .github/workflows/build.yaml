@@ -27,3 +27,26 @@ jobs:
           distribution: goreleaser
           version: latest
           args: build --skip=validate
+
+      - name: Generate SBOM from the source
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          artifact-name: sbom.spdx.json
+          upload-artifact: true
+          config: .github/edgebit/source-syft.yaml
+
+      - name: Write out the metadata
+        run: |
+          cat > /tmp/metadata.json <<EOF
+            {
+              "pr-number": "${{ github.event.number }}",
+              "tags": "${{ github.ref == 'refs/heads/main' && 'latest' || '' }}"
+            }
+          EOF
+
+      - uses: actions/upload-artifact@v3
+        name: Save the metadata as an artifact
+        with:
+          name: metadata.json
+          path: /tmp/metadata.json
