@@ -218,16 +218,7 @@ func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomData []byte) (*inferredSB
 
 	// Format-specific inferences of additional fields
 	switch sbomInfo.Format {
-	case platform.SBOMFormat_SBOM_FORMAT_SYFT:
-		metadata, ok := sbom.Source.Metadata.(source.StereoscopeImageSourceMetadata)
-		if ok {
-			sbomInfo.ImageID = metadata.ID
-			if len(metadata.Tags) > 0 {
-				sbomInfo.ImageTag = metadata.Tags[0]
-			}
-		}
-
-	case platform.SBOMFormat_SBOM_FORMAT_CYCLONEDX_JSON:
+	case platform.SBOMFormat_SBOM_FORMAT_SYFT, platform.SBOMFormat_SBOM_FORMAT_CYCLONEDX_JSON:
 		metadata, ok := sbom.Source.Metadata.(source.StereoscopeImageSourceMetadata)
 		if ok {
 			sbomInfo.ImageID = metadata.ID
