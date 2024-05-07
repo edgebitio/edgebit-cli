@@ -18,7 +18,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// LoginServiceName is the fully-qualified name of the LoginService service.
@@ -50,6 +50,16 @@ const (
 	LoginServiceAPIAccessTokenLoginProcedure = "/edgebit.platform.v1alpha.LoginService/APIAccessTokenLogin"
 )
 
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	loginServiceServiceDescriptor                   = v1alpha.File_edgebit_platform_v1alpha_login_proto.Services().ByName("LoginService")
+	loginServiceGetLoginMethodMethodDescriptor      = loginServiceServiceDescriptor.Methods().ByName("GetLoginMethod")
+	loginServicePasswordLoginMethodDescriptor       = loginServiceServiceDescriptor.Methods().ByName("PasswordLogin")
+	loginServiceOIDCCallbackMethodDescriptor        = loginServiceServiceDescriptor.Methods().ByName("OIDCCallback")
+	loginServiceExchangeInviteTokenMethodDescriptor = loginServiceServiceDescriptor.Methods().ByName("ExchangeInviteToken")
+	loginServiceAPIAccessTokenLoginMethodDescriptor = loginServiceServiceDescriptor.Methods().ByName("APIAccessTokenLogin")
+)
+
 // LoginServiceClient is a client for the edgebit.platform.v1alpha.LoginService service.
 type LoginServiceClient interface {
 	GetLoginMethod(context.Context, *connect.Request[v1alpha.GetLoginMethodRequest]) (*connect.Response[v1alpha.GetLoginMethodResponse], error)
@@ -72,27 +82,32 @@ func NewLoginServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 		getLoginMethod: connect.NewClient[v1alpha.GetLoginMethodRequest, v1alpha.GetLoginMethodResponse](
 			httpClient,
 			baseURL+LoginServiceGetLoginMethodProcedure,
-			opts...,
+			connect.WithSchema(loginServiceGetLoginMethodMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		passwordLogin: connect.NewClient[v1alpha.PasswordLoginRequest, v1alpha.PasswordLoginResponse](
 			httpClient,
 			baseURL+LoginServicePasswordLoginProcedure,
-			opts...,
+			connect.WithSchema(loginServicePasswordLoginMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		oIDCCallback: connect.NewClient[v1alpha.OIDCCallbackRequest, v1alpha.OIDCCallbackResponse](
 			httpClient,
 			baseURL+LoginServiceOIDCCallbackProcedure,
-			opts...,
+			connect.WithSchema(loginServiceOIDCCallbackMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		exchangeInviteToken: connect.NewClient[v1alpha.ExchangeInviteTokenRequest, v1alpha.ExchangeInviteTokenResponse](
 			httpClient,
 			baseURL+LoginServiceExchangeInviteTokenProcedure,
-			opts...,
+			connect.WithSchema(loginServiceExchangeInviteTokenMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		aPIAccessTokenLogin: connect.NewClient[v1alpha.APIAccessTokenLoginRequest, v1alpha.APIAccessTokenLoginResponse](
 			httpClient,
 			baseURL+LoginServiceAPIAccessTokenLoginProcedure,
-			opts...,
+			connect.WithSchema(loginServiceAPIAccessTokenLoginMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -149,27 +164,32 @@ func NewLoginServiceHandler(svc LoginServiceHandler, opts ...connect.HandlerOpti
 	loginServiceGetLoginMethodHandler := connect.NewUnaryHandler(
 		LoginServiceGetLoginMethodProcedure,
 		svc.GetLoginMethod,
-		opts...,
+		connect.WithSchema(loginServiceGetLoginMethodMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	loginServicePasswordLoginHandler := connect.NewUnaryHandler(
 		LoginServicePasswordLoginProcedure,
 		svc.PasswordLogin,
-		opts...,
+		connect.WithSchema(loginServicePasswordLoginMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	loginServiceOIDCCallbackHandler := connect.NewUnaryHandler(
 		LoginServiceOIDCCallbackProcedure,
 		svc.OIDCCallback,
-		opts...,
+		connect.WithSchema(loginServiceOIDCCallbackMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	loginServiceExchangeInviteTokenHandler := connect.NewUnaryHandler(
 		LoginServiceExchangeInviteTokenProcedure,
 		svc.ExchangeInviteToken,
-		opts...,
+		connect.WithSchema(loginServiceExchangeInviteTokenMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	loginServiceAPIAccessTokenLoginHandler := connect.NewUnaryHandler(
 		LoginServiceAPIAccessTokenLoginProcedure,
 		svc.APIAccessTokenLogin,
-		opts...,
+		connect.WithSchema(loginServiceAPIAccessTokenLoginMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/edgebit.platform.v1alpha.LoginService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {

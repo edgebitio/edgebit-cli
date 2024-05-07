@@ -29,6 +29,7 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 	cmd.Flags().String("commit", "", "Source commit ID to tag the SBOM with")
 	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
 	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
+	cmd.Flags().StringSlice("repo-digest", nil, "Repo Digest to tag the SBOM with (can be specified multiple times)")
 	cmd.Flags().String("component", "", "Component name to associate the SBOM with")
 	cmd.Flags().Bool("force", false, "Ignore errors parsing the local SBOM and attempt to upload it anyway")
 	cmd.Flags().String("format", "", "SBOM format (optional, will be inferred from file contents if not specified)")
@@ -40,6 +41,11 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 
 func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, error) {
 	tags, err := cmd.Flags().GetStringSlice("tag")
+	if err != nil {
+		return UploadSBOMArgs{}, err
+	}
+
+	repoDigests, err := cmd.Flags().GetStringSlice("repo-digest")
 	if err != nil {
 		return UploadSBOMArgs{}, err
 	}
@@ -60,6 +66,7 @@ func parseUploadSBOMArgs(cmd *cobra.Command, args []string) (UploadSBOMArgs, err
 		Commit:          cmd.Flag("commit").Value.String(),
 		ImageID:         cmd.Flag("image-id").Value.String(),
 		ImageTag:        cmd.Flag("image-tag").Value.String(),
+		RepoDigests:     repoDigests,
 		ComponentName:   cmd.Flag("component").Value.String(),
 		Format:          cmd.Flag("format").Value.String(),
 		Force:           force,
@@ -203,7 +210,7 @@ type inferredSBOMInfo struct {
 	Format   platform.SBOMFormat
 }
 
-func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomData []byte) (*inferredSBOMInfo, error) {
+func (cli *CLI) inferSBOMInfo(sbomData []byte) (*inferredSBOMInfo, error) {
 	sbom, format, err := formats.Decode(bytes.NewReader(sbomData))
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode SBOM: %w", err)
@@ -235,6 +242,7 @@ type UploadSBOMArgs struct {
 	SBOMFilePath    string
 	ImageID         string
 	ImageTag        string
+	RepoDigests     []string
 	Repo            string
 	Commit          string
 	ComponentName   string
@@ -252,7 +260,7 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 		return "", err
 	}
 
-	inferredInfo, err := cli.inferSBOMInfo(ctx, sbomData)
+	inferredInfo, err := cli.inferSBOMInfo(sbomData)
 	if err != nil {
 		if !args.Force {
 			return "", err
@@ -301,7 +309,8 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 				Image: &platform.Image{
 					Kind: &platform.Image_Docker{
 						Docker: &platform.DockerImage{
-							Tag: imageTag,
+							Tag:         imageTag,
+							RepoDigests: args.RepoDigests,
 						},
 					},
 				},
