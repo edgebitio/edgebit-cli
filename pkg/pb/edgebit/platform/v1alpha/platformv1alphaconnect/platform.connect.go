@@ -18,7 +18,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// EdgeBitPublicAPIServiceName is the fully-qualified name of the EdgeBitPublicAPIService service.
@@ -60,6 +60,9 @@ const (
 	// EdgeBitPublicAPIServiceListMachinesProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's ListMachines RPC.
 	EdgeBitPublicAPIServiceListMachinesProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListMachines"
+	// EdgeBitPublicAPIServiceGetMachineProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetMachine RPC.
+	EdgeBitPublicAPIServiceGetMachineProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetMachine"
 	// EdgeBitPublicAPIServiceGetMachineInventoryProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetMachineInventory RPC.
 	EdgeBitPublicAPIServiceGetMachineInventoryProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetMachineInventory"
@@ -147,6 +150,9 @@ const (
 	// EdgeBitPublicAPIServiceListWorkloadsProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's ListWorkloads RPC.
 	EdgeBitPublicAPIServiceListWorkloadsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListWorkloads"
+	// EdgeBitPublicAPIServiceListWorkloadItemsForMachineProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListWorkloadItemsForMachine RPC.
+	EdgeBitPublicAPIServiceListWorkloadItemsForMachineProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListWorkloadItemsForMachine"
 	// EdgeBitPublicAPIServiceGetWorkloadProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetWorkload RPC.
 	EdgeBitPublicAPIServiceGetWorkloadProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetWorkload"
@@ -156,9 +162,15 @@ const (
 	// EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetSBOMDownloadUrl RPC.
 	EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMDownloadUrl"
+	// EdgeBitPublicAPIServiceGetSBOMUploadUrlProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetSBOMUploadUrl RPC.
+	EdgeBitPublicAPIServiceGetSBOMUploadUrlProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSBOMUploadUrl"
 	// EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's GetVexDownloadUrl RPC.
 	EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetVexDownloadUrl"
+	// EdgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlProcedure is the fully-qualified name
+	// of the EdgeBitPublicAPIService's GetComponentIssuesReportDownloadUrl RPC.
+	EdgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetComponentIssuesReportDownloadUrl"
 	// EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's ListComponentsWithMetrics RPC.
 	EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListComponentsWithMetrics"
@@ -225,6 +237,127 @@ const (
 	// EdgeBitPublicAPIServiceLookupEPSSDataProcedure is the fully-qualified name of the
 	// EdgeBitPublicAPIService's LookupEPSSData RPC.
 	EdgeBitPublicAPIServiceLookupEPSSDataProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/LookupEPSSData"
+	// EdgeBitPublicAPIServiceGenerateOrgSummaryReportProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GenerateOrgSummaryReport RPC.
+	EdgeBitPublicAPIServiceGenerateOrgSummaryReportProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateOrgSummaryReport"
+	// EdgeBitPublicAPIServiceGenerateComponentIssuesReportProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GenerateComponentIssuesReport RPC.
+	EdgeBitPublicAPIServiceGenerateComponentIssuesReportProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GenerateComponentIssuesReport"
+	// EdgeBitPublicAPIServiceListEnabledFeaturesProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's ListEnabledFeatures RPC.
+	EdgeBitPublicAPIServiceListEnabledFeaturesProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/ListEnabledFeatures"
+	// EdgeBitPublicAPIServiceBeginVantaInstallProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's BeginVantaInstall RPC.
+	EdgeBitPublicAPIServiceBeginVantaInstallProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/BeginVantaInstall"
+	// EdgeBitPublicAPIServiceCompleteVantaInstallProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CompleteVantaInstall RPC.
+	EdgeBitPublicAPIServiceCompleteVantaInstallProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CompleteVantaInstall"
+	// EdgeBitPublicAPIServiceGetVantaIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetVantaIntegration RPC.
+	EdgeBitPublicAPIServiceGetVantaIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetVantaIntegration"
+	// EdgeBitPublicAPIServiceUpdateVantaIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateVantaIntegration RPC.
+	EdgeBitPublicAPIServiceUpdateVantaIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateVantaIntegration"
+	// EdgeBitPublicAPIServiceBeginSlackInstallProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's BeginSlackInstall RPC.
+	EdgeBitPublicAPIServiceBeginSlackInstallProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/BeginSlackInstall"
+	// EdgeBitPublicAPIServiceCompleteSlackInstallProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's CompleteSlackInstall RPC.
+	EdgeBitPublicAPIServiceCompleteSlackInstallProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/CompleteSlackInstall"
+	// EdgeBitPublicAPIServiceGetSlackIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's GetSlackIntegration RPC.
+	EdgeBitPublicAPIServiceGetSlackIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/GetSlackIntegration"
+	// EdgeBitPublicAPIServiceUpdateSlackIntegrationProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's UpdateSlackIntegration RPC.
+	EdgeBitPublicAPIServiceUpdateSlackIntegrationProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/UpdateSlackIntegration"
+	// EdgeBitPublicAPIServiceTriggerCodeAnalysisProcedure is the fully-qualified name of the
+	// EdgeBitPublicAPIService's TriggerCodeAnalysis RPC.
+	EdgeBitPublicAPIServiceTriggerCodeAnalysisProcedure = "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/TriggerCodeAnalysis"
+)
+
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	edgeBitPublicAPIServiceServiceDescriptor                                     = v1alpha.File_edgebit_platform_v1alpha_platform_proto.Services().ByName("EdgeBitPublicAPIService")
+	edgeBitPublicAPIServiceListProjectsMethodDescriptor                          = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListProjects")
+	edgeBitPublicAPIServiceCreateProjectMethodDescriptor                         = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CreateProject")
+	edgeBitPublicAPIServiceGetProjectMethodDescriptor                            = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetProject")
+	edgeBitPublicAPIServiceUpdateProjectMethodDescriptor                         = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateProject")
+	edgeBitPublicAPIServiceGenerateAgentDeployTokenMethodDescriptor              = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GenerateAgentDeployToken")
+	edgeBitPublicAPIServiceCreateAgentDeployTokenMethodDescriptor                = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CreateAgentDeployToken")
+	edgeBitPublicAPIServiceListAgentDeployTokensMethodDescriptor                 = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListAgentDeployTokens")
+	edgeBitPublicAPIServiceDeleteAgentDeployTokenMethodDescriptor                = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("DeleteAgentDeployToken")
+	edgeBitPublicAPIServiceListMachinesMethodDescriptor                          = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListMachines")
+	edgeBitPublicAPIServiceGetMachineMethodDescriptor                            = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetMachine")
+	edgeBitPublicAPIServiceGetMachineInventoryMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetMachineInventory")
+	edgeBitPublicAPIServiceOverviewMethodDescriptor                              = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("Overview")
+	edgeBitPublicAPIServiceListWorkloadsForMachineMethodDescriptor               = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListWorkloadsForMachine")
+	edgeBitPublicAPIServiceCreateOrgAccessTokenMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CreateOrgAccessToken")
+	edgeBitPublicAPIServiceListOrgAccessTokensMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListOrgAccessTokens")
+	edgeBitPublicAPIServiceDeleteOrgAccessTokenMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("DeleteOrgAccessToken")
+	edgeBitPublicAPIServiceUploadSBOMMethodDescriptor                            = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UploadSBOM")
+	edgeBitPublicAPIServiceListSBOMsMethodDescriptor                             = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListSBOMs")
+	edgeBitPublicAPIServiceGetSBOMMethodDescriptor                               = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetSBOM")
+	edgeBitPublicAPIServiceGetSBOMInventoryMethodDescriptor                      = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetSBOMInventory")
+	edgeBitPublicAPIServiceGetSBOMAttestationMethodDescriptor                    = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetSBOMAttestation")
+	edgeBitPublicAPIServiceListComponentsMethodDescriptor                        = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListComponents")
+	edgeBitPublicAPIServiceGetComponentMethodDescriptor                          = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetComponent")
+	edgeBitPublicAPIServiceCreateComponentMethodDescriptor                       = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CreateComponent")
+	edgeBitPublicAPIServiceUpdateComponentMethodDescriptor                       = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateComponent")
+	edgeBitPublicAPIServiceDeleteComponentMethodDescriptor                       = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("DeleteComponent")
+	edgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationMethodDescriptor = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetComponentDefaultTagSBOMAttestation")
+	edgeBitPublicAPIServiceListComponentTagsMethodDescriptor                     = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListComponentTags")
+	edgeBitPublicAPIServiceGetComponentTagMethodDescriptor                       = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetComponentTag")
+	edgeBitPublicAPIServiceSetComponentTagMethodDescriptor                       = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("SetComponentTag")
+	edgeBitPublicAPIServiceDeleteComponentTagMethodDescriptor                    = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("DeleteComponentTag")
+	edgeBitPublicAPIServiceGetComponentTagsOverviewMethodDescriptor              = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetComponentTagsOverview")
+	edgeBitPublicAPIServiceListComponentIssuesMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListComponentIssues")
+	edgeBitPublicAPIServiceGetComponentIssueMethodDescriptor                     = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetComponentIssue")
+	edgeBitPublicAPIServiceUpdateComponentIssueMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateComponentIssue")
+	edgeBitPublicAPIServiceGetComponentIssueTrendMethodDescriptor                = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetComponentIssueTrend")
+	edgeBitPublicAPIServiceListComponentIssuesByStateForProjectMethodDescriptor  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListComponentIssuesByStateForProject")
+	edgeBitPublicAPIServiceGetCIBotCommentMethodDescriptor                       = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetCIBotComment")
+	edgeBitPublicAPIServiceListWorkloadsMethodDescriptor                         = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListWorkloads")
+	edgeBitPublicAPIServiceListWorkloadItemsForMachineMethodDescriptor           = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListWorkloadItemsForMachine")
+	edgeBitPublicAPIServiceGetWorkloadMethodDescriptor                           = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetWorkload")
+	edgeBitPublicAPIServiceDebugWorkloadPackageInUseMethodDescriptor             = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("DebugWorkloadPackageInUse")
+	edgeBitPublicAPIServiceGetSBOMDownloadUrlMethodDescriptor                    = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetSBOMDownloadUrl")
+	edgeBitPublicAPIServiceGetSBOMUploadUrlMethodDescriptor                      = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetSBOMUploadUrl")
+	edgeBitPublicAPIServiceGetVexDownloadUrlMethodDescriptor                     = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetVexDownloadUrl")
+	edgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlMethodDescriptor   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetComponentIssuesReportDownloadUrl")
+	edgeBitPublicAPIServiceListComponentsWithMetricsMethodDescriptor             = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListComponentsWithMetrics")
+	edgeBitPublicAPIServiceGetServerSBOMRoutingPolicyMethodDescriptor            = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetServerSBOMRoutingPolicy")
+	edgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyMethodDescriptor         = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateServerSbomRoutingPolicy")
+	edgeBitPublicAPIServiceSetProjectIssueSLAPolicyMethodDescriptor              = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("SetProjectIssueSLAPolicy")
+	edgeBitPublicAPIServiceGetProjectIssueSLAPolicyMethodDescriptor              = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetProjectIssueSLAPolicy")
+	edgeBitPublicAPIServiceCompleteGitHubAppInstallMethodDescriptor              = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CompleteGitHubAppInstall")
+	edgeBitPublicAPIServiceGetProjectIssueTrendMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetProjectIssueTrend")
+	edgeBitPublicAPIServiceListGitHubIntegrationsMethodDescriptor                = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListGitHubIntegrations")
+	edgeBitPublicAPIServiceGetGitHubIntegrationMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetGitHubIntegration")
+	edgeBitPublicAPIServiceHasGitHubIntegrationMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("HasGitHubIntegration")
+	edgeBitPublicAPIServiceUpdateGitHubIntegrationMethodDescriptor               = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateGitHubIntegration")
+	edgeBitPublicAPIServiceListGitHubRepositoriesMethodDescriptor                = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListGitHubRepositories")
+	edgeBitPublicAPIServiceAnalyzeGitHubRepoMethodDescriptor                     = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("AnalyzeGitHubRepo")
+	edgeBitPublicAPIServiceImportGitHubReposMethodDescriptor                     = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ImportGitHubRepos")
+	edgeBitPublicAPIServiceIgnoreIssueMethodDescriptor                           = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("IgnoreIssue")
+	edgeBitPublicAPIServiceListIntegrationsMethodDescriptor                      = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListIntegrations")
+	edgeBitPublicAPIServiceBeginJiraInstallMethodDescriptor                      = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("BeginJiraInstall")
+	edgeBitPublicAPIServiceCompleteJiraInstallMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CompleteJiraInstall")
+	edgeBitPublicAPIServiceGetJiraIntegrationMethodDescriptor                    = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetJiraIntegration")
+	edgeBitPublicAPIServiceUpdateJiraIntegrationMethodDescriptor                 = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateJiraIntegration")
+	edgeBitPublicAPIServiceListComponentIssueStateChangesMethodDescriptor        = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListComponentIssueStateChanges")
+	edgeBitPublicAPIServiceLookupEPSSDataMethodDescriptor                        = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("LookupEPSSData")
+	edgeBitPublicAPIServiceGenerateOrgSummaryReportMethodDescriptor              = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GenerateOrgSummaryReport")
+	edgeBitPublicAPIServiceGenerateComponentIssuesReportMethodDescriptor         = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GenerateComponentIssuesReport")
+	edgeBitPublicAPIServiceListEnabledFeaturesMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("ListEnabledFeatures")
+	edgeBitPublicAPIServiceBeginVantaInstallMethodDescriptor                     = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("BeginVantaInstall")
+	edgeBitPublicAPIServiceCompleteVantaInstallMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CompleteVantaInstall")
+	edgeBitPublicAPIServiceGetVantaIntegrationMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetVantaIntegration")
+	edgeBitPublicAPIServiceUpdateVantaIntegrationMethodDescriptor                = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateVantaIntegration")
+	edgeBitPublicAPIServiceBeginSlackInstallMethodDescriptor                     = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("BeginSlackInstall")
+	edgeBitPublicAPIServiceCompleteSlackInstallMethodDescriptor                  = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("CompleteSlackInstall")
+	edgeBitPublicAPIServiceGetSlackIntegrationMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("GetSlackIntegration")
+	edgeBitPublicAPIServiceUpdateSlackIntegrationMethodDescriptor                = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("UpdateSlackIntegration")
+	edgeBitPublicAPIServiceTriggerCodeAnalysisMethodDescriptor                   = edgeBitPublicAPIServiceServiceDescriptor.Methods().ByName("TriggerCodeAnalysis")
 )
 
 // EdgeBitPublicAPIServiceClient is a client for the
@@ -242,6 +375,7 @@ type EdgeBitPublicAPIServiceClient interface {
 	DeleteAgentDeployToken(context.Context, *connect.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
 	// Machine Management (project-scoped)
 	ListMachines(context.Context, *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error)
+	GetMachine(context.Context, *connect.Request[v1alpha.GetMachineRequest]) (*connect.Response[v1alpha.GetMachineResponse], error)
 	// Inventory Exploration (project-scoped)
 	GetMachineInventory(context.Context, *connect.Request[v1alpha.GetMachineInventoryRequest]) (*connect.Response[v1alpha.GetMachineInventoryResponse], error)
 	Overview(context.Context, *connect.Request[v1alpha.OverviewRequest]) (*connect.Response[v1alpha.OverviewResponse], error)
@@ -279,12 +413,17 @@ type EdgeBitPublicAPIServiceClient interface {
 	GetCIBotComment(context.Context, *connect.Request[v1alpha.GetCIBotCommentRequest]) (*connect.Response[v1alpha.GetCIBotCommentResponse], error)
 	// Workload Management (project-scoped)
 	ListWorkloads(context.Context, *connect.Request[v1alpha.ListWorkloadsRequest]) (*connect.Response[v1alpha.ListWorkloadsResponse], error)
+	ListWorkloadItemsForMachine(context.Context, *connect.Request[v1alpha.ListWorkloadItemsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadItemsForMachineResponse], error)
 	GetWorkload(context.Context, *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error)
 	DebugWorkloadPackageInUse(context.Context, *connect.Request[v1alpha.DebugWorkloadPackageInUseRequest]) (*connect.Response[v1alpha.DebugWorkloadPackageInUseResponse], error)
 	// Get Sbom Download Url
 	GetSBOMDownloadUrl(context.Context, *connect.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
+	// Get Sbom Upload Url
+	GetSBOMUploadUrl(context.Context, *connect.Request[v1alpha.GetSBOMUploadUrlRequest]) (*connect.Response[v1alpha.GetSBOMUploadUrlResponse], error)
 	// Get Vex Download Url
 	GetVexDownloadUrl(context.Context, *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error)
+	// Get ComponentIssuesReport Download Url
+	GetComponentIssuesReportDownloadUrl(context.Context, *connect.Request[v1alpha.GetComponentIssuesReportDownloadUrlRequest]) (*connect.Response[v1alpha.GetComponentIssuesReportDownloadUrlResponse], error)
 	// Get Component With Metrics
 	ListComponentsWithMetrics(context.Context, *connect.Request[v1alpha.ListComponentsWithMetricsRequest]) (*connect.Response[v1alpha.ListComponentsWithMetricsResponse], error)
 	// Server Sbom Routing Policies
@@ -307,12 +446,30 @@ type EdgeBitPublicAPIServiceClient interface {
 	// Ignore Issue
 	IgnoreIssue(context.Context, *connect.Request[v1alpha.IgnoreIssueRequest]) (*connect.Response[v1alpha.IgnoreIssueResponse], error)
 	ListIntegrations(context.Context, *connect.Request[v1alpha.ListIntegrationsRequest]) (*connect.Response[v1alpha.ListIntegrationsResponse], error)
+	// Jira Integration (org-scoped)
 	BeginJiraInstall(context.Context, *connect.Request[v1alpha.BeginJiraInstallRequest]) (*connect.Response[v1alpha.BeginJiraInstallResponse], error)
 	CompleteJiraInstall(context.Context, *connect.Request[v1alpha.CompleteJiraInstallRequest]) (*connect.Response[v1alpha.CompleteJiraInstallResponse], error)
 	GetJiraIntegration(context.Context, *connect.Request[v1alpha.GetJiraIntegrationRequest]) (*connect.Response[v1alpha.GetJiraIntegrationResponse], error)
 	UpdateJiraIntegration(context.Context, *connect.Request[v1alpha.UpdateJiraIntegrationRequest]) (*connect.Response[v1alpha.UpdateJiraIntegrationResponse], error)
 	ListComponentIssueStateChanges(context.Context, *connect.Request[v1alpha.ListComponentIssueStateChangesRequest]) (*connect.Response[v1alpha.ListComponentIssueStateChangesResponse], error)
 	LookupEPSSData(context.Context, *connect.Request[v1alpha.LookupEPSSDataRequest]) (*connect.Response[v1alpha.LookupEPSSDataResponse], error)
+	// Reports (org-scoped)
+	GenerateOrgSummaryReport(context.Context, *connect.Request[v1alpha.GenerateOrgSummaryReportRequest]) (*connect.Response[v1alpha.GenerateOrgSummaryReportResponse], error)
+	// Reports (project-scoped)
+	GenerateComponentIssuesReport(context.Context, *connect.Request[v1alpha.GenerateComponentIssuesReportRequest]) (*connect.Response[v1alpha.GenerateComponentIssuesReportResponse], error)
+	ListEnabledFeatures(context.Context, *connect.Request[v1alpha.ListEnabledFeaturesRequest]) (*connect.Response[v1alpha.ListEnabledFeaturesResponse], error)
+	// Vanta Integration (org-scoped)
+	BeginVantaInstall(context.Context, *connect.Request[v1alpha.BeginVantaInstallRequest]) (*connect.Response[v1alpha.BeginVantaInstallResponse], error)
+	CompleteVantaInstall(context.Context, *connect.Request[v1alpha.CompleteVantaInstallRequest]) (*connect.Response[v1alpha.CompleteVantaInstallResponse], error)
+	GetVantaIntegration(context.Context, *connect.Request[v1alpha.GetVantaIntegrationRequest]) (*connect.Response[v1alpha.GetVantaIntegrationResponse], error)
+	UpdateVantaIntegration(context.Context, *connect.Request[v1alpha.UpdateVantaIntegrationRequest]) (*connect.Response[v1alpha.UpdateVantaIntegrationResponse], error)
+	// Slack Integration (org-scoped)
+	BeginSlackInstall(context.Context, *connect.Request[v1alpha.BeginSlackInstallRequest]) (*connect.Response[v1alpha.BeginSlackInstallResponse], error)
+	CompleteSlackInstall(context.Context, *connect.Request[v1alpha.CompleteSlackInstallRequest]) (*connect.Response[v1alpha.CompleteSlackInstallResponse], error)
+	GetSlackIntegration(context.Context, *connect.Request[v1alpha.GetSlackIntegrationRequest]) (*connect.Response[v1alpha.GetSlackIntegrationResponse], error)
+	UpdateSlackIntegration(context.Context, *connect.Request[v1alpha.UpdateSlackIntegrationRequest]) (*connect.Response[v1alpha.UpdateSlackIntegrationResponse], error)
+	// Code Analysis (project-scoped)
+	TriggerCodeAnalysis(context.Context, *connect.Request[v1alpha.TriggerCodeAnalysisRequest]) (*connect.Response[v1alpha.TriggerCodeAnalysisResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceClient constructs a client for the
@@ -329,322 +486,482 @@ func NewEdgeBitPublicAPIServiceClient(httpClient connect.HTTPClient, baseURL str
 		listProjects: connect.NewClient[v1alpha.ListProjectsRequest, v1alpha.ListProjectsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListProjectsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListProjectsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		createProject: connect.NewClient[v1alpha.CreateProjectRequest, v1alpha.CreateProjectResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCreateProjectProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceCreateProjectMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getProject: connect.NewClient[v1alpha.GetProjectRequest, v1alpha.GetProjectResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetProjectProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetProjectMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateProject: connect.NewClient[v1alpha.UpdateProjectRequest, v1alpha.UpdateProjectResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUpdateProjectProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateProjectMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		generateAgentDeployToken: connect.NewClient[v1alpha.GenerateAgentDeployTokenRequest, v1alpha.GenerateAgentDeployTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGenerateAgentDeployTokenMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		createAgentDeployToken: connect.NewClient[v1alpha.CreateAgentDeployTokenRequest, v1alpha.CreateAgentDeployTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceCreateAgentDeployTokenMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listAgentDeployTokens: connect.NewClient[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListAgentDeployTokensProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListAgentDeployTokensMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteAgentDeployToken: connect.NewClient[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceDeleteAgentDeployTokenMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listMachines: connect.NewClient[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListMachinesProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListMachinesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getMachine: connect.NewClient[v1alpha.GetMachineRequest, v1alpha.GetMachineResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetMachineProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceGetMachineMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getMachineInventory: connect.NewClient[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetMachineInventoryProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetMachineInventoryMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		overview: connect.NewClient[v1alpha.OverviewRequest, v1alpha.OverviewResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceOverviewProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceOverviewMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listWorkloadsForMachine: connect.NewClient[v1alpha.ListWorkloadsForMachineRequest, v1alpha.ListWorkloadsForMachineResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListWorkloadsForMachineProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListWorkloadsForMachineMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		createOrgAccessToken: connect.NewClient[v1alpha.CreateOrgAccessTokenRequest, v1alpha.CreateOrgAccessTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceCreateOrgAccessTokenMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listOrgAccessTokens: connect.NewClient[v1alpha.ListOrgAccessTokensRequest, v1alpha.ListOrgAccessTokensResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListOrgAccessTokensProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListOrgAccessTokensMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteOrgAccessToken: connect.NewClient[v1alpha.DeleteOrgAccessTokenRequest, v1alpha.DeleteOrgAccessTokenResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceDeleteOrgAccessTokenMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		uploadSBOM: connect.NewClient[v1alpha.UploadSBOMRequest, v1alpha.UploadSBOMResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUploadSBOMProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceUploadSBOMMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listSBOMs: connect.NewClient[v1alpha.ListSBOMsRequest, v1alpha.ListSBOMsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListSBOMsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListSBOMsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getSBOM: connect.NewClient[v1alpha.GetSBOMRequest, v1alpha.GetSBOMResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetSBOMProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetSBOMMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getSBOMInventory: connect.NewClient[v1alpha.GetSBOMInventoryRequest, v1alpha.GetSBOMInventoryResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetSBOMInventoryProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetSBOMInventoryMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getSBOMAttestation: connect.NewClient[v1alpha.GetSBOMAttestationRequest, v1alpha.GetSBOMAttestationResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetSBOMAttestationProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetSBOMAttestationMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listComponents: connect.NewClient[v1alpha.ListComponentsRequest, v1alpha.ListComponentsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListComponentsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getComponent: connect.NewClient[v1alpha.GetComponentRequest, v1alpha.GetComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetComponentMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		createComponent: connect.NewClient[v1alpha.CreateComponentRequest, v1alpha.CreateComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCreateComponentProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceCreateComponentMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateComponent: connect.NewClient[v1alpha.UpdateComponentRequest, v1alpha.UpdateComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUpdateComponentProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateComponentMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteComponent: connect.NewClient[v1alpha.DeleteComponentRequest, v1alpha.DeleteComponentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteComponentProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceDeleteComponentMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getComponentDefaultTagSBOMAttestation: connect.NewClient[v1alpha.GetComponentDefaultTagSBOMAttestationRequest, v1alpha.GetComponentDefaultTagSBOMAttestationResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listComponentTags: connect.NewClient[v1alpha.ListComponentTagsRequest, v1alpha.ListComponentTagsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentTagsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListComponentTagsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getComponentTag: connect.NewClient[v1alpha.GetComponentTagRequest, v1alpha.GetComponentTagResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentTagProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetComponentTagMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		setComponentTag: connect.NewClient[v1alpha.SetComponentTagRequest, v1alpha.SetComponentTagResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceSetComponentTagProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceSetComponentTagMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteComponentTag: connect.NewClient[v1alpha.DeleteComponentTagRequest, v1alpha.DeleteComponentTagResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDeleteComponentTagProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceDeleteComponentTagMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getComponentTagsOverview: connect.NewClient[v1alpha.GetComponentTagsOverviewRequest, v1alpha.GetComponentTagsOverviewResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetComponentTagsOverviewMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listComponentIssues: connect.NewClient[v1alpha.ListComponentIssuesRequest, v1alpha.ListComponentIssuesResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentIssuesProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListComponentIssuesMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getComponentIssue: connect.NewClient[v1alpha.GetComponentIssueRequest, v1alpha.GetComponentIssueResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentIssueProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetComponentIssueMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateComponentIssue: connect.NewClient[v1alpha.UpdateComponentIssueRequest, v1alpha.UpdateComponentIssueResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUpdateComponentIssueProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateComponentIssueMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getComponentIssueTrend: connect.NewClient[v1alpha.GetComponentIssueTrendRequest, v1alpha.GetComponentIssueTrendResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetComponentIssueTrendProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetComponentIssueTrendMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listComponentIssuesByStateForProject: connect.NewClient[v1alpha.ListComponentIssuesByStateForProjectRequest, v1alpha.ListComponentIssuesByStateForProjectResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentIssuesByStateForProjectProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListComponentIssuesByStateForProjectMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getCIBotComment: connect.NewClient[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetCIBotCommentProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetCIBotCommentMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listWorkloads: connect.NewClient[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListWorkloadsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListWorkloadsMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		listWorkloadItemsForMachine: connect.NewClient[v1alpha.ListWorkloadItemsForMachineRequest, v1alpha.ListWorkloadItemsForMachineResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListWorkloadItemsForMachineProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceListWorkloadItemsForMachineMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getWorkload: connect.NewClient[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetWorkloadProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetWorkloadMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		debugWorkloadPackageInUse: connect.NewClient[v1alpha.DebugWorkloadPackageInUseRequest, v1alpha.DebugWorkloadPackageInUseResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceDebugWorkloadPackageInUseMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getSBOMDownloadUrl: connect.NewClient[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetSBOMDownloadUrlMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getSBOMUploadUrl: connect.NewClient[v1alpha.GetSBOMUploadUrlRequest, v1alpha.GetSBOMUploadUrlResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetSBOMUploadUrlProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceGetSBOMUploadUrlMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getVexDownloadUrl: connect.NewClient[v1alpha.GetVexDownloadUrlRequest, v1alpha.GetVexDownloadUrlResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetVexDownloadUrlMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getComponentIssuesReportDownloadUrl: connect.NewClient[v1alpha.GetComponentIssuesReportDownloadUrlRequest, v1alpha.GetComponentIssuesReportDownloadUrlResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listComponentsWithMetrics: connect.NewClient[v1alpha.ListComponentsWithMetricsRequest, v1alpha.ListComponentsWithMetricsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListComponentsWithMetricsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getServerSBOMRoutingPolicy: connect.NewClient[v1alpha.GetServerSBOMRoutingPolicyRequest, v1alpha.GetServerSBOMRoutingPolicyResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetServerSBOMRoutingPolicyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateServerSbomRoutingPolicy: connect.NewClient[v1alpha.UpdateServerSbomRoutingPolicyRequest, v1alpha.UpdateServerSbomRoutingPolicyResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		setProjectIssueSLAPolicy: connect.NewClient[v1alpha.SetProjectIssueSLAPolicyRequest, v1alpha.SetProjectIssueSLAPolicyResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceSetProjectIssueSLAPolicyProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceSetProjectIssueSLAPolicyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getProjectIssueSLAPolicy: connect.NewClient[v1alpha.GetProjectIssueSLAPolicyRequest, v1alpha.GetProjectIssueSLAPolicyResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetProjectIssueSLAPolicyProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetProjectIssueSLAPolicyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		completeGitHubAppInstall: connect.NewClient[v1alpha.CompleteGitHubAppInstallRequest, v1alpha.CompleteGitHubAppInstallResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCompleteGitHubAppInstallProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceCompleteGitHubAppInstallMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getProjectIssueTrend: connect.NewClient[v1alpha.GetProjectIssueTrendRequest, v1alpha.GetProjectIssueTrendResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetProjectIssueTrendProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetProjectIssueTrendMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listGitHubIntegrations: connect.NewClient[v1alpha.ListGitHubIntegrationsRequest, v1alpha.ListGitHubIntegrationsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListGitHubIntegrationsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListGitHubIntegrationsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getGitHubIntegration: connect.NewClient[v1alpha.GetGitHubIntegrationRequest, v1alpha.GetGitHubIntegrationResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetGitHubIntegrationProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetGitHubIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		hasGitHubIntegration: connect.NewClient[v1alpha.HasGitHubIntegrationRequest, v1alpha.HasGitHubIntegrationResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceHasGitHubIntegrationProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceHasGitHubIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateGitHubIntegration: connect.NewClient[v1alpha.UpdateGitHubIntegrationRequest, v1alpha.UpdateGitHubIntegrationResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUpdateGitHubIntegrationProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateGitHubIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listGitHubRepositories: connect.NewClient[v1alpha.ListGitHubRepositoriesRequest, v1alpha.ListGitHubRepositoriesResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListGitHubRepositoriesProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListGitHubRepositoriesMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		analyzeGitHubRepo: connect.NewClient[v1alpha.AnalyzeGitHubRepoRequest, v1alpha.AnalyzeGitHubRepoResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceAnalyzeGitHubRepoProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceAnalyzeGitHubRepoMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		importGitHubRepos: connect.NewClient[v1alpha.ImportGitHubReposRequest, v1alpha.ImportGitHubReposResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceImportGitHubReposProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceImportGitHubReposMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		ignoreIssue: connect.NewClient[v1alpha.IgnoreIssueRequest, v1alpha.IgnoreIssueResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceIgnoreIssueProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceIgnoreIssueMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listIntegrations: connect.NewClient[v1alpha.ListIntegrationsRequest, v1alpha.ListIntegrationsResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListIntegrationsProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListIntegrationsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		beginJiraInstall: connect.NewClient[v1alpha.BeginJiraInstallRequest, v1alpha.BeginJiraInstallResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceBeginJiraInstallProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceBeginJiraInstallMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		completeJiraInstall: connect.NewClient[v1alpha.CompleteJiraInstallRequest, v1alpha.CompleteJiraInstallResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceCompleteJiraInstallProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceCompleteJiraInstallMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getJiraIntegration: connect.NewClient[v1alpha.GetJiraIntegrationRequest, v1alpha.GetJiraIntegrationResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceGetJiraIntegrationProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceGetJiraIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateJiraIntegration: connect.NewClient[v1alpha.UpdateJiraIntegrationRequest, v1alpha.UpdateJiraIntegrationResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceUpdateJiraIntegrationProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateJiraIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		listComponentIssueStateChanges: connect.NewClient[v1alpha.ListComponentIssueStateChangesRequest, v1alpha.ListComponentIssueStateChangesResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceListComponentIssueStateChangesProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceListComponentIssueStateChangesMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		lookupEPSSData: connect.NewClient[v1alpha.LookupEPSSDataRequest, v1alpha.LookupEPSSDataResponse](
 			httpClient,
 			baseURL+EdgeBitPublicAPIServiceLookupEPSSDataProcedure,
-			opts...,
+			connect.WithSchema(edgeBitPublicAPIServiceLookupEPSSDataMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		generateOrgSummaryReport: connect.NewClient[v1alpha.GenerateOrgSummaryReportRequest, v1alpha.GenerateOrgSummaryReportResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGenerateOrgSummaryReportProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceGenerateOrgSummaryReportMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		generateComponentIssuesReport: connect.NewClient[v1alpha.GenerateComponentIssuesReportRequest, v1alpha.GenerateComponentIssuesReportResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGenerateComponentIssuesReportProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceGenerateComponentIssuesReportMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		listEnabledFeatures: connect.NewClient[v1alpha.ListEnabledFeaturesRequest, v1alpha.ListEnabledFeaturesResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceListEnabledFeaturesProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceListEnabledFeaturesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		beginVantaInstall: connect.NewClient[v1alpha.BeginVantaInstallRequest, v1alpha.BeginVantaInstallResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceBeginVantaInstallProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceBeginVantaInstallMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		completeVantaInstall: connect.NewClient[v1alpha.CompleteVantaInstallRequest, v1alpha.CompleteVantaInstallResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceCompleteVantaInstallProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceCompleteVantaInstallMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getVantaIntegration: connect.NewClient[v1alpha.GetVantaIntegrationRequest, v1alpha.GetVantaIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetVantaIntegrationProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceGetVantaIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		updateVantaIntegration: connect.NewClient[v1alpha.UpdateVantaIntegrationRequest, v1alpha.UpdateVantaIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceUpdateVantaIntegrationProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateVantaIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		beginSlackInstall: connect.NewClient[v1alpha.BeginSlackInstallRequest, v1alpha.BeginSlackInstallResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceBeginSlackInstallProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceBeginSlackInstallMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		completeSlackInstall: connect.NewClient[v1alpha.CompleteSlackInstallRequest, v1alpha.CompleteSlackInstallResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceCompleteSlackInstallProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceCompleteSlackInstallMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getSlackIntegration: connect.NewClient[v1alpha.GetSlackIntegrationRequest, v1alpha.GetSlackIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceGetSlackIntegrationProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceGetSlackIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		updateSlackIntegration: connect.NewClient[v1alpha.UpdateSlackIntegrationRequest, v1alpha.UpdateSlackIntegrationResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceUpdateSlackIntegrationProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceUpdateSlackIntegrationMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		triggerCodeAnalysis: connect.NewClient[v1alpha.TriggerCodeAnalysisRequest, v1alpha.TriggerCodeAnalysisResponse](
+			httpClient,
+			baseURL+EdgeBitPublicAPIServiceTriggerCodeAnalysisProcedure,
+			connect.WithSchema(edgeBitPublicAPIServiceTriggerCodeAnalysisMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -660,6 +977,7 @@ type edgeBitPublicAPIServiceClient struct {
 	listAgentDeployTokens                 *connect.Client[v1alpha.ListAgentDeployTokensRequest, v1alpha.ListAgentDeployTokensResponse]
 	deleteAgentDeployToken                *connect.Client[v1alpha.DeleteAgentDeployTokenRequest, v1alpha.DeleteAgentDeployTokenResponse]
 	listMachines                          *connect.Client[v1alpha.ListMachinesRequest, v1alpha.ListMachinesResponse]
+	getMachine                            *connect.Client[v1alpha.GetMachineRequest, v1alpha.GetMachineResponse]
 	getMachineInventory                   *connect.Client[v1alpha.GetMachineInventoryRequest, v1alpha.GetMachineInventoryResponse]
 	overview                              *connect.Client[v1alpha.OverviewRequest, v1alpha.OverviewResponse]
 	listWorkloadsForMachine               *connect.Client[v1alpha.ListWorkloadsForMachineRequest, v1alpha.ListWorkloadsForMachineResponse]
@@ -689,10 +1007,13 @@ type edgeBitPublicAPIServiceClient struct {
 	listComponentIssuesByStateForProject  *connect.Client[v1alpha.ListComponentIssuesByStateForProjectRequest, v1alpha.ListComponentIssuesByStateForProjectResponse]
 	getCIBotComment                       *connect.Client[v1alpha.GetCIBotCommentRequest, v1alpha.GetCIBotCommentResponse]
 	listWorkloads                         *connect.Client[v1alpha.ListWorkloadsRequest, v1alpha.ListWorkloadsResponse]
+	listWorkloadItemsForMachine           *connect.Client[v1alpha.ListWorkloadItemsForMachineRequest, v1alpha.ListWorkloadItemsForMachineResponse]
 	getWorkload                           *connect.Client[v1alpha.GetWorkloadRequest, v1alpha.GetWorkloadResponse]
 	debugWorkloadPackageInUse             *connect.Client[v1alpha.DebugWorkloadPackageInUseRequest, v1alpha.DebugWorkloadPackageInUseResponse]
 	getSBOMDownloadUrl                    *connect.Client[v1alpha.GetSBOMDownloadUrlRequest, v1alpha.GetSBOMDownloadUrlResponse]
+	getSBOMUploadUrl                      *connect.Client[v1alpha.GetSBOMUploadUrlRequest, v1alpha.GetSBOMUploadUrlResponse]
 	getVexDownloadUrl                     *connect.Client[v1alpha.GetVexDownloadUrlRequest, v1alpha.GetVexDownloadUrlResponse]
+	getComponentIssuesReportDownloadUrl   *connect.Client[v1alpha.GetComponentIssuesReportDownloadUrlRequest, v1alpha.GetComponentIssuesReportDownloadUrlResponse]
 	listComponentsWithMetrics             *connect.Client[v1alpha.ListComponentsWithMetricsRequest, v1alpha.ListComponentsWithMetricsResponse]
 	getServerSBOMRoutingPolicy            *connect.Client[v1alpha.GetServerSBOMRoutingPolicyRequest, v1alpha.GetServerSBOMRoutingPolicyResponse]
 	updateServerSbomRoutingPolicy         *connect.Client[v1alpha.UpdateServerSbomRoutingPolicyRequest, v1alpha.UpdateServerSbomRoutingPolicyResponse]
@@ -715,6 +1036,18 @@ type edgeBitPublicAPIServiceClient struct {
 	updateJiraIntegration                 *connect.Client[v1alpha.UpdateJiraIntegrationRequest, v1alpha.UpdateJiraIntegrationResponse]
 	listComponentIssueStateChanges        *connect.Client[v1alpha.ListComponentIssueStateChangesRequest, v1alpha.ListComponentIssueStateChangesResponse]
 	lookupEPSSData                        *connect.Client[v1alpha.LookupEPSSDataRequest, v1alpha.LookupEPSSDataResponse]
+	generateOrgSummaryReport              *connect.Client[v1alpha.GenerateOrgSummaryReportRequest, v1alpha.GenerateOrgSummaryReportResponse]
+	generateComponentIssuesReport         *connect.Client[v1alpha.GenerateComponentIssuesReportRequest, v1alpha.GenerateComponentIssuesReportResponse]
+	listEnabledFeatures                   *connect.Client[v1alpha.ListEnabledFeaturesRequest, v1alpha.ListEnabledFeaturesResponse]
+	beginVantaInstall                     *connect.Client[v1alpha.BeginVantaInstallRequest, v1alpha.BeginVantaInstallResponse]
+	completeVantaInstall                  *connect.Client[v1alpha.CompleteVantaInstallRequest, v1alpha.CompleteVantaInstallResponse]
+	getVantaIntegration                   *connect.Client[v1alpha.GetVantaIntegrationRequest, v1alpha.GetVantaIntegrationResponse]
+	updateVantaIntegration                *connect.Client[v1alpha.UpdateVantaIntegrationRequest, v1alpha.UpdateVantaIntegrationResponse]
+	beginSlackInstall                     *connect.Client[v1alpha.BeginSlackInstallRequest, v1alpha.BeginSlackInstallResponse]
+	completeSlackInstall                  *connect.Client[v1alpha.CompleteSlackInstallRequest, v1alpha.CompleteSlackInstallResponse]
+	getSlackIntegration                   *connect.Client[v1alpha.GetSlackIntegrationRequest, v1alpha.GetSlackIntegrationResponse]
+	updateSlackIntegration                *connect.Client[v1alpha.UpdateSlackIntegrationRequest, v1alpha.UpdateSlackIntegrationResponse]
+	triggerCodeAnalysis                   *connect.Client[v1alpha.TriggerCodeAnalysisRequest, v1alpha.TriggerCodeAnalysisResponse]
 }
 
 // ListProjects calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListProjects.
@@ -764,6 +1097,11 @@ func (c *edgeBitPublicAPIServiceClient) DeleteAgentDeployToken(ctx context.Conte
 // ListMachines calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListMachines.
 func (c *edgeBitPublicAPIServiceClient) ListMachines(ctx context.Context, req *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error) {
 	return c.listMachines.CallUnary(ctx, req)
+}
+
+// GetMachine calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetMachine.
+func (c *edgeBitPublicAPIServiceClient) GetMachine(ctx context.Context, req *connect.Request[v1alpha.GetMachineRequest]) (*connect.Response[v1alpha.GetMachineResponse], error) {
+	return c.getMachine.CallUnary(ctx, req)
 }
 
 // GetMachineInventory calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetMachineInventory.
@@ -916,6 +1254,12 @@ func (c *edgeBitPublicAPIServiceClient) ListWorkloads(ctx context.Context, req *
 	return c.listWorkloads.CallUnary(ctx, req)
 }
 
+// ListWorkloadItemsForMachine calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloadItemsForMachine.
+func (c *edgeBitPublicAPIServiceClient) ListWorkloadItemsForMachine(ctx context.Context, req *connect.Request[v1alpha.ListWorkloadItemsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadItemsForMachineResponse], error) {
+	return c.listWorkloadItemsForMachine.CallUnary(ctx, req)
+}
+
 // GetWorkload calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetWorkload.
 func (c *edgeBitPublicAPIServiceClient) GetWorkload(ctx context.Context, req *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error) {
 	return c.getWorkload.CallUnary(ctx, req)
@@ -932,9 +1276,20 @@ func (c *edgeBitPublicAPIServiceClient) GetSBOMDownloadUrl(ctx context.Context, 
 	return c.getSBOMDownloadUrl.CallUnary(ctx, req)
 }
 
+// GetSBOMUploadUrl calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMUploadUrl.
+func (c *edgeBitPublicAPIServiceClient) GetSBOMUploadUrl(ctx context.Context, req *connect.Request[v1alpha.GetSBOMUploadUrlRequest]) (*connect.Response[v1alpha.GetSBOMUploadUrlResponse], error) {
+	return c.getSBOMUploadUrl.CallUnary(ctx, req)
+}
+
 // GetVexDownloadUrl calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetVexDownloadUrl.
 func (c *edgeBitPublicAPIServiceClient) GetVexDownloadUrl(ctx context.Context, req *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error) {
 	return c.getVexDownloadUrl.CallUnary(ctx, req)
+}
+
+// GetComponentIssuesReportDownloadUrl calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentIssuesReportDownloadUrl.
+func (c *edgeBitPublicAPIServiceClient) GetComponentIssuesReportDownloadUrl(ctx context.Context, req *connect.Request[v1alpha.GetComponentIssuesReportDownloadUrlRequest]) (*connect.Response[v1alpha.GetComponentIssuesReportDownloadUrlResponse], error) {
+	return c.getComponentIssuesReportDownloadUrl.CallUnary(ctx, req)
 }
 
 // ListComponentsWithMetrics calls
@@ -1058,6 +1413,70 @@ func (c *edgeBitPublicAPIServiceClient) LookupEPSSData(ctx context.Context, req 
 	return c.lookupEPSSData.CallUnary(ctx, req)
 }
 
+// GenerateOrgSummaryReport calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateOrgSummaryReport.
+func (c *edgeBitPublicAPIServiceClient) GenerateOrgSummaryReport(ctx context.Context, req *connect.Request[v1alpha.GenerateOrgSummaryReportRequest]) (*connect.Response[v1alpha.GenerateOrgSummaryReportResponse], error) {
+	return c.generateOrgSummaryReport.CallUnary(ctx, req)
+}
+
+// GenerateComponentIssuesReport calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateComponentIssuesReport.
+func (c *edgeBitPublicAPIServiceClient) GenerateComponentIssuesReport(ctx context.Context, req *connect.Request[v1alpha.GenerateComponentIssuesReportRequest]) (*connect.Response[v1alpha.GenerateComponentIssuesReportResponse], error) {
+	return c.generateComponentIssuesReport.CallUnary(ctx, req)
+}
+
+// ListEnabledFeatures calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListEnabledFeatures.
+func (c *edgeBitPublicAPIServiceClient) ListEnabledFeatures(ctx context.Context, req *connect.Request[v1alpha.ListEnabledFeaturesRequest]) (*connect.Response[v1alpha.ListEnabledFeaturesResponse], error) {
+	return c.listEnabledFeatures.CallUnary(ctx, req)
+}
+
+// BeginVantaInstall calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.BeginVantaInstall.
+func (c *edgeBitPublicAPIServiceClient) BeginVantaInstall(ctx context.Context, req *connect.Request[v1alpha.BeginVantaInstallRequest]) (*connect.Response[v1alpha.BeginVantaInstallResponse], error) {
+	return c.beginVantaInstall.CallUnary(ctx, req)
+}
+
+// CompleteVantaInstall calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteVantaInstall.
+func (c *edgeBitPublicAPIServiceClient) CompleteVantaInstall(ctx context.Context, req *connect.Request[v1alpha.CompleteVantaInstallRequest]) (*connect.Response[v1alpha.CompleteVantaInstallResponse], error) {
+	return c.completeVantaInstall.CallUnary(ctx, req)
+}
+
+// GetVantaIntegration calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetVantaIntegration.
+func (c *edgeBitPublicAPIServiceClient) GetVantaIntegration(ctx context.Context, req *connect.Request[v1alpha.GetVantaIntegrationRequest]) (*connect.Response[v1alpha.GetVantaIntegrationResponse], error) {
+	return c.getVantaIntegration.CallUnary(ctx, req)
+}
+
+// UpdateVantaIntegration calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateVantaIntegration.
+func (c *edgeBitPublicAPIServiceClient) UpdateVantaIntegration(ctx context.Context, req *connect.Request[v1alpha.UpdateVantaIntegrationRequest]) (*connect.Response[v1alpha.UpdateVantaIntegrationResponse], error) {
+	return c.updateVantaIntegration.CallUnary(ctx, req)
+}
+
+// BeginSlackInstall calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.BeginSlackInstall.
+func (c *edgeBitPublicAPIServiceClient) BeginSlackInstall(ctx context.Context, req *connect.Request[v1alpha.BeginSlackInstallRequest]) (*connect.Response[v1alpha.BeginSlackInstallResponse], error) {
+	return c.beginSlackInstall.CallUnary(ctx, req)
+}
+
+// CompleteSlackInstall calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteSlackInstall.
+func (c *edgeBitPublicAPIServiceClient) CompleteSlackInstall(ctx context.Context, req *connect.Request[v1alpha.CompleteSlackInstallRequest]) (*connect.Response[v1alpha.CompleteSlackInstallResponse], error) {
+	return c.completeSlackInstall.CallUnary(ctx, req)
+}
+
+// GetSlackIntegration calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSlackIntegration.
+func (c *edgeBitPublicAPIServiceClient) GetSlackIntegration(ctx context.Context, req *connect.Request[v1alpha.GetSlackIntegrationRequest]) (*connect.Response[v1alpha.GetSlackIntegrationResponse], error) {
+	return c.getSlackIntegration.CallUnary(ctx, req)
+}
+
+// UpdateSlackIntegration calls
+// edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateSlackIntegration.
+func (c *edgeBitPublicAPIServiceClient) UpdateSlackIntegration(ctx context.Context, req *connect.Request[v1alpha.UpdateSlackIntegrationRequest]) (*connect.Response[v1alpha.UpdateSlackIntegrationResponse], error) {
+	return c.updateSlackIntegration.CallUnary(ctx, req)
+}
+
+// TriggerCodeAnalysis calls edgebit.platform.v1alpha.EdgeBitPublicAPIService.TriggerCodeAnalysis.
+func (c *edgeBitPublicAPIServiceClient) TriggerCodeAnalysis(ctx context.Context, req *connect.Request[v1alpha.TriggerCodeAnalysisRequest]) (*connect.Response[v1alpha.TriggerCodeAnalysisResponse], error) {
+	return c.triggerCodeAnalysis.CallUnary(ctx, req)
+}
+
 // EdgeBitPublicAPIServiceHandler is an implementation of the
 // edgebit.platform.v1alpha.EdgeBitPublicAPIService service.
 type EdgeBitPublicAPIServiceHandler interface {
@@ -1073,6 +1492,7 @@ type EdgeBitPublicAPIServiceHandler interface {
 	DeleteAgentDeployToken(context.Context, *connect.Request[v1alpha.DeleteAgentDeployTokenRequest]) (*connect.Response[v1alpha.DeleteAgentDeployTokenResponse], error)
 	// Machine Management (project-scoped)
 	ListMachines(context.Context, *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error)
+	GetMachine(context.Context, *connect.Request[v1alpha.GetMachineRequest]) (*connect.Response[v1alpha.GetMachineResponse], error)
 	// Inventory Exploration (project-scoped)
 	GetMachineInventory(context.Context, *connect.Request[v1alpha.GetMachineInventoryRequest]) (*connect.Response[v1alpha.GetMachineInventoryResponse], error)
 	Overview(context.Context, *connect.Request[v1alpha.OverviewRequest]) (*connect.Response[v1alpha.OverviewResponse], error)
@@ -1110,12 +1530,17 @@ type EdgeBitPublicAPIServiceHandler interface {
 	GetCIBotComment(context.Context, *connect.Request[v1alpha.GetCIBotCommentRequest]) (*connect.Response[v1alpha.GetCIBotCommentResponse], error)
 	// Workload Management (project-scoped)
 	ListWorkloads(context.Context, *connect.Request[v1alpha.ListWorkloadsRequest]) (*connect.Response[v1alpha.ListWorkloadsResponse], error)
+	ListWorkloadItemsForMachine(context.Context, *connect.Request[v1alpha.ListWorkloadItemsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadItemsForMachineResponse], error)
 	GetWorkload(context.Context, *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error)
 	DebugWorkloadPackageInUse(context.Context, *connect.Request[v1alpha.DebugWorkloadPackageInUseRequest]) (*connect.Response[v1alpha.DebugWorkloadPackageInUseResponse], error)
 	// Get Sbom Download Url
 	GetSBOMDownloadUrl(context.Context, *connect.Request[v1alpha.GetSBOMDownloadUrlRequest]) (*connect.Response[v1alpha.GetSBOMDownloadUrlResponse], error)
+	// Get Sbom Upload Url
+	GetSBOMUploadUrl(context.Context, *connect.Request[v1alpha.GetSBOMUploadUrlRequest]) (*connect.Response[v1alpha.GetSBOMUploadUrlResponse], error)
 	// Get Vex Download Url
 	GetVexDownloadUrl(context.Context, *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error)
+	// Get ComponentIssuesReport Download Url
+	GetComponentIssuesReportDownloadUrl(context.Context, *connect.Request[v1alpha.GetComponentIssuesReportDownloadUrlRequest]) (*connect.Response[v1alpha.GetComponentIssuesReportDownloadUrlResponse], error)
 	// Get Component With Metrics
 	ListComponentsWithMetrics(context.Context, *connect.Request[v1alpha.ListComponentsWithMetricsRequest]) (*connect.Response[v1alpha.ListComponentsWithMetricsResponse], error)
 	// Server Sbom Routing Policies
@@ -1138,12 +1563,30 @@ type EdgeBitPublicAPIServiceHandler interface {
 	// Ignore Issue
 	IgnoreIssue(context.Context, *connect.Request[v1alpha.IgnoreIssueRequest]) (*connect.Response[v1alpha.IgnoreIssueResponse], error)
 	ListIntegrations(context.Context, *connect.Request[v1alpha.ListIntegrationsRequest]) (*connect.Response[v1alpha.ListIntegrationsResponse], error)
+	// Jira Integration (org-scoped)
 	BeginJiraInstall(context.Context, *connect.Request[v1alpha.BeginJiraInstallRequest]) (*connect.Response[v1alpha.BeginJiraInstallResponse], error)
 	CompleteJiraInstall(context.Context, *connect.Request[v1alpha.CompleteJiraInstallRequest]) (*connect.Response[v1alpha.CompleteJiraInstallResponse], error)
 	GetJiraIntegration(context.Context, *connect.Request[v1alpha.GetJiraIntegrationRequest]) (*connect.Response[v1alpha.GetJiraIntegrationResponse], error)
 	UpdateJiraIntegration(context.Context, *connect.Request[v1alpha.UpdateJiraIntegrationRequest]) (*connect.Response[v1alpha.UpdateJiraIntegrationResponse], error)
 	ListComponentIssueStateChanges(context.Context, *connect.Request[v1alpha.ListComponentIssueStateChangesRequest]) (*connect.Response[v1alpha.ListComponentIssueStateChangesResponse], error)
 	LookupEPSSData(context.Context, *connect.Request[v1alpha.LookupEPSSDataRequest]) (*connect.Response[v1alpha.LookupEPSSDataResponse], error)
+	// Reports (org-scoped)
+	GenerateOrgSummaryReport(context.Context, *connect.Request[v1alpha.GenerateOrgSummaryReportRequest]) (*connect.Response[v1alpha.GenerateOrgSummaryReportResponse], error)
+	// Reports (project-scoped)
+	GenerateComponentIssuesReport(context.Context, *connect.Request[v1alpha.GenerateComponentIssuesReportRequest]) (*connect.Response[v1alpha.GenerateComponentIssuesReportResponse], error)
+	ListEnabledFeatures(context.Context, *connect.Request[v1alpha.ListEnabledFeaturesRequest]) (*connect.Response[v1alpha.ListEnabledFeaturesResponse], error)
+	// Vanta Integration (org-scoped)
+	BeginVantaInstall(context.Context, *connect.Request[v1alpha.BeginVantaInstallRequest]) (*connect.Response[v1alpha.BeginVantaInstallResponse], error)
+	CompleteVantaInstall(context.Context, *connect.Request[v1alpha.CompleteVantaInstallRequest]) (*connect.Response[v1alpha.CompleteVantaInstallResponse], error)
+	GetVantaIntegration(context.Context, *connect.Request[v1alpha.GetVantaIntegrationRequest]) (*connect.Response[v1alpha.GetVantaIntegrationResponse], error)
+	UpdateVantaIntegration(context.Context, *connect.Request[v1alpha.UpdateVantaIntegrationRequest]) (*connect.Response[v1alpha.UpdateVantaIntegrationResponse], error)
+	// Slack Integration (org-scoped)
+	BeginSlackInstall(context.Context, *connect.Request[v1alpha.BeginSlackInstallRequest]) (*connect.Response[v1alpha.BeginSlackInstallResponse], error)
+	CompleteSlackInstall(context.Context, *connect.Request[v1alpha.CompleteSlackInstallRequest]) (*connect.Response[v1alpha.CompleteSlackInstallResponse], error)
+	GetSlackIntegration(context.Context, *connect.Request[v1alpha.GetSlackIntegrationRequest]) (*connect.Response[v1alpha.GetSlackIntegrationResponse], error)
+	UpdateSlackIntegration(context.Context, *connect.Request[v1alpha.UpdateSlackIntegrationRequest]) (*connect.Response[v1alpha.UpdateSlackIntegrationResponse], error)
+	// Code Analysis (project-scoped)
+	TriggerCodeAnalysis(context.Context, *connect.Request[v1alpha.TriggerCodeAnalysisRequest]) (*connect.Response[v1alpha.TriggerCodeAnalysisResponse], error)
 }
 
 // NewEdgeBitPublicAPIServiceHandler builds an HTTP handler from the service implementation. It
@@ -1155,322 +1598,482 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 	edgeBitPublicAPIServiceListProjectsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListProjectsProcedure,
 		svc.ListProjects,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListProjectsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceCreateProjectHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCreateProjectProcedure,
 		svc.CreateProject,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceCreateProjectMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetProjectHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetProjectProcedure,
 		svc.GetProject,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetProjectMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceUpdateProjectHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceUpdateProjectProcedure,
 		svc.UpdateProject,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateProjectMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGenerateAgentDeployTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGenerateAgentDeployTokenProcedure,
 		svc.GenerateAgentDeployToken,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGenerateAgentDeployTokenMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceCreateAgentDeployTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCreateAgentDeployTokenProcedure,
 		svc.CreateAgentDeployToken,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceCreateAgentDeployTokenMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListAgentDeployTokensHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListAgentDeployTokensProcedure,
 		svc.ListAgentDeployTokens,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListAgentDeployTokensMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceDeleteAgentDeployTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteAgentDeployTokenProcedure,
 		svc.DeleteAgentDeployToken,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceDeleteAgentDeployTokenMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListMachinesHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListMachinesProcedure,
 		svc.ListMachines,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListMachinesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceGetMachineHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetMachineProcedure,
+		svc.GetMachine,
+		connect.WithSchema(edgeBitPublicAPIServiceGetMachineMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetMachineInventoryHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetMachineInventoryProcedure,
 		svc.GetMachineInventory,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetMachineInventoryMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceOverviewHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceOverviewProcedure,
 		svc.Overview,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceOverviewMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListWorkloadsForMachineHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListWorkloadsForMachineProcedure,
 		svc.ListWorkloadsForMachine,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListWorkloadsForMachineMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceCreateOrgAccessTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCreateOrgAccessTokenProcedure,
 		svc.CreateOrgAccessToken,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceCreateOrgAccessTokenMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListOrgAccessTokensHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListOrgAccessTokensProcedure,
 		svc.ListOrgAccessTokens,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListOrgAccessTokensMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceDeleteOrgAccessTokenHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteOrgAccessTokenProcedure,
 		svc.DeleteOrgAccessToken,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceDeleteOrgAccessTokenMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceUploadSBOMHandler := connect.NewClientStreamHandler(
 		EdgeBitPublicAPIServiceUploadSBOMProcedure,
 		svc.UploadSBOM,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceUploadSBOMMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListSBOMsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListSBOMsProcedure,
 		svc.ListSBOMs,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListSBOMsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetSBOMHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetSBOMProcedure,
 		svc.GetSBOM,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetSBOMMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetSBOMInventoryHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetSBOMInventoryProcedure,
 		svc.GetSBOMInventory,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetSBOMInventoryMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetSBOMAttestationHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetSBOMAttestationProcedure,
 		svc.GetSBOMAttestation,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetSBOMAttestationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListComponentsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentsProcedure,
 		svc.ListComponents,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListComponentsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentProcedure,
 		svc.GetComponent,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetComponentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceCreateComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCreateComponentProcedure,
 		svc.CreateComponent,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceCreateComponentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceUpdateComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceUpdateComponentProcedure,
 		svc.UpdateComponent,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateComponentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceDeleteComponentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteComponentProcedure,
 		svc.DeleteComponent,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceDeleteComponentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationProcedure,
 		svc.GetComponentDefaultTagSBOMAttestation,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetComponentDefaultTagSBOMAttestationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListComponentTagsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentTagsProcedure,
 		svc.ListComponentTags,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListComponentTagsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetComponentTagHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentTagProcedure,
 		svc.GetComponentTag,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetComponentTagMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceSetComponentTagHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceSetComponentTagProcedure,
 		svc.SetComponentTag,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceSetComponentTagMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceDeleteComponentTagHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDeleteComponentTagProcedure,
 		svc.DeleteComponentTag,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceDeleteComponentTagMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetComponentTagsOverviewHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentTagsOverviewProcedure,
 		svc.GetComponentTagsOverview,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetComponentTagsOverviewMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListComponentIssuesHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentIssuesProcedure,
 		svc.ListComponentIssues,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListComponentIssuesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetComponentIssueHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentIssueProcedure,
 		svc.GetComponentIssue,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetComponentIssueMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceUpdateComponentIssueHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceUpdateComponentIssueProcedure,
 		svc.UpdateComponentIssue,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateComponentIssueMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetComponentIssueTrendHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetComponentIssueTrendProcedure,
 		svc.GetComponentIssueTrend,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetComponentIssueTrendMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListComponentIssuesByStateForProjectHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentIssuesByStateForProjectProcedure,
 		svc.ListComponentIssuesByStateForProject,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListComponentIssuesByStateForProjectMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetCIBotCommentHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetCIBotCommentProcedure,
 		svc.GetCIBotComment,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetCIBotCommentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListWorkloadsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListWorkloadsProcedure,
 		svc.ListWorkloads,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListWorkloadsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceListWorkloadItemsForMachineHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListWorkloadItemsForMachineProcedure,
+		svc.ListWorkloadItemsForMachine,
+		connect.WithSchema(edgeBitPublicAPIServiceListWorkloadItemsForMachineMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetWorkloadHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetWorkloadProcedure,
 		svc.GetWorkload,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetWorkloadMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceDebugWorkloadPackageInUseHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure,
 		svc.DebugWorkloadPackageInUse,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceDebugWorkloadPackageInUseMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetSBOMDownloadUrlHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure,
 		svc.GetSBOMDownloadUrl,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetSBOMDownloadUrlMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceGetSBOMUploadUrlHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetSBOMUploadUrlProcedure,
+		svc.GetSBOMUploadUrl,
+		connect.WithSchema(edgeBitPublicAPIServiceGetSBOMUploadUrlMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetVexDownloadUrlHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure,
 		svc.GetVexDownloadUrl,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetVexDownloadUrlMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlProcedure,
+		svc.GetComponentIssuesReportDownloadUrl,
+		connect.WithSchema(edgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListComponentsWithMetricsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure,
 		svc.ListComponentsWithMetrics,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListComponentsWithMetricsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetServerSBOMRoutingPolicyHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure,
 		svc.GetServerSBOMRoutingPolicy,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetServerSBOMRoutingPolicyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyProcedure,
 		svc.UpdateServerSbomRoutingPolicy,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateServerSbomRoutingPolicyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceSetProjectIssueSLAPolicyHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceSetProjectIssueSLAPolicyProcedure,
 		svc.SetProjectIssueSLAPolicy,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceSetProjectIssueSLAPolicyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetProjectIssueSLAPolicyHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetProjectIssueSLAPolicyProcedure,
 		svc.GetProjectIssueSLAPolicy,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetProjectIssueSLAPolicyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceCompleteGitHubAppInstallHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCompleteGitHubAppInstallProcedure,
 		svc.CompleteGitHubAppInstall,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceCompleteGitHubAppInstallMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetProjectIssueTrendHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetProjectIssueTrendProcedure,
 		svc.GetProjectIssueTrend,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetProjectIssueTrendMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListGitHubIntegrationsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListGitHubIntegrationsProcedure,
 		svc.ListGitHubIntegrations,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListGitHubIntegrationsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetGitHubIntegrationHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetGitHubIntegrationProcedure,
 		svc.GetGitHubIntegration,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetGitHubIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceHasGitHubIntegrationHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceHasGitHubIntegrationProcedure,
 		svc.HasGitHubIntegration,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceHasGitHubIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceUpdateGitHubIntegrationHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceUpdateGitHubIntegrationProcedure,
 		svc.UpdateGitHubIntegration,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateGitHubIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListGitHubRepositoriesHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListGitHubRepositoriesProcedure,
 		svc.ListGitHubRepositories,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListGitHubRepositoriesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceAnalyzeGitHubRepoHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceAnalyzeGitHubRepoProcedure,
 		svc.AnalyzeGitHubRepo,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceAnalyzeGitHubRepoMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceImportGitHubReposHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceImportGitHubReposProcedure,
 		svc.ImportGitHubRepos,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceImportGitHubReposMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceIgnoreIssueHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceIgnoreIssueProcedure,
 		svc.IgnoreIssue,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceIgnoreIssueMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListIntegrationsHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListIntegrationsProcedure,
 		svc.ListIntegrations,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListIntegrationsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceBeginJiraInstallHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceBeginJiraInstallProcedure,
 		svc.BeginJiraInstall,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceBeginJiraInstallMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceCompleteJiraInstallHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceCompleteJiraInstallProcedure,
 		svc.CompleteJiraInstall,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceCompleteJiraInstallMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceGetJiraIntegrationHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceGetJiraIntegrationProcedure,
 		svc.GetJiraIntegration,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceGetJiraIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceUpdateJiraIntegrationHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceUpdateJiraIntegrationProcedure,
 		svc.UpdateJiraIntegration,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateJiraIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceListComponentIssueStateChangesHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceListComponentIssueStateChangesProcedure,
 		svc.ListComponentIssueStateChanges,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceListComponentIssueStateChangesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	edgeBitPublicAPIServiceLookupEPSSDataHandler := connect.NewUnaryHandler(
 		EdgeBitPublicAPIServiceLookupEPSSDataProcedure,
 		svc.LookupEPSSData,
-		opts...,
+		connect.WithSchema(edgeBitPublicAPIServiceLookupEPSSDataMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceGenerateOrgSummaryReportHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGenerateOrgSummaryReportProcedure,
+		svc.GenerateOrgSummaryReport,
+		connect.WithSchema(edgeBitPublicAPIServiceGenerateOrgSummaryReportMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceGenerateComponentIssuesReportHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGenerateComponentIssuesReportProcedure,
+		svc.GenerateComponentIssuesReport,
+		connect.WithSchema(edgeBitPublicAPIServiceGenerateComponentIssuesReportMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceListEnabledFeaturesHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceListEnabledFeaturesProcedure,
+		svc.ListEnabledFeatures,
+		connect.WithSchema(edgeBitPublicAPIServiceListEnabledFeaturesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceBeginVantaInstallHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceBeginVantaInstallProcedure,
+		svc.BeginVantaInstall,
+		connect.WithSchema(edgeBitPublicAPIServiceBeginVantaInstallMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceCompleteVantaInstallHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCompleteVantaInstallProcedure,
+		svc.CompleteVantaInstall,
+		connect.WithSchema(edgeBitPublicAPIServiceCompleteVantaInstallMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceGetVantaIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetVantaIntegrationProcedure,
+		svc.GetVantaIntegration,
+		connect.WithSchema(edgeBitPublicAPIServiceGetVantaIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceUpdateVantaIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateVantaIntegrationProcedure,
+		svc.UpdateVantaIntegration,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateVantaIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceBeginSlackInstallHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceBeginSlackInstallProcedure,
+		svc.BeginSlackInstall,
+		connect.WithSchema(edgeBitPublicAPIServiceBeginSlackInstallMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceCompleteSlackInstallHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceCompleteSlackInstallProcedure,
+		svc.CompleteSlackInstall,
+		connect.WithSchema(edgeBitPublicAPIServiceCompleteSlackInstallMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceGetSlackIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceGetSlackIntegrationProcedure,
+		svc.GetSlackIntegration,
+		connect.WithSchema(edgeBitPublicAPIServiceGetSlackIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceUpdateSlackIntegrationHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceUpdateSlackIntegrationProcedure,
+		svc.UpdateSlackIntegration,
+		connect.WithSchema(edgeBitPublicAPIServiceUpdateSlackIntegrationMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	edgeBitPublicAPIServiceTriggerCodeAnalysisHandler := connect.NewUnaryHandler(
+		EdgeBitPublicAPIServiceTriggerCodeAnalysisProcedure,
+		svc.TriggerCodeAnalysis,
+		connect.WithSchema(edgeBitPublicAPIServiceTriggerCodeAnalysisMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/edgebit.platform.v1alpha.EdgeBitPublicAPIService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
@@ -1492,6 +2095,8 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 			edgeBitPublicAPIServiceDeleteAgentDeployTokenHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceListMachinesProcedure:
 			edgeBitPublicAPIServiceListMachinesHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetMachineProcedure:
+			edgeBitPublicAPIServiceGetMachineHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceGetMachineInventoryProcedure:
 			edgeBitPublicAPIServiceGetMachineInventoryHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceOverviewProcedure:
@@ -1550,14 +2155,20 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 			edgeBitPublicAPIServiceGetCIBotCommentHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceListWorkloadsProcedure:
 			edgeBitPublicAPIServiceListWorkloadsHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListWorkloadItemsForMachineProcedure:
+			edgeBitPublicAPIServiceListWorkloadItemsForMachineHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceGetWorkloadProcedure:
 			edgeBitPublicAPIServiceGetWorkloadHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceDebugWorkloadPackageInUseProcedure:
 			edgeBitPublicAPIServiceDebugWorkloadPackageInUseHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceGetSBOMDownloadUrlProcedure:
 			edgeBitPublicAPIServiceGetSBOMDownloadUrlHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetSBOMUploadUrlProcedure:
+			edgeBitPublicAPIServiceGetSBOMUploadUrlHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceGetVexDownloadUrlProcedure:
 			edgeBitPublicAPIServiceGetVexDownloadUrlHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlProcedure:
+			edgeBitPublicAPIServiceGetComponentIssuesReportDownloadUrlHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceListComponentsWithMetricsProcedure:
 			edgeBitPublicAPIServiceListComponentsWithMetricsHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceGetServerSBOMRoutingPolicyProcedure:
@@ -1602,6 +2213,30 @@ func NewEdgeBitPublicAPIServiceHandler(svc EdgeBitPublicAPIServiceHandler, opts 
 			edgeBitPublicAPIServiceListComponentIssueStateChangesHandler.ServeHTTP(w, r)
 		case EdgeBitPublicAPIServiceLookupEPSSDataProcedure:
 			edgeBitPublicAPIServiceLookupEPSSDataHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGenerateOrgSummaryReportProcedure:
+			edgeBitPublicAPIServiceGenerateOrgSummaryReportHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGenerateComponentIssuesReportProcedure:
+			edgeBitPublicAPIServiceGenerateComponentIssuesReportHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceListEnabledFeaturesProcedure:
+			edgeBitPublicAPIServiceListEnabledFeaturesHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceBeginVantaInstallProcedure:
+			edgeBitPublicAPIServiceBeginVantaInstallHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCompleteVantaInstallProcedure:
+			edgeBitPublicAPIServiceCompleteVantaInstallHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetVantaIntegrationProcedure:
+			edgeBitPublicAPIServiceGetVantaIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateVantaIntegrationProcedure:
+			edgeBitPublicAPIServiceUpdateVantaIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceBeginSlackInstallProcedure:
+			edgeBitPublicAPIServiceBeginSlackInstallHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceCompleteSlackInstallProcedure:
+			edgeBitPublicAPIServiceCompleteSlackInstallHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceGetSlackIntegrationProcedure:
+			edgeBitPublicAPIServiceGetSlackIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceUpdateSlackIntegrationProcedure:
+			edgeBitPublicAPIServiceUpdateSlackIntegrationHandler.ServeHTTP(w, r)
+		case EdgeBitPublicAPIServiceTriggerCodeAnalysisProcedure:
+			edgeBitPublicAPIServiceTriggerCodeAnalysisHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1645,6 +2280,10 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) DeleteAgentDeployToken(contex
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) ListMachines(context.Context, *connect.Request[v1alpha.ListMachinesRequest]) (*connect.Response[v1alpha.ListMachinesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListMachines is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetMachine(context.Context, *connect.Request[v1alpha.GetMachineRequest]) (*connect.Response[v1alpha.GetMachineResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetMachine is not implemented"))
 }
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) GetMachineInventory(context.Context, *connect.Request[v1alpha.GetMachineInventoryRequest]) (*connect.Response[v1alpha.GetMachineInventoryResponse], error) {
@@ -1763,6 +2402,10 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) ListWorkloads(context.Context
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloads is not implemented"))
 }
 
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListWorkloadItemsForMachine(context.Context, *connect.Request[v1alpha.ListWorkloadItemsForMachineRequest]) (*connect.Response[v1alpha.ListWorkloadItemsForMachineResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListWorkloadItemsForMachine is not implemented"))
+}
+
 func (UnimplementedEdgeBitPublicAPIServiceHandler) GetWorkload(context.Context, *connect.Request[v1alpha.GetWorkloadRequest]) (*connect.Response[v1alpha.GetWorkloadResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetWorkload is not implemented"))
 }
@@ -1775,8 +2418,16 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMDownloadUrl(context.Co
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMDownloadUrl is not implemented"))
 }
 
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSBOMUploadUrl(context.Context, *connect.Request[v1alpha.GetSBOMUploadUrlRequest]) (*connect.Response[v1alpha.GetSBOMUploadUrlResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSBOMUploadUrl is not implemented"))
+}
+
 func (UnimplementedEdgeBitPublicAPIServiceHandler) GetVexDownloadUrl(context.Context, *connect.Request[v1alpha.GetVexDownloadUrlRequest]) (*connect.Response[v1alpha.GetVexDownloadUrlResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetVexDownloadUrl is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetComponentIssuesReportDownloadUrl(context.Context, *connect.Request[v1alpha.GetComponentIssuesReportDownloadUrlRequest]) (*connect.Response[v1alpha.GetComponentIssuesReportDownloadUrlResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetComponentIssuesReportDownloadUrl is not implemented"))
 }
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentsWithMetrics(context.Context, *connect.Request[v1alpha.ListComponentsWithMetricsRequest]) (*connect.Response[v1alpha.ListComponentsWithMetricsResponse], error) {
@@ -1865,4 +2516,52 @@ func (UnimplementedEdgeBitPublicAPIServiceHandler) ListComponentIssueStateChange
 
 func (UnimplementedEdgeBitPublicAPIServiceHandler) LookupEPSSData(context.Context, *connect.Request[v1alpha.LookupEPSSDataRequest]) (*connect.Response[v1alpha.LookupEPSSDataResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.LookupEPSSData is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GenerateOrgSummaryReport(context.Context, *connect.Request[v1alpha.GenerateOrgSummaryReportRequest]) (*connect.Response[v1alpha.GenerateOrgSummaryReportResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateOrgSummaryReport is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GenerateComponentIssuesReport(context.Context, *connect.Request[v1alpha.GenerateComponentIssuesReportRequest]) (*connect.Response[v1alpha.GenerateComponentIssuesReportResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GenerateComponentIssuesReport is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) ListEnabledFeatures(context.Context, *connect.Request[v1alpha.ListEnabledFeaturesRequest]) (*connect.Response[v1alpha.ListEnabledFeaturesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.ListEnabledFeatures is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) BeginVantaInstall(context.Context, *connect.Request[v1alpha.BeginVantaInstallRequest]) (*connect.Response[v1alpha.BeginVantaInstallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.BeginVantaInstall is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CompleteVantaInstall(context.Context, *connect.Request[v1alpha.CompleteVantaInstallRequest]) (*connect.Response[v1alpha.CompleteVantaInstallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteVantaInstall is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetVantaIntegration(context.Context, *connect.Request[v1alpha.GetVantaIntegrationRequest]) (*connect.Response[v1alpha.GetVantaIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetVantaIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateVantaIntegration(context.Context, *connect.Request[v1alpha.UpdateVantaIntegrationRequest]) (*connect.Response[v1alpha.UpdateVantaIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateVantaIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) BeginSlackInstall(context.Context, *connect.Request[v1alpha.BeginSlackInstallRequest]) (*connect.Response[v1alpha.BeginSlackInstallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.BeginSlackInstall is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) CompleteSlackInstall(context.Context, *connect.Request[v1alpha.CompleteSlackInstallRequest]) (*connect.Response[v1alpha.CompleteSlackInstallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.CompleteSlackInstall is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) GetSlackIntegration(context.Context, *connect.Request[v1alpha.GetSlackIntegrationRequest]) (*connect.Response[v1alpha.GetSlackIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.GetSlackIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) UpdateSlackIntegration(context.Context, *connect.Request[v1alpha.UpdateSlackIntegrationRequest]) (*connect.Response[v1alpha.UpdateSlackIntegrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.UpdateSlackIntegration is not implemented"))
+}
+
+func (UnimplementedEdgeBitPublicAPIServiceHandler) TriggerCodeAnalysis(context.Context, *connect.Request[v1alpha.TriggerCodeAnalysisRequest]) (*connect.Response[v1alpha.TriggerCodeAnalysisResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("edgebit.platform.v1alpha.EdgeBitPublicAPIService.TriggerCodeAnalysis is not implemented"))
 }
