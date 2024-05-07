@@ -17,6 +17,7 @@ import (
 
 	connect "connectrpc.com/connect"
 	"github.com/anchore/syft/syft/formats"
+	"github.com/anchore/syft/syft/formats/cyclonedxjson"
 	"github.com/anchore/syft/syft/formats/spdxjson"
 	"github.com/anchore/syft/syft/formats/syftjson"
 	"github.com/anchore/syft/syft/source"
@@ -217,7 +218,7 @@ func (cli *CLI) inferSBOMInfo(ctx context.Context, sbomData []byte) (*inferredSB
 
 	// Format-specific inferences of additional fields
 	switch sbomInfo.Format {
-	case platform.SBOMFormat_SBOM_FORMAT_SYFT:
+	case platform.SBOMFormat_SBOM_FORMAT_SYFT, platform.SBOMFormat_SBOM_FORMAT_CYCLONEDX_JSON:
 		metadata, ok := sbom.Source.Metadata.(source.StereoscopeImageSourceMetadata)
 		if ok {
 			sbomInfo.ImageID = metadata.ID
@@ -405,6 +406,9 @@ func formatFromID(id string) (platform.SBOMFormat, error) {
 
 	case string(spdxjson.ID):
 		return platform.SBOMFormat_SBOM_FORMAT_SPDX_JSON, nil
+
+	case string(cyclonedxjson.ID):
+		return platform.SBOMFormat_SBOM_FORMAT_CYCLONEDX_JSON, nil
 
 	default:
 		return platform.SBOMFormat_SBOM_FORMAT_UNSPECIFIED, fmt.Errorf("unknown SBOM format: %s", id)
