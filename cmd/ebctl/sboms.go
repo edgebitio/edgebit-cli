@@ -16,10 +16,10 @@ import (
 	"github.com/edgebitio/edgebit-cli/pkg/sboms"
 
 	connect "connectrpc.com/connect"
-	"github.com/anchore/syft/syft/formats"
-	"github.com/anchore/syft/syft/formats/cyclonedxjson"
-	"github.com/anchore/syft/syft/formats/spdxjson"
-	"github.com/anchore/syft/syft/formats/syftjson"
+	"github.com/anchore/syft/syft/format"
+	"github.com/anchore/syft/syft/format/cyclonedxjson"
+	"github.com/anchore/syft/syft/format/spdxjson"
+	"github.com/anchore/syft/syft/format/syftjson"
 	"github.com/anchore/syft/syft/source"
 	"github.com/spf13/cobra"
 )
@@ -211,14 +211,14 @@ type inferredSBOMInfo struct {
 }
 
 func (cli *CLI) inferSBOMInfo(sbomData []byte) (*inferredSBOMInfo, error) {
-	sbom, format, err := formats.Decode(bytes.NewReader(sbomData))
+	sbom, formatID, _, err := format.Decode(bytes.NewReader(sbomData))
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode SBOM: %w", err)
 	}
 
 	sbomInfo := inferredSBOMInfo{}
 
-	sbomInfo.Format, err = formatFromID(string(format.ID()))
+	sbomInfo.Format, err = formatFromID(string(formatID))
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +226,7 @@ func (cli *CLI) inferSBOMInfo(sbomData []byte) (*inferredSBOMInfo, error) {
 	// Format-specific inferences of additional fields
 	switch sbomInfo.Format {
 	case platform.SBOMFormat_SBOM_FORMAT_SYFT, platform.SBOMFormat_SBOM_FORMAT_CYCLONEDX_JSON:
-		metadata, ok := sbom.Source.Metadata.(source.StereoscopeImageSourceMetadata)
+		metadata, ok := sbom.Source.Metadata.(source.ImageMetadata)
 		if ok {
 			sbomInfo.ImageID = metadata.ID
 			if len(metadata.Tags) > 0 {
