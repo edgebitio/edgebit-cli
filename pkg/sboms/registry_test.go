@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/anchore/syft/syft/formats"
-	"github.com/anchore/syft/syft/formats/spdxjson"
+	"github.com/anchore/syft/syft/format"
+	"github.com/anchore/syft/syft/format/spdxjson"
 	"github.com/stretchr/testify/require"
 )
 
@@ -101,14 +101,14 @@ func TestLoadSBOM(t *testing.T) {
 
 			require.NoError(t, err)
 
-			sbom, format, err := formats.Decode(data)
+			sbom, formatID, _, err := format.Decode(data)
 			if tt.invalidSBOM {
 				require.Error(t, err)
 				return
 			}
 
 			require.NoError(t, err)
-			require.Equal(t, format.ID(), spdxjson.ID)
+			require.Equal(t, formatID, spdxjson.ID)
 			require.Greater(t, sbom.Artifacts.Packages.PackageCount(), 0)
 		})
 	}
