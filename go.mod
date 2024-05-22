@@ -4,6 +4,9 @@ go 1.21.0
 
 toolchain go1.21.3
 
+// Blocked on https://github.com/mholt/archiver/pull/396
+replace github.com/mholt/archiver/v3 v3.5.1 => github.com/anchore/archiver/v3 v3.5.2
+
 require (
 	connectrpc.com/connect v1.16.1
 	github.com/anchore/syft v1.4.2-0.20240516191711-1bec1fc5d397
