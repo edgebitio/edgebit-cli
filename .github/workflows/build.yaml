@@ -43,7 +43,7 @@ jobs:
             {
               "pr-number": "${{ github.event.number }}",
               "tags": "${{ github.ref == 'refs/heads/main' && 'latest' || '' }}",
-              commit-sha: ${{github.sha}}
+              "commit-sha": "${{github.sha}}"
             }
           EOF
 
