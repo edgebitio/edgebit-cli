@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - 'main'
+      - "main"
   pull_request:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
-          go-version: '1.21'
+          go-version: "1.21"
 
       - name: Run GoReleaser
         id: goreleaser
@@ -35,13 +35,15 @@ jobs:
           artifact-name: sbom.spdx.json
           upload-artifact: true
           config: .github/edgebit/source-syft.yaml
+          syft-version: v1.5.0
 
       - name: Write out the metadata
         run: |
           cat > /tmp/metadata.json <<EOF
             {
               "pr-number": "${{ github.event.number }}",
-              "tags": "${{ github.ref == 'refs/heads/main' && 'latest' || '' }}"
+              "tags": "${{ github.ref == 'refs/heads/main' && 'latest' || '' }}",
+              "commit-sha": "${{github.sha}}"
             }
           EOF
 
