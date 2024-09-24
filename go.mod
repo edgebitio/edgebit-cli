@@ -8,6 +8,7 @@ require (
 	connectrpc.com/connect v1.16.1
 	github.com/anchore/syft v1.4.2-0.20240516191711-1bec1fc5d397
 	github.com/bufbuild/buf v1.30.1
+	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/google/go-containerregistry v0.19.1
 	github.com/spf13/cobra v1.8.0
 	google.golang.org/protobuf v1.33.1-0.20240408130810-98873a205002
