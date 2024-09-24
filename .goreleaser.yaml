@@ -1,3 +1,4 @@
+version: 2
 before:
   hooks:
     - go mod tidy
@@ -40,12 +41,12 @@ blobs:
   - provider: s3
     region: us-east-1
     bucket: edgebit-releases
-    folder: "releases/edgebit-cli/v{{.Version}}"
+    directory: "releases/edgebit-cli/v{{.Version}}"
 
   - provider: s3
     region: us-east-1
     bucket: edgebit-releases
-    folder: "releases/edgebit-cli/latest"
+    directory: "releases/edgebit-cli/latest"
 
 sboms:
   - artifacts: binary
