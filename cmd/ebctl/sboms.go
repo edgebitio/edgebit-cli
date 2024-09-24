@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	platform "github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha"
 	"github.com/edgebitio/edgebit-cli/pkg/pb/edgebit/platform/v1alpha/platformv1alphaconnect"
@@ -21,7 +22,12 @@ import (
 	"github.com/anchore/syft/syft/format/spdxjson"
 	"github.com/anchore/syft/syft/format/syftjson"
 	"github.com/anchore/syft/syft/source"
+	"github.com/cenkalti/backoff/v4"
 	"github.com/spf13/cobra"
+)
+
+const (
+	maxAPIElapsedTime = 1 * time.Minute
 )
 
 func addUploadSBOMFlags(cmd *cobra.Command) {
@@ -178,9 +184,20 @@ func NewCLI(ctx context.Context) (*CLI, error) {
 		edgebitURL,
 	)
 
-	loginResponse, err := loginClient.APIAccessTokenLogin(ctx, connect.NewRequest(&platform.APIAccessTokenLoginRequest{
-		Token: apiKey,
-	}))
+	loginResponse, err := backoff.RetryWithData(
+		func() (*platform.APIAccessTokenLoginResponse, error) {
+			r, err := loginClient.APIAccessTokenLogin(ctx,
+				connect.NewRequest(&platform.APIAccessTokenLoginRequest{
+					Token: apiKey,
+				}),
+			)
+			if err != nil {
+				return nil, err
+			}
+			return r.Msg, nil
+		},
+		backoff.NewExponentialBackOff(backoff.WithMaxElapsedTime(maxAPIElapsedTime)),
+	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to authenticate: %w", err)
 	}
@@ -192,8 +209,8 @@ func NewCLI(ctx context.Context) (*CLI, error) {
 
 	return &CLI{
 		apiClient:    apiClient,
-		sessionToken: loginResponse.Msg.SessionToken,
-		ProjectID:    loginResponse.Msg.ProjectId,
+		sessionToken: loginResponse.SessionToken,
+		ProjectID:    loginResponse.ProjectId,
 	}, nil
 }
 
@@ -297,29 +314,31 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 
 	uploadRequest := cli.uploadSBOMRequest(ctx)
 
-	err = uploadRequest.Send(&platform.UploadSBOMRequest{
-		Kind: &platform.UploadSBOMRequest_Header{
-			Header: &platform.UploadSBOMHeader{
-				ProjectId:      cli.ProjectID,
-				Format:         uploadFormat,
-				Labels:         args.Labels,
-				SourceRepoUrl:  args.Repo,
-				SourceCommitId: args.Commit,
-				ImageId:        imageID,
-				Image: &platform.Image{
-					Kind: &platform.Image_Docker{
-						Docker: &platform.DockerImage{
-							Tag:         imageTag,
-							RepoDigests: args.RepoDigests,
+	err = backoff.Retry(func() error {
+		return uploadRequest.Send(&platform.UploadSBOMRequest{
+			Kind: &platform.UploadSBOMRequest_Header{
+				Header: &platform.UploadSBOMHeader{
+					ProjectId:      cli.ProjectID,
+					Format:         uploadFormat,
+					Labels:         args.Labels,
+					SourceRepoUrl:  args.Repo,
+					SourceCommitId: args.Commit,
+					ImageId:        imageID,
+					Image: &platform.Image{
+						Kind: &platform.Image_Docker{
+							Docker: &platform.DockerImage{
+								Tag:         imageTag,
+								RepoDigests: args.RepoDigests,
+							},
 						},
 					},
+					ComponentName: args.ComponentName,
+					Tags:          args.Tags,
+					PullRequest:   args.PullRequest,
 				},
-				ComponentName: args.ComponentName,
-				Tags:          args.Tags,
-				PullRequest:   args.PullRequest,
 			},
-		},
-	})
+		})
+	}, backoff.NewExponentialBackOff(backoff.WithMaxElapsedTime(maxAPIElapsedTime)))
 	if err != nil {
 		return "", fmt.Errorf("failed to send upload request: %w", err)
 	}
@@ -397,14 +416,20 @@ func (cli *CLI) uploadSBOMForCI(ctx context.Context, args UploadSBOMForCIArgs) (
 	})
 	req.Header().Add("Authorization", "Bearer "+cli.sessionToken)
 
-	commentRes, err := cli.apiClient.GetCIBotComment(ctx, req)
+	commentRes, err := backoff.RetryWithData(func() (*platform.GetCIBotCommentResponse, error) {
+		r, err := cli.apiClient.GetCIBotComment(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return r.Msg, nil
+	}, backoff.NewExponentialBackOff(backoff.WithMaxElapsedTime(maxAPIElapsedTime)))
 	if err != nil {
 		return nil, err
 	}
 
 	return &UploadSBOMForCIOutput{
-		CommentBody: commentRes.Msg.CommentBody,
-		SkipComment: commentRes.Msg.SkipComment,
+		CommentBody: commentRes.CommentBody,
+		SkipComment: commentRes.SkipComment,
 	}, nil
 }
 

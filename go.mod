@@ -9,6 +9,7 @@ require (
 	connectrpc.com/connect v1.16.1
 	github.com/anchore/syft v1.4.2-0.20240516191711-1bec1fc5d397
 	github.com/bufbuild/buf v1.30.1
+	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/google/go-containerregistry v0.20.1
 	github.com/spf13/cobra v1.8.1
 	google.golang.org/protobuf v1.34.2
@@ -17,7 +18,6 @@ require (
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/bufbuild/protoyaml-go v0.1.9 // indirect
-	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/charmbracelet/lipgloss v0.12.1 // indirect
 	github.com/charmbracelet/x/ansi v0.1.4 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
