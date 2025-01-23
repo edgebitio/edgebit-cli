@@ -36,7 +36,7 @@ func addUploadSBOMFlags(cmd *cobra.Command) {
 	cmd.Flags().String("image-id", "", "Image ID to tag the SBOM with (required for most SBOM formats)")
 	cmd.Flags().String("image-tag", "", "Image tag to tag the SBOM with")
 	cmd.Flags().StringSlice("repo-digest", nil, "Repo Digest to tag the SBOM with (can be specified multiple times)")
-	cmd.Flags().String("component", "", "Component name to associate the SBOM with")
+	cmd.Flags().String("component", "", "Component name to associate the SBOM with (required)")
 	cmd.Flags().Bool("force", false, "Ignore errors parsing the local SBOM and attempt to upload it anyway")
 	cmd.Flags().String("format", "", "SBOM format (optional, will be inferred from file contents if not specified)")
 	cmd.Flags().StringSlice("tag", nil, "EdgeBit Component tags to associate the SBOM with (can be specified multiple times)")
@@ -308,8 +308,8 @@ func (cli *CLI) uploadSBOM(ctx context.Context, args UploadSBOMArgs) (string, er
 		imageTag = args.ImageTag
 	}
 
-	if len(args.Tags) > 0 && args.ComponentName == "" {
-		return "", errors.New("component name is required when specifying tags")
+	if args.ComponentName == "" {
+		return "", errors.New("component name is required")
 	}
 
 	uploadRequest := cli.uploadSBOMRequest(ctx)
